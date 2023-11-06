@@ -27,10 +27,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build 
-
-permissions:
-  deployments: write
-  contents: write
-  statuses: write
-  actions: write
-  checks: read

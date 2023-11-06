@@ -54,7 +54,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/social-card.jpg',
       navbar: {
         title: 'SigLens Docs',
         logo: {
@@ -69,7 +69,7 @@ const config = {
             label: 'Docs',
           },
           {
-            href: 'https://github.com/siglens/siglens-docs',
+            href: 'https://github.com/siglens/siglens',
             label: 'GitHub',
             position: 'right',
           },
