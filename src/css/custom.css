@@ -30,12 +30,3 @@
   --ifm-color-primary-lightest: #f7c77c;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
-
-/* html[data-theme='dark'] {
-  --ifm-background-color: #1e2125;
-  --ifm-background-surface-color: #121212;
-} */
-
-:root {
-  --ifm-font-family-base: 'Open Sans';
-}
