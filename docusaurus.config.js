@@ -69,7 +69,7 @@ const config = {
             label: 'Docs',
           },
           {
-            href: 'https://github.com/siglens/siglens-docs',
+            href: 'https://github.com/siglens/siglens',
             label: 'GitHub',
             position: 'right',
           },
