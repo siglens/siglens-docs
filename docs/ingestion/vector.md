@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # Vector
 
-- Similar to FluentD, SigScalr is compatible with the Elastic plugin for vector. Install vector and start it.
+- Similar to FluentD, SigLens is compatible with the Elastic plugin for vector. Install vector and start it.
 - Make sure that the `endpoints` in the configuration has the `/elastic`suffix. 
 - Create a vector.yaml file which will contain the configurations. Add the below configuration code to vector.yaml file
 - Run the command: `vector --config vector.yaml`

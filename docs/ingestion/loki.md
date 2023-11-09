@@ -26,8 +26,4 @@ scrape_configs:
 #### Run the binary:
 - ./promtail-darwin-amd64 -config.file=promtail-config.yaml
 
-Promtail will start ingesting the logs from the /var/log folder and then push them to siglens
-
-For promtail ingestion to work, we have added proto files in the siglens repo in loki pkg. These proto files are used to generate the go files which are used by promtail to push the logs to siglens. The source protos are `push.proto, stats.proto and logproto.proto`. The *.pb.go were generated using this pkg `google.golang.org/protobuf/cmd/protoc-gen-go`` and running command `protoc --go_out=. path/to/your/proto/file.proto.`
-
 
