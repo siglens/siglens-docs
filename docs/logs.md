@@ -6,9 +6,7 @@ sidebar_position: 9
 
 - Given below is an overview of the query search interface that supports SQL,SPL and LogQL queries
 
-    <video width="320" height="240" controls>
-    <source src="/static/img/query-search-overview.mp4" type="video/mp4">
-    </video>
+    https://github.com/Davleen14/siglens-docs/assets/114626340/d6388d96-c390-4c3c-9ca4-11ed4afac86a
 
 - You can select query from info icon or you can enter your own query
 ![Query Search](/static/img/search-query-1.png)
