@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Install Using Git 
+# Git 
 
 - Git clone the SigLens repository and cd into the siglens directory 
 

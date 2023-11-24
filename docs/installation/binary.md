@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# Install Using Binary 
+# Binary 
 - SigLens can be installed on Linux or macOS machine. 
 - Git clone the SigLens repository and cd into the siglens directory 
 ```
