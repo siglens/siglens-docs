@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Install Using Docker
+# Docker
 - SigLens can be installed on Linux or macOS machine. 
 - On macOS, Docker Desktop should be installed before you run the install script. 
 - Git clone the SigLens repository and cd into the siglens directory 
