@@ -6,22 +6,30 @@ sidebar_position: 9
 
 - Given below is an overview of the query search interface that supports SQL,SPL and LogQL queries
 
-   
+https://github.com/Davleen14/siglens-docs/assets/114626340/a9482aed-6d8e-483d-b6f6-4c606cd863cd
 
 - You can select query from info icon or you can enter your own query
+  
 ![Query Search](/static/img/icon.png)
 
 - Select which type of query you want to search: SQL,SPL,LogQL
+  
 ![Query Type](/static/img/query-type.png)
 
 - You can select index from the index dropdown
+  
 ![index](/static/img/index.png)
 
-- Selecting the last search time 
+- Selecting the last search time
+  
 ![last-search](/static/img/time.png)
 
 - Searching with query builder
+  
+https://github.com/Davleen14/siglens-docs/assets/114626340/442c69dc-aac5-48b4-925b-b41d20aca842
+
 ![qb-search](/static/img/query-builder.png)
+
 ![qb-query](/static/img/query-qb.png)
 
 
