@@ -7,7 +7,9 @@ sidebar_position: 2
 There are **two ways** to get started using git.
 
 ## Install using script
+
 Click 👉 <a href="https://github.com/siglens/siglens/releases/latest/download/install_with_git.sh" download>**here**</a> 👈 to download the install script.
+
 
 Go to the directory where install script is downloaded.
 
