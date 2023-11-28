@@ -3,13 +3,13 @@ sidebar_position: 4
 ---
 
 # Binary 
-- SigLens can be installed on Linux or macOS machine. 
-- Git clone the SigLens repository and cd into the siglens directory 
+SigLens can be installed on Linux or macOS machine. 
+
+Click 👉 <a href="https://github.com/siglens/siglens/releases/download/0.1.2/install_with_binary.sh" download>**here**</a> 👈 to download the install script.
+
+Go to the directory where install script is downloaded.
+
 ```
-    git clone git@github.com:siglens/siglens.git
-    cd siglens
-```
-- Run the install_with_docker.sh script:
-```
-    ./install_with_binaty.sh
+chmod +x install_with_binary.sh
+./install_with_binary.sh
 ```
