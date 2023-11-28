@@ -6,10 +6,10 @@ sidebar_position: 9
 
 - Given below is an overview of the query search interface that supports SQL,SPL and LogQL queries
 
-    https://github.com/Davleen14/siglens-docs/assets/114626340/d6388d96-c390-4c3c-9ca4-11ed4afac86a
+   
 
 - You can select query from info icon or you can enter your own query
-![Query Search](/static/img/search-query-1.png)
+![Query Search](/static/img/icon.png)
 
 - Select which type of query you want to search: SQL,SPL,LogQL
 ![Query Type](/static/img/query-type.png)
@@ -18,7 +18,20 @@ sidebar_position: 9
 ![index](/static/img/index.png)
 
 - Selecting the last search time 
-![last-search](/static/img/last-search.png)
+![last-search](/static/img/time.png)
+
+- Searching with query builder
+![qb-search](/static/img/query-builder.png)
+![qb-query](/static/img/query-qb.png)
+
+
+
+
+
+
+
+
+
 
 # SQL query 
 
@@ -28,12 +41,6 @@ sidebar_position: 9
 
     ![sql-1](/static/img/sql-1.png)
     
-    - Select/unselect the fields you want from the available fields dropdown
-
-    ![available-fields](/static/img/available-fields.png)
-
-    ![sql-field](/static/img/sql-fields.png)
-
     2. SELECT * FROM `ind-0` ORDER BY latency ASC
 
     ![sql-2](/static/img/sql-2.png)
