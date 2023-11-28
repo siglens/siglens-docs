@@ -1,3 +1,7 @@
+---
+sidebar_position: 10
+---
+
 # Elastic Search
 
 # The siglens instance should be running on localhost with ingestPort 8081
