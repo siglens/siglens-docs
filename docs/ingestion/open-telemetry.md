@@ -14,7 +14,7 @@ sidebar_position: 8
 ```
 exporters:
 otlphttp/siglens:
-    endpoint: "http://host.docker.internal:8080/otlp"
+    endpoint: "http://host.docker.internal:8081/otlp"
 
 service:
 pipelines:
