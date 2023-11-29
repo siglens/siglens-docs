@@ -4,45 +4,13 @@ sidebar_position: 10
 
 # Dashboards
 
-- Adding panel to dashboard
-
-
-
-  Enter a query in the search bar and select the option right next to downloads option to add the panel to dashboard.
-
-  ![add panel](/static/img/add-panel.png)
-
-  ![display panel](/static/img/display-panel.png)
-
-  You can view, edit, duplicate and remove the panel as well
-
-  ![view add panel](/static/img/view-add-panel.png)
-
-  ![view panel](/static/img/view-panel.png)
-
-- Adding panel demo
-
-  https://github.com/Davleen14/siglens-docs/assets/114626340/40c2d5e9-9045-48e9-b930-68dc103d2869
-
-
-
-- Create dashboard panel demo
+#### Create dashboard panel demo
 
   
-  https://github.com/Davleen14/siglens-docs/assets/114626340/3a04e2e3-c2ba-4169-8193-c127041bb467
-
- 
+  - https://github.com/Davleen14/siglens-docs/assets/114626340/3a04e2e3-c2ba-4169-8193-c127041bb467
 
 
-  
-
-
-
-
-
-
-
-- Create Panel for SPL Query
+#### Create Panel for SPL Query
 
   1. Click on the add panel option to add the panel and then click on edit panel 
 
@@ -58,9 +26,11 @@ sidebar_position: 10
 
   ![query language](/static/img/query-type.png)
 
-  4. Enter query-
+  4. Enter query -
 
-     city=Boston | stats count, avg(latency) BY weekday
+```
+city=Boston | stats count, avg(latency) BY weekday
+```
 
   ![SPL1 query](/static/img/spl1-query.png)
 
@@ -74,44 +44,66 @@ sidebar_position: 10
 
   7. Similarly we can enter another SPL query and now the chart type is data table
 
-     city=Boston | ```This is a comment``` fields http*
+```
+city=Boston | ```This is a comment``` fields http*
+```
 
   ![SPL2 query](/static/img/spl2.png)
 
-- Create Panel for SQL Query
+#### Create Panel for SQL Query
 
-  Follow the same steps as above for SPL and change the query language to SQL and you can modify 
+  - Follow the same steps as above for SPL and change the query language to SQL and  you can modify 
   the panel details as per your needs
 
-  1. SELECT COUNT(weekday) FROM `*` GROUP BY weekday
+  1. Enter query -
+
+```
+SELECT COUNT(weekday) FROM `*` GROUP BY weekday
+```
 
   ![SQL1 query](/static/img/sql1.png)
 
-  2. SELECT * FROM `ind-0` ORDER BY latency ASC
+  2. Enter query -
+
+```
+SELECT * FROM `ind-0` ORDER BY latency ASC
+```
 
   ![SQL2 query](/static/img/sql2.png)
 
-- Create Panel for Log QL Query
+ #### Create Panel for Log QL Query
 
-  Follow the same steps as above for SPL and change the query language to Log QL  and you can modify the panel details as per your needs
+  - Follow the same steps as above for SPL and change the query language to Log QL  and you can modify the panel details as per your needs
 
-  1. {gender="female",city="Fresno"} != "batch-212"
+  1. Enter query -
+```
+{gender="female",city="Fresno"} != "batch-212"
+```
 
   ![LogQL1 query](/static/img/logql1.png)
 
-  2. {gender="female"} | json
+  2. Enter query -
+```
+{gender="female"} | json
+```
 
   ![LogQL2 query](/static/img/logql2.png)
 
-- Create Panel for Metrics Query
+#### Create Panel for Metrics Query
 
-  Note - You have to ingest metrics data to get the metrics data
+  - Note - You have to ingest metrics data to get the metrics data
   
-  1. max by (color) (testmetric0)
+  1. Enter query -
+```
+max by (color) (testmetric0)
+```
 
   ![metrics1 query](/static/img/metrics-1.png)
 
-  2. min by (model) (testmetric0)
+  2. Enter query -
+```
+min by (model) (testmetric0)
+```
 
   ![metrics2 query](/static/img/metrics-2.png)
 
@@ -119,13 +111,34 @@ sidebar_position: 10
 
   ![panel](/static/img/metrics-overview.png)
 
-- Create Panel for traces
+#### Create Panel for traces
 
   Note - You have to ingest traces data to get the traces
 
-  1. service="adservice"
+  1. Enter query -
+```
+service="adservice"
+```
 
   ![traces query](/static/img/traces.png)
+
+#### Adding panel to dashboard
+
+  Enter a query in the search bar and select the option right next to downloads option to add the panel to dashboard.
+
+  ![add panel](/static/img/add-panel.png)
+
+  ![display panel](/static/img/display-panel.png)
+
+  You can view, edit, duplicate and remove the panel as well
+
+  ![view add panel](/static/img/view-add-panel.png)
+
+  ![view panel](/static/img/view-panel.png)
+
+#### Adding panel demo
+
+  - https://github.com/Davleen14/siglens-docs/assets/114626340/40c2d5e9-9045-48e9-b930-68dc103d2869
 
 
 
