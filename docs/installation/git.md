@@ -1,7 +1,3 @@
----
-sidebar_position: 2
----
-
 # Git 
 
 There are **two ways** to get started using git.

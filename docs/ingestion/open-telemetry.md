@@ -1,7 +1,3 @@
----
-sidebar_position: 9
----
-
 # Open Telemetry
 
 - To ingest traces, you can run siglens and follow the below steps. 

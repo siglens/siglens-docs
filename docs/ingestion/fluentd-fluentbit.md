@@ -1,7 +1,3 @@
----
-sidebar_position: 6
----
-
 # Fluentd/Fluentbit
 
 ### How to integrate Fluentd locally

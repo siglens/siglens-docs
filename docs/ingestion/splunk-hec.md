@@ -1,7 +1,3 @@
----
-sidebar_position: 8
----
-
 # Splunk HEC
 
 - Make sure that the `endpoints` in the configuration has the `/splunk`suffix. 
