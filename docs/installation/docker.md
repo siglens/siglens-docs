@@ -1,7 +1,3 @@
----
-sidebar_position: 3
----
-
 # Docker
 SigLens can be installed on Linux or macOS machine. 
 <br/>

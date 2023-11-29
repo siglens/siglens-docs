@@ -1,7 +1,3 @@
----
-sidebar_position: 4
----
-
 # Binary 
 SigLens can be installed on Linux or macOS machine. 
 

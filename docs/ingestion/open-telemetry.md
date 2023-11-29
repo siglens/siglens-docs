@@ -1,7 +1,3 @@
----
-sidebar_position: 9
----
-
 # Open Telemetry
 
 #### MacOS Packaging
