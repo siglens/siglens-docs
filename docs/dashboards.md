@@ -22,8 +22,23 @@ sidebar_position: 10
 
 - Adding panel demo
 
+  https://github.com/Davleen14/siglens-docs/assets/114626340/40c2d5e9-9045-48e9-b930-68dc103d2869
+
+
 
 - Create dashboard panel demo
+
+  
+  https://github.com/Davleen14/siglens-docs/assets/114626340/3a04e2e3-c2ba-4169-8193-c127041bb467
+
+ 
+
+
+  
+
+
+
+
 
 
 
