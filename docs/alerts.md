@@ -7,6 +7,10 @@ This guide provides step-by-step instructions on how to set up alerts and contac
 
 ### 📌 Accessing Alerts and Contact Points
 
+
+https://github.com/Davleen14/siglens-docs/assets/114626340/550bc375-2437-4447-9ebb-4393b2bedc7f
+
+
 1. **Navigation:**
    - Click on the `alerts` button in the side navigation bar. 
 
