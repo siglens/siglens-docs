@@ -2,49 +2,48 @@
 sidebar_position: 9
 ---
 
-# Logs
+# Logs Overview 📊
 
-- Given below is an overview of the query search interface that supports SQL,SPL and LogQL queries
+## Query Search Interface Overview 🔍
 
-https://github.com/Davleen14/siglens-docs/assets/114626340/a9482aed-6d8e-483d-b6f6-4c606cd863cd
-
-- You can select query from info icon or you can enter your own query
-  
-![Query Search](/static/img/icon.png)
-
-- Select which type of query you want to search: SQL,SPL,LogQL
-  
-![Query Type](/static/img/query-type.png)
-
-- You can select index from the index dropdown
-  
-![index](/static/img/index.png)
-
-- Select time range for the query
-  
-![last-search](/static/img/time.png)
-
-- Searching with query builder
-  
-https://github.com/Davleen14/siglens-docs/assets/114626340/442c69dc-aac5-48b4-925b-b41d20aca842
-
-![qb-search](/static/img/query-builder.png)
-
-![qb-query](/static/img/query-qb.png)
+- Overview of the query search interface supporting SQL, SPL, and LogQL queries.
 
 
 
 
+### Steps for Using the Query Search
+
+1. **Select or Enter Queries:**
+   - You can either select a query from the info icon or enter your own.
+   ![Query Search](/static/img/icon.png)
+
+2. **Choose Query Type:**
+   - Select which type of query you want to search: SQL, SPL, LogQL.
+   ![Query Type](/static/img/query-type.png)
+
+3. **Select Index:**
+   - Choose an index from the index dropdown.
+   ![Index](/static/img/index.png)
+
+4. **Set Time Range:**
+   - Select the time range for the query.
+   ![Time Range](/static/img/time.png)
+
+5. **Use Query Builder:**
 
 
 
+   ![Query Builder Search](/static/img/query-builder.png)
+   ![Query Builder Query](/static/img/query-qb.png)
 
+---
 
+## SQL Query Examples 💾
 
-# SQL query 
+To use SQL queries:
 
-- Select query language SQL from the dropdown and enter the query in the search field
- 
+- Select SQL as the query language from the dropdown and enter your query in the search field.
+
 ```
 SELECT first_name AS firstnames, country AS origincountry FROM `ind-0`
 ```
@@ -74,9 +73,11 @@ select 1 as one,'word' as word,city from `ind-0`
 
    ![sql-5](/static/img/sql-5.png)
 
-# SPL query
+##  SPL Query Examples 📈
 
-- Select query langauge SPL from the dropdown and enter the query in the search field
+To use SPL queries:
+
+- Select SPL as the query language from the dropdown and enter your query in the search field.
 
 ```
 city=Boston | stats count AS Count BY weekday | where Count / 2 > 6 OR weekday = "Saturday"
@@ -108,7 +109,9 @@ city=Columbus | stats count AS Count BY http_status | eval sqrt=sqrt(http_status
 
    ![spl-5](/static/img/spl-5.png)
 
-# LogQL query
+# LogQL Query Examples 📜
+
+To use LogQL queries:
 
 - Select query langauge LogQL from the dropdown and enter the query in the search field
 
@@ -139,6 +142,13 @@ city=Columbus | stats count AS Count BY http_status | eval sqrt=sqrt(http_status
 ```
 
    ![logql-5](/static/img/logql-5.png)
+
+
+
+
+
+
+
 
 
 
