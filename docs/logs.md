@@ -10,6 +10,10 @@ sidebar_position: 9
 
 
 
+https://github.com/Davleen14/siglens-docs/assets/114626340/134cf62c-2c4b-41bd-ab8e-1b64d3dfb6b1
+
+
+
 
 ### Steps for Using the Query Search
 
@@ -30,6 +34,10 @@ sidebar_position: 9
    ![Time Range](/static/img/time.png)
 
 5. **Use Query Builder:**
+
+
+
+https://github.com/Davleen14/siglens-docs/assets/114626340/2255a445-462b-4c22-90cb-67078edeb9dd
 
 
 
