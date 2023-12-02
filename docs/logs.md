@@ -20,6 +20,7 @@ sidebar_position: 9
 
 2. **Choose Query Type:**
    - Select which type of query you want to search: SQL,Splunk QL, LogQL.
+     
       ![Query Type](/static/img/query-type.png)
 
       #### ⭐ SQL Query Examples ⭐
