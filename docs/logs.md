@@ -1,7 +1,3 @@
----
-sidebar_position: 9
----
-
 # Logs Overview 📊
 
 ## Log Search Interface Overview 🔍
@@ -126,37 +122,3 @@ sidebar_position: 9
 6. **Query Builder Demo:**
    - Overview of the query builder :
    [Video](../static/img/query-builder-search.mp4) 👀
-
-
-
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
