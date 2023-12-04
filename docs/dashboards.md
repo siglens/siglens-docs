@@ -1,7 +1,3 @@
----
-sidebar_position: 10
----
-
 # Dashboards 📊
 
 ## Create Dashboard Panel Demo 📈
@@ -99,7 +95,5 @@ Demonstration for adding a panel
    - You can view, edit, duplicate, and remove the panel.
      ![View Add Panel](/static/img/view-add-panel.png)
      ![View Panel](/static/img/view-panel.png)
-
-
 
 
