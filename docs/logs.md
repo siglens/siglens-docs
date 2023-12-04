@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs Overview 📊
 
 ## Log Search Interface Overview 🔍

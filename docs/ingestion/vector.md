@@ -1,7 +1,3 @@
----
-sidebar_position: 6
----
-
 # Vector
 
 - Similar to FluentD, SigLens is compatible with the Elastic plugin for vector. Install vector and start it.

@@ -1,42 +1,22 @@
----
-sidebar_position: 8
----
-
 # Open Telemetry
 
-#### MacOS Packaging
-- Get the MacOS release using: `curl --proto '=https' --tlsv1.2 -fOL https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.80.0/otelcol_0.80.0_darwin_amd64.tar.gz`
-- They are packaged as gzipped tarballs (.tar.gz) and will need to be unpacked with a tool that supports this compression format: `tar -xvf otelcol_0.80.0_darwin_amd64.tar.gz`.
-- Every Collector release includes an otelcol executable that you can run after unpacking.
-- Create a config.yaml file which will contain the configurations for the otelCol
-- Run otelCol using: `./otelCol --config config.yaml`
+- To ingest traces, you can run siglens and follow the below steps. 
+- If Siglens is running with ingestPort: 8081 in the server.yaml file, you'll follow these steps:
 
-The config file used: 
+1. git clone https://github.com/open-telemetry/opentelemetry-demo.git
+2. cd opentelemetry-demo/
+3. Update `src/otelcollector/otelcol-config-extras.yml` to be:
+
 ```
-receivers:
-  prometheus:
-    config:
-      scrape_configs:
-        - job_name: 'example'
-          scrape_interval: 60s
-          static_configs:
-            - targets: ['localhost:2222']
-processors:
-  batch:
-
 exporters:
-  logging:
-    loglevel: debug
-
-  prometheusremotewrite:
-    endpoint: 'http://localhost:8081/promql/api/v1/write'
-    headers:
-      Authorization: 'Bearer YOUR_TOKEN_HERE'  # Optional: Add any necessary headers
+otlphttp/siglens:
+    endpoint: "http://host.docker.internal:8081/otlp"
 
 service:
-  pipelines:
-    metrics:
-      receivers: [prometheus]
-      processors: [batch]
-      exporters: [prometheusremotewrite]
+pipelines:
+    traces:
+    exporters: [spanmetrics, otlphttp/siglens]
 ```
+4. Run the command `make start`.
+
+    After the docker containers start and you wait a few seconds, you should see traces getting ingested into siglens.
