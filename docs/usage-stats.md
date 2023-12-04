@@ -4,7 +4,7 @@
 
 Welcome to the Cluster Stats Dashboard. To view the cluster stats you have to ingest the data.
 
-You can ingest test data: [Video](../static/img/test-data.mp4)
+You can ingest test data: [Video](../static/img/test-data.mp4)👀
 
 ## ⭐ Features Overview ⭐
 
@@ -34,4 +34,3 @@ You can ingest test data: [Video](../static/img/test-data.mp4)
 - **Storage Savings:** Highlights the storage savings achieved for cost-effective storage management.
 
     ![Incoming Event](../static/img/stats.png)
-
