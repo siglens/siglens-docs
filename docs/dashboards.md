@@ -1,11 +1,8 @@
 # Dashboards
 
-## Create Panel Demo 📈
+### 📈 Create Panel Demo : [Video](../static/img/dashboard-preview.mp4) 👀
 
-- Demonstration for creating a dashboard panel:
-[Video](../static/img/dashboard-preview.mp4) 👀
-
-## Create Panel for Spunk QL Query 
+### ⭐ Create Panel for Spunk QL Query ⭐
 1. **Add and Edit Panel:**
    - Click on the 'Add Panel' option and then click on edit.
 
@@ -45,7 +42,7 @@
 
     ![SPL preview](../static/img/spl-preview.png)
 
-## Create Panel for SQL Query 
+### ⭐ Create Panel for SQL Query ⭐
 
 Follow the same steps as for Splunk QL and change the query language to SQL. Modify the panel details as needed.
 
@@ -61,7 +58,7 @@ Follow the same steps as for Splunk QL and change the query language to SQL. Mod
     ```
     ![SQL2 Query](../static/img/sql2.png)
 
-## Create Panel for LogQL Query 
+### ⭐ Create Panel for LogQL Query ⭐
 
 Follow the same steps as for SPL and change the query language to LogQL. Modify the panel details as needed.
 
@@ -77,7 +74,7 @@ Follow the same steps as for SPL and change the query language to LogQL. Modify 
     ```
     ![LogQL2 Query](../static/img/logql2.png)
 
-## Create Panel for Metrics Query 
+### ⭐ Create Panel for Metrics Query ⭐
 
 Note: You need to ingest metrics data to get the metrics.
 
@@ -97,7 +94,7 @@ Note: You need to ingest metrics data to get the metrics.
 
     ![Panel Overview](../static/img/metrics-preview.png)
 
-## Create Panel for Traces 
+### ⭐ Create Panel for Traces ⭐ 
 
 Note: You need to ingest traces data to get the traces.
 
@@ -108,7 +105,7 @@ Note: You need to ingest traces data to get the traces.
     ```
     ![Traces Query](../static/img/traces.png)
 
-## Adding Panel to Dashboard 
+### ⭐ Adding Panel to Dashboard ⭐
 
 Demonstration for adding a panel
 [Video](../static/img/add-panel.mp4)👀

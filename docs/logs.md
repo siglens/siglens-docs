@@ -1,11 +1,8 @@
-# Logs Overview 
+# Logs
 
-## Log Search Interface Overview 🔍
+### 🔍 Log Search Interface Overview :[Video](../static/img/query-overview.mp4) 👀
 
-- Overview of the logs search interface supporting SQL, Splunk QL, and LogQL queries:
-[Video](../static/img/query-overview.mp4) 👀
-
-### Steps for Using the Logs Search
+### ⭐ Steps for Using the Logs Search ⭐
 
 1. **Select or Enter Queries:**
    - You can either select a query from the info icon or enter your own.
