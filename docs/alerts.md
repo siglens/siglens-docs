@@ -1,14 +1,7 @@
 
 #  Alerts 
 
-## Getting Started
-
-- This guide provides step-by-step instructions on how to set up alerts and contact points.
-
-### 📌 Accessing Alerts and Contact Points
-
-- Demo for creating alert rules :
-[Video](../static/img/alert-overview.mp4)👀
+### 📌 Accessing Alerts and Contact Points : [Video](../static/img/alert-overview.mp4)👀
 
 ### ⭐ Creating Alert Rules ⭐
 
