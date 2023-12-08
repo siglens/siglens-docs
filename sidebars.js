@@ -41,6 +41,7 @@ const sidebars = {
         'ingestion/open-telemetry',
         'ingestion/elastic-search',
         'ingestion/loki',
+        'ingestion/auto-instrument-java-app'
       ],
     },
     'logs',
