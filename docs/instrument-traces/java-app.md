@@ -13,7 +13,7 @@ Given below are the commands for setting up a Java application.
 
 ```
 # Clone the Spring PetClinic repository from GitHub and make sure to comment out the code in docker-compose.yaml file
-git clone https://github.com/SigNoz/spring-petclinic
+git clone https://github.com/spring-projects/spring-petclinic
 
 # Change into the cloned directory
 cd spring-petclinic
@@ -48,9 +48,19 @@ The application gets started on the same server - localhost:8090. Make sure that
 
 ![terminal-java-app](/tutorials/terminal-java-app.png)
 
-You can view the traces:
+You can view red-metrics traces:
 
-![siglens-java-app](/tutorials/siglens-java-app.png)
+![siglens-java-app](/tutorials/java-app-red-traces.png)
+
+Graph visualization of red-metrics:
+
+![graph-1](/tutorials/java-app-red-metrics-graph-1.png)
+
+![graph-2](/tutorials/java-app-red-metrics-graph-2.png)
+
+
+
+
 
 
 
