@@ -5,18 +5,19 @@ In this tutorial we will go through the steps to auto instrument a java app to s
 ### Prerequisites
 - Siglens instance should be running on localhost with ingest port-4318. To do so you need to change the ingest port of Siglens to `4318` in `server.yaml`
 - Java app (refer the documentation below if you don't have the setup for java app)
-- Open Telemetry jar agent (refer the documentation below for setting up the jar agent)
 
 ### Set up java application
 
 Given below are the commands for setting up a Java application.
 
 ```
-# Clone the Spring PetClinic repository from GitHub and make sure to comment out the code in docker-compose.yaml file
+# Clone the Spring PetClinic repository from GitHub
 git clone https://github.com/spring-projects/spring-petclinic
 
 # Change into the cloned directory
 cd spring-petclinic
+
+# Comment out the code in docker-compose.yml file
 
 # Use Maven Wrapper to package the Spring PetClinic application
 ./mvnw package
