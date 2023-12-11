@@ -40,8 +40,8 @@ cd /mnt/nvme1n1
 sudo chmod 777 .
 ```
 
-## Benchmark siglens
-You'll want three terminals. Terminal 1 will run siglens, Terminal 2 will do some setup and view the logs, and Terminal 3 will send the queries. Terminal 3 can run in your local machine if you setup the server to accept HTTP traffic, but Terminals 1 and 2 should be on the server. Start with Terminal 1.
+## Benchmark SigLens
+You'll want three terminals. Terminal 1 will run SigLens, Terminal 2 will do some setup and view the logs, and Terminal 3 will send the queries. Terminal 3 can run in your local machine if you setup the server to accept HTTP traffic, but Terminals 1 and 2 should be on the server. Start with Terminal 1.
 
 ### Install Go
 ```bash
@@ -50,7 +50,7 @@ sudo apt install golang -y
 ```
 If prompted to restart some daemons, you can restart the recommended daemons.
 
-### Clone siglens
+### Clone SigLens
 ```bash
 git clone https://github.com/siglens/siglens.git
 git clone https://github.com/sigscalr/sigscalr-client.git
@@ -64,12 +64,12 @@ Append this to the `server.yaml` config file:
 agileAggsEnabled: true
 ```
 
-### Start siglens
+### Start SigLens
 ```bash
 sudo go run cmd/siglens/main.go --config server.yaml
 ```
 
-Wait until siglens is running. You'll see these lines in the terminal once it's up:
+Wait until SigLens is running. You'll see these lines in the terminal once it's up:
 ```
 INFO[2023-12-06 18:10:38] Extracting config from configFile: server.yaml
 INFO[2023-12-06 18:10:38] Defaulting to 2160hrs (90 days) of retention...
@@ -146,8 +146,8 @@ if __name__ == "__main__":
     ingest(sys.argv[1])
 ```
 
-### Ingest the data into siglens
-Run the following script to download, decompress, and ingest the data into siglens.
+### Ingest the data into SigLens
+Run the following script to download, decompress, and ingest the data into SigLens.
 ```bash
 export NUM_FILES=20
 
@@ -174,15 +174,15 @@ for i in $(seq 0 $(($NUM_FILES - 1))); do
 done
 wait
 
-# Ingest into siglens.
+# Ingest into SigLens.
 for i in $(seq 0 $(($NUM_FILES - 1))); do
     python3 ../ingester.py benchmark_data/trips_$i.json &
 done
 wait
 ```
 
-### Restart siglens
-This step is to ensure that siglens flushes all the ingested data. Simply Ctrl-C the process in Terminal 1 and restart it with
+### Restart SigLens
+This step is to ensure that SigLens flushes all the ingested data. Simply Ctrl-C the process in Terminal 1 and restart it with
 ```bash
 sudo go run cmd/siglens/main.go --config server.yaml
 ```
@@ -194,8 +194,11 @@ cd /mnt/nvme1n1/siglens
 sudo tail -f siglens.log
 ```
 
-### Run the queries on siglens
-You can append ` | python3 -m json.tool` to format the responses nicely. Check the log file siglens/siglens.log for the query times.
+### Run the Queries in SigLens
+Run the following in Terminal 3.
+If Terminal 3 is on your local machine, make sure to replace `localhost` with the IP of the server.
+You can also append ` | python3 -m json.tool` to each curl request to format the responses nicely.
+Check the log file `siglens/siglens.log` for the query times.
 ```bash
 curl -X POST -d '{
     "searchText": "SELECT cab_type, count(*) FROM trips GROUP BY cab_type",
