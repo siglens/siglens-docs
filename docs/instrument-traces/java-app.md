@@ -3,9 +3,9 @@
 In this tutorial we will go through the steps to auto instrument a java app to send traces to Siglens.
 
 ### Prerequisites
-- Siglens instance should be running on localhost with ingest port-4318
-- Java app
-- Open Telemetry jar agent
+- Siglens instance should be running on localhost with ingest port-4318. To do so you need to change the ingest port of Siglens to `4318` in `server.yaml`
+- Java app (refer the documentation below if you don't have the setup for java app)
+- Open Telemetry jar agent (refer the documentation below for setting up the jar agent)
 
 ### Set up java application
 
