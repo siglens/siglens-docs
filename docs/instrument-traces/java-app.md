@@ -49,6 +49,10 @@ The application gets started on the same server - localhost:8090. Make sure that
 
 ![terminal-java-app](/tutorials/terminal-java-app.png)
 
+You can search traces:
+
+![search-traces](/tutorials/search-traces.png)
+
 You can view red-metrics traces:
 
 ![siglens-java-app](/tutorials/java-app-red-traces.png)
