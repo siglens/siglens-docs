@@ -40,9 +40,20 @@ const sidebars = {
         'ingestion/splunk-hec',
         'ingestion/open-telemetry',
         'ingestion/elastic-search',
-        'ingestion/loki',
+        'ingestion/loki'
       ],
     },
+    {
+      type: 'category',
+      label: 'Instrumention for Traces',
+      link: {
+        type: 'generated-index',
+      },
+      items: [
+        'instrument-traces/go-app',
+      ],
+    },
+
     'logs',
     'dashboards',
     'saved-searches',
