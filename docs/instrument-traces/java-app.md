@@ -51,7 +51,7 @@ The application gets started on the same server - localhost:8090. Make sure that
 
 You can search traces:
 
-![search-traces](/tutorials/search-traces.png)
+![search-traces](/tutorials/search-traces-java.png)
 
 You can view red-metrics traces:
 
