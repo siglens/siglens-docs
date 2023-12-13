@@ -8,199 +8,22 @@ In this tutorial we will go through the steps to auto instrument a Go app to sen
 
 ### Set up for Go application
 
-Given below are the instructions for setting up a sample Golang application which for a bookstore.
-
-- Create a folder in which you will setup your go application
-- Inside that create a folder named `models` and `controllers`. Models folder will contain two files named `book.go` and `setup.go` and controllers will contain file `books.go`
-- Create a `main.go` file
-
-Note:
-- Initialize the Go Module with a Local Path:
-```
-go mod init mylocalmodule
-
-// This will create a go.mod file
-```
-
-- You will have to run `go mod tidy` to download all the packges which are there in the code and populate the `go.sum` file
-
-`book.go` will have the structure of the book which represents fields in the database table.
-```
-// Book.go
-
-package models
-
-type Book struct {
-	ID     uint   `json:"id" gorm:"primary_key"`
-	Title  string `json:"title"`
-	Author string `json:"author"`
-}
-```
-`setup.go` will contain the code for connecting to the database.
-```
-// Setup.go
-
-package models
-
-import (
-	"github.com/uptrace/opentelemetry-go-extra/otelgorm"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
-)
-
-var DB *gorm.DB
-
-func ConnectDatabase() {
-	database, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
-
-	if err != nil {
-		panic("Failed to connect to database!")
-	}
-
-	database.AutoMigrate(&Book{})
-
-	DB = database
-	if err := DB.Use(otelgorm.NewPlugin()); err != nil {
-		panic(err)
-	}
-}
-```
-`books.go` in controllers will have all the CRUD operations.
+Given below are the instructions for setting up a sample Golang application for a bookstore:
 
 ```
-// Books.go
+# Clone the bookstore repository from GitHub
+git clone https://github.com/siglens/bookstore-app
 
-package controllers
+# Change into the cloned directory
+cd bookstore-app
 
-import (
-	"net/http"
-	"mylocalmodule/models"
-	"github.com/gin-gonic/gin"
-)
-
-type CreateBookInput struct {
-	Title  string `json:"title" binding:"required"`
-	Author string `json:"author" binding:"required"`
-}
-
-type UpdateBookInput struct {
-	Title  string `json:"title"`
-	Author string `json:"author"`
-}
-
-// GET /books
-// Find all books
-func FindBooks(c *gin.Context) {
-	var books []models.Book
-	models.DB.WithContext(c.Request.Context()).Find(&books)
-	c.JSON(http.StatusOK, gin.H{"data": books})
-}
-
-// GET /books/:id
-// Find a book
-func FindBook(c *gin.Context) {
-	// Get model if exist
-	var book models.Book
-	if err := models.DB.WithContext(c.Request.Context()).Where("id = ?", c.Param("id")).First(&book).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"data": book})
-}
-
-// POST /books
-// Create new book
-func CreateBook(c *gin.Context) {
-	// Validate input
-	var input CreateBookInput
-	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	// Create book
-	book := models.Book{Title: input.Title, Author: input.Author}
-	models.DB.WithContext(c.Request.Context()).Create(&book)
-
-	c.JSON(http.StatusOK, gin.H{"data": book})
-}
-
-// PATCH /books/:id
-// Update a book
-func UpdateBook(c *gin.Context) {
-	// Get model if exist
-	var book models.Book
-	if err := models.DB.WithContext(c.Request.Context()).Where("id = ?", c.Param("id")).First(&book).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-		return
-	}
-
-	// Validate input
-	var input UpdateBookInput
-	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	models.DB.WithContext(c.Request.Context()).Model(&book).Updates(input)
-
-	c.JSON(http.StatusOK, gin.H{"data": book})
-}
-
-// DELETE /books/:id
-// Delete a book
-func DeleteBook(c *gin.Context) {
-	// Get model if exist
-	var book models.Book
-	if err := models.DB.WithContext(c.Request.Context()).Where("id = ?", c.Param("id")).First(&book).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-		return
-	}
-
-	models.DB.Delete(&book)
-
-	c.JSON(http.StatusOK, gin.H{"data": true})
-}
-```
-`main.go` will contain the following code to run our Go app.
-```
-// main.go
-
-package main
-import (
-	"mylocalmodule/controllers"
-	"mylocalmodule/models"
-	"github.com/gin-gonic/gin"
-)
-
-func main() {
-
-	r := gin.Default()
-	// Connect to database
-	models.ConnectDatabase()
-
-	// Routes
-	r.GET("/books", controllers.FindBooks)
-	r.GET("/books/:id", controllers.FindBook)
-	r.POST("/books", controllers.CreateBook)
-	r.PATCH("/books/:id", controllers.UpdateBook)
-	r.DELETE("/books/:id", controllers.DeleteBook)
-
-	// Run the server
-	r.Run(":8090")
-}
-```
-Run the application with the following command:
-
-```
+# Run the application with the following command:
 go run main.go
 ```
 This runs the application at port 8090. Try accessing API at http://localhost:8090/books .
 If you see an empty array as the result, it means your application is working:
 
 ![go-app](/tutorials/go-app.png)
-
 
 Below are the apis available:
 ```
@@ -236,8 +59,8 @@ import (
 	"log"
 	"os"
 
-	"mylocalmodule/controllers"
-	"mylocalmodule/models"
+	"github.com/siglens/bookstore-app/controllers"
+	"github.com/siglens/bookstore-app/models"
 
 	"github.com/gin-gonic/gin"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
@@ -309,9 +132,10 @@ func main() {
 	r.Run(":8090")
 }
 ```
+Note:
+- You will have to run `go mod tidy` to download all the packges which are there in the code and populate the `go.sum` file
 
-
-The endpoint for sending the traces to Sigens is `http://localhost:4318/otlp/v1/traces` which is set in the code using `otlptracehttp.WithURLPath("/otlp/v1/traces")`
+The endpoint for sending the traces to SigLens is `http://localhost:4318/otlp/v1/traces` which is set in the code using `otlptracehttp.WithURLPath("/otlp/v1/traces")`
 . Now, set the environment variable and run the app:
 
 ```
