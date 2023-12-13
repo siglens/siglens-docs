@@ -92,7 +92,7 @@ $ helm repo add siglens-repo https://siglens.github.io/charts
 ```
 You should see a message confirming that "siglens-repo" has been added to your repositories.
 
-#### Step 6: Updating Helm Repositories</h2>
+#### Step 6: Updating Helm Repositories
 Update all Helm repositories to ensure you have access to the latest chart versions:
 
 ```
