@@ -1,4 +1,6 @@
-# Auto-instrument sample Golang app for traces
+# Go App
+
+### Auto-instrument sample Golang app for traces
 
 In this tutorial we will go through the steps to auto instrument a Go app to send traces to Siglens.
 
@@ -25,7 +27,7 @@ If you see an empty array as the result, it means your application is working:
 
 ![go-app](/tutorials/go-app.png)
 
-Below are the apis available:
+Below are the APIs available:
 ```
 GET    /books                    
 GET    /books/:id               
@@ -38,39 +40,37 @@ DELETE /books/:id
 Import the following dependencies related to OpenTelemetry exporter and SDK in `main.go` file:
 ```
 import (
-    .....
+    // other imports...
 
     "go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
-	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
-
-	"go.opentelemetry.io/otel/sdk/resource"
-	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+    "go.opentelemetry.io/otel"
+    "go.opentelemetry.io/otel/attribute"
+    "go.opentelemetry.io/otel/exporters/otlp/otlptrace"
+    "go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
+    "go.opentelemetry.io/otel/sdk/resource"
+    sdktrace "go.opentelemetry.io/otel/sdk/trace"
 )
+
 ```
 To configure application to send data we have to create a function to initialise Opentelemetry. Update the code in `main.go` file by adding the code given below:
 
 ```
 package main
+
 import (
 	"context"
-	"log"
-	"os"
-
+	"github.com/gin-gonic/gin"
 	"github.com/siglens/bookstore-app/controllers"
 	"github.com/siglens/bookstore-app/models"
-
-	"github.com/gin-gonic/gin"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
-
 	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+	"log"
+	"os"
 )
 
 var (
@@ -83,7 +83,7 @@ func initTracer() func(context.Context) error {
 		context.Background(),
 		otlptracehttp.NewClient(
 			otlptracehttp.WithURLPath("/otlp/v1/traces"),
-			otlptracehttp.WithInsecure(), 
+			otlptracehttp.WithInsecure(),
 		),
 	)
 
