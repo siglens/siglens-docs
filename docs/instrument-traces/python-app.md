@@ -64,7 +64,9 @@ pip install opentelemetry-exporter-otlp-proto-http
 ```
 Run the following command in terminal to enable auto instrumentation of the application
 ```
-OTEL_TRACES_EXPORTER=otlp OTEL_METRICS_EXPORTER=none OTEL_EXPORTER_OTLP_TRACES_ENDPOINT="http://localhost:4318/otlp/v1/traces" OTEL_EXPORTER_OTLP_PROTOCOL="http/protobuf" OTEL_RESOURCE_ATTRIBUTES=service.name=python-app opentelemetry-instrument python3 server.py
+OTEL_TRACES_EXPORTER=otlp OTEL_METRICS_EXPORTER=none 
+OTEL_EXPORTER_OTLP_TRACES_ENDPOINT="http://localhost:4318/otlp/v1/traces" 
+OTEL_EXPORTER_OTLP_PROTOCOL="http/protobuf" OTEL_RESOURCE_ATTRIBUTES=service.name=python-app opentelemetry-instrument python3 server.py
 ```
 The application gets started on `http://localhost:81`. Refresh the page to trigger our app to generate and emit a trace of that transaction (repeat that a few times to generate sample traces).
 
