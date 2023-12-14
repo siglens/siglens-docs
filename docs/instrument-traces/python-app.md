@@ -1,4 +1,6 @@
-# Auto-instrument sample Python app for traces
+# Python App
+
+### Auto-instrument sample Python app for traces
 
 In this tutorial we will go through the steps to auto instrument a Python app to send traces to Siglens.
 
