@@ -1,4 +1,6 @@
-# Auto-instrument sample java app for traces
+# Java App
+
+### Auto-instrument sample java app for traces
 
 In this tutorial we will go through the steps to auto instrument a java app to send traces to Siglens.
 
