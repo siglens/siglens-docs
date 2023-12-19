@@ -50,11 +50,12 @@ const sidebars = {
         type: 'generated-index',
       },
       items: [
+        'instrument-traces/go-app',
         'instrument-traces/java-app',
-        'instrument-traces/python-app'
+        'instrument-traces/python-app',
+        
       ],
     },
-    
     'logs',
     'dashboards',
     'saved-searches',
