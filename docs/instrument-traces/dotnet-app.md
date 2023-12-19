@@ -7,10 +7,9 @@ In this tutorial we will go through the steps to auto instrument a .Net app to s
 ### Prerequisites
 - Siglens instance should be running on localhost with ingest port-4318. To do so you need to change the ingest port of Siglens to `4318` in `server.yaml`
 - .Net app (refer the documentation below if you don't have the setup for .Net app)
+- To begin with the setup of .NET app you must have .NET SDK installed locally. You can download it from [here](https://dotnet.microsoft.com/en-us/download/dotnet)
 
 ### Set up for .Net application
-
-Note: You need to have .NET SDK installed
 
 To begin, set up an environment in a new directory called dotnet-app. Within that directory, execute following command:
 ```
