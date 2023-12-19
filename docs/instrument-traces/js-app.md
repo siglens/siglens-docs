@@ -7,13 +7,14 @@ In this tutorial we will go through the steps to auto instrument a Javascript ap
 ### Prerequisites
 - Siglens instance should be running on localhost with ingest port-4318. To do so you need to change the ingest port of Siglens to `4318` in `server.yaml`
 - Javascript app (refer the documentation below if you don't have the setup for javascript app)
+- To begin with the setup of Javascript app you must have Node.js installed locally. You can download it from [here](https://nodejs.org/en/download/)
 
 ### Set up for Javascript application
 
 Given below are the instructions for setting up a sample Javascript application:
 
 Note:                                                                                
-To begin with the setup you must have Node.js installed locally. To check if node is installed you can run the following command:
+To check if node is installed you can run the following command:
 ```
 node -v
 ```
