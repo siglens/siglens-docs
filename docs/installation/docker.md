@@ -15,4 +15,4 @@ chmod +x install_with_docker.sh
 ./install_with_docker.sh
 ```
 
-Siglens UI can be accessed here: http://localhost:80
+Siglens UI can be accessed here: http://localhost:5122
