@@ -53,6 +53,7 @@ const sidebars = {
         'instrument-traces/go-app',
         'instrument-traces/java-app',
         'instrument-traces/python-app',
+        'instrument-traces/dotnet-app',
         'instrument-traces/js-app',
         
       ],
