@@ -75,8 +75,8 @@ INFO[2023-12-06 18:10:38] Extracting config from configFile: server.yaml
 INFO[2023-12-06 18:10:38] Defaulting to 2160hrs (90 days) of retention...
 INFO[2023-12-06 18:10:38] ----- Siglens server type SingleNode starting up -----
 INFO[2023-12-06 18:10:38] ----- Siglens Ingestion server starting on 0.0.0.0:8081 -----
-INFO[2023-12-06 18:10:38] ----- Siglens Query server starting on 0.0.0.0:80 -----
-INFO[2023-12-06 18:10:38] ----- Siglens UI starting on 0.0.0.0:80 -----
+INFO[2023-12-06 18:10:38] ----- Siglens Query server starting on 0.0.0.0:5122 -----
+INFO[2023-12-06 18:10:38] ----- Siglens UI starting on 0.0.0.0:5122 -----
 ```
 
 ### Setup PQS
