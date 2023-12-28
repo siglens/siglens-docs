@@ -23,24 +23,23 @@ const sidebars = {
       },
       items: [
         'installation/git',
-        'installation/binary',
         'installation/docker',
         'installation/helm',
       ],
     },
     {
       type: 'category',
-      label: 'Ingestion',
+      label: 'Log Ingestion',
       link: {
         type: 'generated-index',
       },
       items: [
-        'ingestion/fluentd-fluentbit',
-        'ingestion/vector',
-        'ingestion/splunk-hec',
-        'ingestion/open-telemetry',
-        'ingestion/elastic-search',
-        'ingestion/loki'
+        'log-ingestion/fluentd-fluentbit',
+        'log-ingestion/vector',
+        'log-ingestion/splunk-hec',
+        'log-ingestion/open-telemetry',
+        'log-ingestion/elastic-search',
+        'log-ingestion/loki',
       ],
     },
     {
@@ -58,7 +57,8 @@ const sidebars = {
         
       ],
     },
-    'logs',
+    'searching-logs',
+    'log-query-builder',
     'dashboards',
     'saved-searches',
     'alerts',
@@ -67,6 +67,7 @@ const sidebars = {
     'retention',
     'contribution-guidelines',
     'community',
+    
   ],
   
 };

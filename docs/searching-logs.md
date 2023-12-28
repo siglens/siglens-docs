@@ -1,6 +1,8 @@
-# Logs
+# Searching Logs
+import ReactPlayer from 'react-player'
 
-### 🔍 Log Search Interface Overview :[Video](../static/img/query-overview.mp4) 👀
+### 🔍 Log Search Interface Overview :
+<ReactPlayer playing controls url='/img/logs-search-video.mp4' autoPlay loop muted />
 
 ### ⭐ Steps for Using the Logs Search ⭐
 
@@ -10,19 +12,19 @@
       ![Query Search](../static/img/icon-query.png)
 
 2. **Choose Query Type:**
-   - Select which type of query you want to search: SQL,Splunk QL, LogQL.
+   - Select which type of query you want to search: SQL, Splunk QL, LogQL.
      
-      ![Query Type](../static/img/query-type.png)
+      ![log-query Type](../static/img/log-query-type.png)
 
 3. **Select Index:**
    - Choose an index from the index dropdown.
 
-      ![Index](../static/img/index-query.png)
+      ![log-index](../static/img/log-index.png)
 
 4. **Set Time Range:**
    - Select the time range for the query.
 
-      ![Time Range](../static/img/time-query.png)
+      ![log-time-range](../static/img/log-time.png)
 
 
       ### ⭐ SQL Query Examples ⭐
@@ -90,14 +92,3 @@
       {gender="female",city="Fresno"} | logfmt city_life="city", single_gender="gender", host
       ```
       ![logql-5](../static/img/logql-5.png)
-
-5. **Use Query Builder:**
-   - Select from the search dropdown
-
-      ![Query Search](../static/img/qb-search.png)
-
-      ![Query Builder Query](../static/img/query-qb.png)
-
-6. **Query Builder Demo:**
-   - Overview of the query builder
-   [Video](../static/img/query-builder-search.mp4) 👀
