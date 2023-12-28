@@ -7,10 +7,6 @@ cd siglens
 go run cmd/siglens/main.go --config server.yaml
 ```
 The server.yaml config file sets up siglens to run on ports 5122 and 8081.
-If you're running on linux, you'll need to either run siglens with
-```
-sudo go run cmd/siglens/main.go --config server.yaml
-```
 
 ### Windows
 We don't support running on Windows.
