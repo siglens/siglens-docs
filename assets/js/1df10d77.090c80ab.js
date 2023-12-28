@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunksiglens_docs=self.webpackChunksiglens_docs||[]).push([[287],{4809:e=>{e.exports=JSON.parse('{"title":"Ingestion","slug":"/category/ingestion","permalink":"/category/ingestion","navigation":{"previous":{"title":"Helm","permalink":"/installation/helm"},"next":{"title":"Fluentd/Fluentbit","permalink":"/ingestion/fluentd-fluentbit"}}}')}}]);

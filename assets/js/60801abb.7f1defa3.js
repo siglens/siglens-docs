@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunksiglens_docs=self.webpackChunksiglens_docs||[]).push([[789],{519:t=>{t.exports=JSON.parse('{"title":"Installation","slug":"/category/installation","permalink":"/category/installation","navigation":{"previous":{"title":"Introduction","permalink":"/"},"next":{"title":"Git","permalink":"/installation/git"}}}')}}]);
