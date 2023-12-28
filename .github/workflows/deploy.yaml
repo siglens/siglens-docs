@@ -17,10 +17,9 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install
-      
-      -name: Install react player
-        run: npm install react-player
+        run: |
+          npm install
+          npm install react-player
 
       - name: Build site
         run: npm run build
@@ -29,4 +28,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build 
+          publish_dir: ./build
