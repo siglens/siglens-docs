@@ -23,7 +23,6 @@ const sidebars = {
       },
       items: [
         'installation/git',
-        'installation/binary',
         'installation/docker',
         'installation/helm',
       ],
@@ -41,7 +40,6 @@ const sidebars = {
         'log-ingestion/open-telemetry',
         'log-ingestion/elastic-search',
         'log-ingestion/loki',
-        'log-ingestion/syslog'
       ],
     },
     {
