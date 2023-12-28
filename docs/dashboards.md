@@ -1,6 +1,9 @@
 # Dashboards
+import ReactPlayer from 'react-player'
 
-### 📈 Create Panel Demo : [Video](../static/img/dashboard-preview.mp4) 👀
+### 📈 Create Panel Demo : [Video](../static/img/dashboard-preview.mp4)
+<ReactPlayer playing controls url='/img/dashboard-preview.mp4' autoPlay loop muted />
+
 
 ### ⭐ Create Panel for Spunk QL Query ⭐
 1. **Add and Edit Panel:**
@@ -108,7 +111,7 @@ Note: You need to ingest traces data to get the traces.
 ### ⭐ Adding Panel to Dashboard ⭐
 
 Demonstration for adding a panel
-[Video](../static/img/add-panel.mp4)👀
+<ReactPlayer playing controls url='/img/add-panel.mp4' autoPlay loop muted />
 
 1. **Add Panel to Dashboard:**
    - Enter a query in the search bar and select the option next to the downloads option to add the panel to the dashboard.

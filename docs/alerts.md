@@ -1,7 +1,9 @@
 
 #  Alerts 
+import ReactPlayer from 'react-player'
 
-### 📌 Accessing Alerts and Contact Points : [Video](../static/img/alert-overview.mp4)👀
+### 📌 Accessing Alerts and Contact Points :
+<ReactPlayer playing controls url='/img/alert-overview.mp4' autoPlay loop muted />
 
 ### ⭐ Creating Alert Rules ⭐
 

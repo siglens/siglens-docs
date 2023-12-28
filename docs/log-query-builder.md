@@ -1,6 +1,8 @@
 # Log Query Builder
+import ReactPlayer from 'react-player'
 
-### 🔍 Query Builder Interface Overview :[Video](../static/img/query-builder-video.mp4) 👀
+### 🔍 Query Builder Interface Overview :
+<ReactPlayer playing controls url='/img/query-builder-video.mp4' autoPlay loop muted />
 
 1.  **Choose Query Type:**
 

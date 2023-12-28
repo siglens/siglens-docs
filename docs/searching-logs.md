@@ -1,6 +1,8 @@
 # Searching Logs
+import ReactPlayer from 'react-player'
 
-### 🔍 Log Search Interface Overview :[Video](../static/img/logs-search-video.mp4) 👀
+### 🔍 Log Search Interface Overview :
+<ReactPlayer playing controls url='/img/logs-search-video.mp4' autoPlay loop muted />
 
 ### ⭐ Steps for Using the Logs Search ⭐
 

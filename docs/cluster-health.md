@@ -1,10 +1,13 @@
 # Cluster Health
+import ReactPlayer from 'react-player'
 
 ### Cluster Stats Dashboard 📊
 
 Welcome to the Cluster Stats Dashboard. To view the cluster stats you have to ingest the data.
 
-You can ingest test data: [Video](../static/img/test-data.mp4)👀
+You can ingest test data:
+<ReactPlayer playing controls url='/img/test-data.mp4' autoPlay loop muted />
+
 
 ### ⭐ Features Overview ⭐
 
