@@ -2,7 +2,15 @@
 import ReactPlayer from 'react-player'
 
 ### 🔍 Log Search Interface Overview :
-<ReactPlayer playing controls url='/img/logs-search-video.mp4' autoPlay loop muted />
+<div class="responsive-iframe">
+  <iframe
+    src="https://www.youtube.com/embed/ROa2owJPOJo?si=IMJJuZmvDxEwCAov"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</div>
 
 ### ⭐ Steps for Using the Logs Search ⭐
 
