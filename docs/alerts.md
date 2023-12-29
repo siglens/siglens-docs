@@ -3,7 +3,15 @@
 import ReactPlayer from 'react-player'
 
 ### 📌 Accessing Alerts and Contact Points :
-<ReactPlayer playing controls url='/img/alert-overview.mp4' autoPlay loop muted />
+<div class="responsive-iframe">
+  <iframe
+    src="https://www.youtube.com/embed/BLWElYEzhNE?si=sLu7GiAELgvy9yCf"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</div>
 
 ### ⭐ Creating Alert Rules ⭐
 
