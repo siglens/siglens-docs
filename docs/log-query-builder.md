@@ -2,7 +2,15 @@
 import ReactPlayer from 'react-player'
 
 ### 🔍 Query Builder Interface Overview :
-<ReactPlayer playing controls url='/img/query-builder-video.mp4' autoPlay loop muted />
+<div class="responsive-iframe">
+  <iframe
+    src="https://www.youtube.com/embed/8q6dY6pqrSs?si=SqWj-A9nxnG_yXyV"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</div>
 
 1.  **Choose Query Type:**
 

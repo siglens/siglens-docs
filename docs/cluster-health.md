@@ -6,7 +6,15 @@ import ReactPlayer from 'react-player'
 Welcome to the Cluster Stats Dashboard. To view the cluster stats you have to ingest the data.
 
 You can ingest test data:
-<ReactPlayer playing controls url='/img/test-data.mp4' autoPlay loop muted />
+<div class="responsive-iframe">
+  <iframe
+    src="https://www.youtube.com/embed/8-QGkxonm7s?si=-PvPICN_u5-NFsC1"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</div>
 
 
 ### ⭐ Features Overview ⭐
