@@ -1,18 +1,29 @@
 # Helm 
 
-## Install SigLens locally using Minikube, Helm
- In this tutorial, we will walk you through the process of installing SigLens locally using Minikube and Helm. This setup will enable you to explore the powerful features of SigLens in your local Kubernetes environment. Before we dive in, let's ensure you have all the necessary tools installed.
 
-### Prerequisites
+
+
+
+```
+$ helm repo add siglens-repo https://siglens.github.io/charts
+```
+
+
+```
+$ helm repo update
+```
+If you want to install using <strong>Minikube</strong>, follow the steps below:
+#### Prerequisites
 Before we start the installation, make sure you have the following tools installed on your system:
 - [Kubernetes command-line interface (CLI)](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [Helm CLI](https://helm.sh/docs/helm/)
 - [Minikube](https://minikube.sigs.k8s.io/)
 - Docker
 
-### Installation
 #### Step 1: Installing Minikube
 Minikube is a command-line tool that helps you set up a single-node Kubernetes cluster within a virtual machine on your local system. You can install Minikube using a package manager or by following the official installation guide. 
+
+
 #### Step 2: Installing kubectl and Helm
 
 Before we proceed, let's ensure you have both KubeCTL and HelmCLI installed. 
@@ -50,6 +61,8 @@ $ brew install kubernetes-cli
 ```
 $ brew install helm
 ```
+
+
 #### Step 4: Starting Minikube
 
 Now that we have Minikube, kubectl, and Helm installed, let's start our Minikube cluster. In your terminal, enter the following command:
@@ -83,27 +96,8 @@ kubeconfig: Configured
 ```
 
 You should see a status indicating that the cluster is running.
-#### Step 5: Adding the SigLens Helm Repository
 
-Before installing SigLens, you need to add the SigLens Helm repository. Execute the following command:
-
-```
-$ helm repo add siglens-repo https://siglens.github.io/charts
-```
-You should see a message confirming that "siglens-repo" has been added to your repositories.
-
-#### Step 6: Updating Helm Repositories
-Update all Helm repositories to ensure you have access to the latest chart versions:
-
-```
-$ helm repo update
-Hang tight while we grab the latest from your chart repositories...
-...Successfully got an update from the "siglens-helm" chart repository
-...Successfully got an update from the "siglens-repo" chart repository
-Update Complete. ⎈Happy Helming!⎈
-```
-
-#### Step 7: Installing SigLens
+#### Step 5: Installing SigLens
 With everything set up, it's time to install SigLens. Use Helm to install the latest version of the SigLens Helm chart:
 ```
 $ helm install siglens siglens-repo/siglens
@@ -125,7 +119,7 @@ To run tests, try:
   $ helm test siglens
 ...
 ```
-#### Step 8: Accessing SigLens
+#### Step 6: Accessing SigLens
 SigLens is now installed in your local Minikube cluster. To access the SigLens UI, follow these steps:
 Forward local port 8081 to the ingest service using: 
  ```
@@ -139,7 +133,7 @@ Forward local port 8000 to the UI / query service using:
 ```
 Open your web browser and navigate to: http://localhost:8000 to access the SigLens UI.
 
-#### Step 9: Clean Up
+#### Step 7: Clean Up
 Once you've finished working with SigLens, you can stop your Minikube cluster to free up resources:
 ```
 $ minikube stop
