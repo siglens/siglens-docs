@@ -1,6 +1,6 @@
 # Loki
 
-Loki is a log aggregation system designed to store and query logs from all your applications and infrastructure.
+Smoothly transition from your current Loki installation to SigLens with ease. SigLens seamlessly accommodates log ingestion in Loki format, making it a straightforward and hassle-free substitute for Loki.
 
 To learn more about Loki, check out the [Loki website](https://grafana.com/oss/loki/)
 
