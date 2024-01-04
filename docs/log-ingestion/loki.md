@@ -4,9 +4,9 @@ Smoothly transition from your current Loki installation to SigLens with ease. Si
 
 To learn more about Loki, check out the [Loki website](https://grafana.com/oss/loki/)
 
-## Ingesting logs from Loki:
+## Ingesting logs in Loki Format:
 
-To Ingest logs from Loki, we are going to use the **Promtail** tool.
+To Ingest logs in Loki format, we are going to use the **Promtail** tool.
 
 Download the correct binary for Promtail and unzip it in your local system.
 
