@@ -2,14 +2,14 @@
 
 We are going to clone the SigLens repository and run it locally. Please ensure that you have [git](https://git-scm.com/) set up on your system.
 
-### Windows Support
+## Windows Support
 Currently, we do not support running natively on Windows, but there are a couple of workarounds.
 
 1. You can create a Linux Virtual Machine using [VirtualBox](https://www.virtualbox.org/) or QEMU(https://www.qemu.org/)
 2. You can use [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install) to emulate a Linux environment within your Windows system
 3. You can run SigLens as a Docker container. Please refer to the page about Docker installation.
 
-### Installing Golang
+## Installing Golang
 
 In order to run SigLens, please make sure that you have [Golang](https://go.dev/) installed and configured.
 
@@ -33,7 +33,7 @@ If you are on **MacOS**, run the below command to install Go. Make sure you have
 brew update&& brew install golang
 ```
 
-### Cloning and Running SigLens
+## Cloning and Running SigLens
 
 As mentioned earlier, we do not support running on Windows, but you can use one of the workarounds.
 
