@@ -3,7 +3,7 @@ slug : /
 ---
 # Introduction
 
-## SigLens is the fastest log management platform
+## SigLens is an open source alternative to Splunk/DataDog
 <strong>100x</strong> more efficient than Splunk and helps you reduce your observability bill by <strong>90%</strong>
 
 
