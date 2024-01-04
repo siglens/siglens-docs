@@ -39,27 +39,27 @@ import ReactPlayer from 'react-player'
       ![alert-4](../static/img/alert-4.png)
 
 4. **Save and Verify:**
-   - Save your alert rule. If the condition for alert rule is satisfied, the alert status will be set to 'firing'.
+   - Save your alert rule. If the condition for the alert rule is satisfied, the alert status will be set to 'firing'.
 
       ![alert-5](../static/img/alert-5.png)
 
 5. **Notification Confirmation:**
-   - For Webhook notifications, confirm message received on the webhook site.
+   - For Webhook notifications, confirm the message received on the Webhook site.
 
       ![alert-7](../static/img/alert-7.png)
 
-   - To receive Slack notifications, you need to provide channel id and slack token. To get channel id and slack token you can refer this documentation -> https://api.slack.com/tutorials/tracks/getting-a-token
+   - To receive Slack notifications, you need to provide a channel id and Slack token. To get channel ID and slack token you can refer to this documentation -> https://api.slack.com/tutorials/tracks/getting-a-token
 
       ![alert-6](../static/img/alert-6.png)
 
-   - Check the designated Slack channel for notification.
+   - Check the designated Slack channel for notifications.
 
       ![alert-8](../static/img/alert-8.png)
 
 ### ✏️ Editing and Deleting
 
 1. **Editing Alert Rules:**
-   - To edit an alert rule, click on alert rule name or press the edit button.
+   - To edit an alert rule, click on the alert rule name or press the edit button.
 
       ![alert-9](../static/img/alert-9.png)
 
@@ -70,7 +70,7 @@ import ReactPlayer from 'react-player'
       ![alert-11](../static/img/alert-11.png)
 
 2. **Deleting Alert Rules:**
-   - To delete an alert rule, press delete button for the alert to be deleted.
+   - To delete an alert rule, press the delete button for the alert to be deleted.
 
       ![alert-12](../static/img/alert-12.png)
 
@@ -78,7 +78,7 @@ import ReactPlayer from 'react-player'
 
 
 3. **Managing Contact Points:**
-   -  To delete a contact point, ensure it is not linked to any active alert rules. You can not delete contact point associated with any of the alert rules.
+   -  To delete a contact point, ensure it is not linked to any active alert rules. You can not delete contact points associated with any of the alert rules.
 
       ![alert-14](../static/img/alert-14.png)
 

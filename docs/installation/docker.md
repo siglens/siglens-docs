@@ -1,10 +1,10 @@
 # Docker
 
-This page will show you how you can run SigLens as a Docker Container. We have created a installation script which will simplify the process.
+This page will show you how you can run SigLens as a Docker Container. We have created an installation script which will simplify the process.
 
 ## Installing Docker
 
-If you are running on Ubuntu or a Red Hat based Linux distribution, you can skip this step. We have created a script that will automatically install and set up Docker for you.
+If you are running on Ubuntu or a Red Hat-based Linux distribution, you can skip this step. We have created a script that will automatically install and set up Docker for you.
 
 If you are running on any other Linux Distribution or MacOS, you will need to set up [Docker](https://www.docker.com/) manually
 
@@ -35,7 +35,7 @@ sudo systemctl start docker
 
 ### MacOS
 
-Please refer to the [offical Docker documentation](https://docs.docker.com/desktop/install/mac-install/) for installing Docker for MacOS.
+Please refer to the [official Docker documentation](https://docs.docker.com/desktop/install/mac-install/) for installing Docker for MacOS.
 
 It is recommended to download and install Docker using the `Docker.dmg` installer
 
@@ -45,7 +45,7 @@ We have created a script that you can use to easily run SigLens using Docker.
 
 Make sure you have docker installed and active before running the script.
 
-**Note for Windows Users**: The below script can work for Windows users as well but please ensure that you run it in a [WSL enviornment](https://learn.microsoft.com/en-us/windows/wsl/install) and have Docker installed and running
+**Note for Windows Users**: The below script can work for Windows users as well but please ensure that you run it in a [WSL environment](https://learn.microsoft.com/en-us/windows/wsl/install) and have Docker installed and running
 
 ```
 curl -L https://siglens.com/install.sh | sh

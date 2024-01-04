@@ -1,14 +1,14 @@
 # Java App
 
-### Auto-instrument sample java app for traces
+### Auto-instrument sample Java app for traces
 
-In this tutorial we will go through the steps to auto instrument a java app to send traces to Siglens.
+In this tutorial, we will go through the steps to auto-instrument a Java app to send traces to Siglens.
 
 ### Prerequisites
 - Siglens instance should be running on localhost with ingest port-4318. To do so you need to change the ingest port of Siglens to `4318` in `server.yaml`
-- Java app (refer the documentation below if you don't have the setup for java app)
+- Java app (refer to the documentation below if you don't have the setup for the Java app)
 
-### Set up java application
+### Set up Java application
 
 Given below are the commands for setting up a Java application.
 
@@ -19,7 +19,7 @@ git clone https://github.com/spring-projects/spring-petclinic
 # Change into the cloned directory
 cd spring-petclinic
 
-# Comment out the code in docker-compose.yml file
+# Comment out the code in the docker-compose.yml file
 
 # Use Maven Wrapper to package the Spring PetClinic application
 ./mvnw package
@@ -31,7 +31,7 @@ You can access the running app at localhost:8090
 
 ![java-app](/tutorials/java-app.png)
 
-### Auto instrumentation setup for java app
+### Auto instrumentation setup for Java app
 
 To enable automatic instrumentation of the application, the Jar agent must be activated. This helps in generating traces from the java app and these traces are then sent to Siglens for visualization and analysis.
 
@@ -40,7 +40,7 @@ To download the Java Jar agent, run the below command in your terminal. The JAR 
 curl -L -O https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
 ```
 
-Run the following command in terminal to enable auto instrumentation of the application
+Run the following command in the terminal to enable auto-instrumentation of the application
 ```
 OTEL_TRACES_EXPORTER=otlp OTEL_METRICS_EXPORTER=none OTEL_EXPORTER_OTLP_TRACES_ENDPOINT="http://localhost:4318/otlp/v1/traces" OTEL_EXPORTER_OTLP_PROTOCOL="http/protobuf" OTEL_RESOURCE_ATTRIBUTES=service.name=spring-petclinic java -javaagent:/path/opentelemetry-javaagent.jar -jar target/*.jar
 ```

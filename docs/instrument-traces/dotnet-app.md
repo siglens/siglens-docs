@@ -2,20 +2,20 @@
 
 ### Auto-instrument sample Dotnet App for traces
 
-In this tutorial we will go through the steps to auto instrument a .Net app to send traces to Siglens.
+In this tutorial, we will go through the steps to auto-instrument a .Net app to send traces to Siglens.
 
 ### Prerequisites
 - Siglens instance should be running on localhost with ingest port-4318. To do so you need to change the ingest port of Siglens to `4318` in `server.yaml`
-- .Net app (refer the documentation below if you don't have the setup for .Net app)
-- To begin with the setup of .NET app you must have .NET SDK installed locally. You can download it from [here](https://dotnet.microsoft.com/en-us/download/dotnet)
+- .Net app (refer to the documentation below if you don't have the setup for the .Net app)
+- To begin with the setup of the .NET app you must have .NET SDK installed locally. You can download it from [here](https://dotnet.microsoft.com/en-us/download/dotnet)
 
 ### Set up for .Net application
 
-To begin, set up an environment in a new directory called dotnet-app. Within that directory, execute following command:
+To begin, set up an environment in a new directory called dotnet-app. Within that directory, execute the following command:
 ```
 dotnet new web
 ```
-You will get a sample code in `Program.cs` file
+You will get a sample code in the `Program.cs` file
 ```
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
@@ -30,7 +30,7 @@ Build and run the application with the following command:
 dotnet build
 dotnet run
 ```
-In the Properties subdirectory, inside `launchSettings.json` you will get the url for the application:
+In the Properties subdirectory, inside `launchSettings.json` you will get the URL for the application:
 ```
 "profiles": {
     "http": {
@@ -44,11 +44,11 @@ In the Properties subdirectory, inside `launchSettings.json` you will get the ur
     },
 }
 ```
-You can see `Hello World!` message when you access the url `http://localhost:5234`:
+You can see the `Hello World!` message when you access the URL `http://localhost:5234`:
 
 ![dotnet](/tutorials/dotnet-app.png)
 
-### Auto instrumentation setup for .NET app
+### Auto instrumentation setup for the .NET app
 
 To automatically instrument the application with OpenTelemetry .NET we use the  `OpenTelemetry.AutoInstrumentation` package.
 
