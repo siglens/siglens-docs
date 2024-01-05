@@ -14,8 +14,8 @@ To load mock data into SigLens use the following commands:
 
 ```bash
 curl -L https://github.com/sigscalr/ss-pub-data/releases/download/v1.0.0/prod-data-100mb.json.tar.gz -o prod-data-100mb.json.tar.gz 
-tar -xf prod-data-100mb.json.tar.gz
-curl http://localhost:8081/elastic/_bulk -i  --data-binary "@prod-data-0.json"
+tar -xOf prod-data-100mb.json.tar.gz >> prod-data-100mb.json
+curl http://localhost:8081/elastic/_bulk -i  --data-binary "@prod-data-100mb.json"
 ```
 
 If you want to experiment with larger volumes of data, you can use these files.
