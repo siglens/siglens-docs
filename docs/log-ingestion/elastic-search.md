@@ -18,7 +18,9 @@ tar -xf prod-data-100mb.json.tar.gz
 curl http://localhost:8081/elastic/_bulk -i  --data-binary "@prod-data-0.json"
 ```
 
-To load larger volumes of data, use:
+If you want to experiment with larger volumes of data, you can use these files.
+
+The below files have sample data of 1GB and 4GB respecitvely. 
 ```
-curl -L https://github.com/sigscalr/ss-pub-data/releases/download/v1.0.0/prod-data-1gb.json.tar.gz -o prod-data-1gb.json
-curl -L https://github.com/sigscalr/ss-pub-data/releases/download/v1.0.0/prod-data-4gb.json.tar.gz -o prod-data-4gb.json
+curl -L https://github.com/sigscalr/ss-pub-data/releases/download/v1.0.0/prod-data-1gb.json.tar.gz -o prod-data-1gb.json.tar.gz
+curl -L https://github.com/sigscalr/ss-pub-data/releases/download/v1.0.0/prod-data-4gb.json.tar.gz -o prod-data-4gb.json.tar.gz
