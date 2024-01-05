@@ -2,12 +2,12 @@
 
 ### Auto-instrument sample Javascript app for traces
 
-In this tutorial we will go through the steps to auto instrument a Javascript app to send traces to Siglens.
+In this tutorial, we will go through the steps to auto-instrument a Javascript app to send traces to Siglens.
 
 ### Prerequisites
 - Siglens instance should be running on localhost with ingest port-4318. To do so you need to change the ingest port of Siglens to `4318` in `server.yaml`
-- Javascript app (refer the documentation below if you don't have the setup for javascript app)
-- To begin with the setup of Javascript app you must have Node.js installed locally. You can download it from [here](https://nodejs.org/en/download/)
+- Javascript app (refer to the documentation below if you don't have the setup for a javascript app)
+- To begin with the setup of the Javascript app you must have Node.js installed locally. You can download it from [here](https://nodejs.org/en/download/)
 
 ### Set up for Javascript application
 
@@ -62,7 +62,7 @@ npm install --save @opentelemetry/exporter-trace-otlp-proto
 ```
 - The `@opentelemetry/sdk-node` package provides the full OpenTelemetry SDK for Node.js.
 - The `@opentelemetry/auto-instrumentations-node` package installs instrumentation packages that will automatically create spans corresponding to code called in libraries. In this case, it provides instrumentation for Express, letting the example app automatically create spans for each incoming request.
-- The `@opentelemetry/exporter-trace-otlp-proto` package allows to transport data via OTLP using the protocol - `http/protobuf`.
+- The `@opentelemetry/exporter-trace-otlp-proto` package allows transporting data via OTLP using the protocol - `http/protobuf`.
 
 Create a file named tracing.js and add the following code to the file:
 ```

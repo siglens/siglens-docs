@@ -19,7 +19,7 @@ You can ingest test data:
 
 ### ⭐ Features Overview ⭐
 
-- **Real-Time Event Monitoring:** Track the event count and volume in real time. 
+- **Real-Time Event Monitoring:** Track the event count and volume in real-time. 
 - **Log Statistics:** Get a detailed breakdown of logs by index name, incoming volume, and event count. 
 - **Metrics Analysis:** Analyze metrics for system performance and efficiency. 
 - **Query Statistics:** Monitor the performance of your queries with average latency and count.

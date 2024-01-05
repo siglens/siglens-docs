@@ -2,11 +2,11 @@
 
 ### Auto-instrument sample Python app for traces
 
-In this tutorial we will go through the steps to auto instrument a Python app to send traces to Siglens.
+In this tutorial, we will go through the steps to auto-instrument a Python app to send traces to Siglens.
 
 ### Prerequisites
 - Siglens instance should be running on localhost with ingest port-4318. To do so you need to change the ingest port of Siglens to `4318` in `server.yaml`
-- Python app (refer the documentation below if you don't have the setup for go app)
+- Python app (refer to the documentation below if you don't have the setup for the go app)
 
 ### Set up for Python application
 Let's start by setting up our example application. This application will be a simple server that, when accessed, will respond with the message 'Web App with Python Flask!'. 
@@ -34,7 +34,7 @@ def index():
  
 app.run(host='0.0.0.0', port=81)
 ```
-Run the application using following command:
+Run the application using the following command:
 ```
 python3 server.py
 ```
@@ -43,11 +43,11 @@ You can now access the running app at `http://localhost:81`:
 
 ![py-app](/tutorials/python-app.png)
 
-### Auto instrumentation setup for python app
+### Auto instrumentation setup for Python app
 
 We have to install all OpenTelemetry components that are required to auto-instrument our app:
 
-Install the opentelemetry-distro package, which contains the OpenTelemetry API, SDK and also the tools opentelemetry-bootstrap and opentelemetry-instrument you will use below
+Install the opentelemetry-distro package, which contains the OpenTelemetry API, SDK, and also the tools opentelemetry-bootstrap and opentelemetry-instrument you will use below
 ```
 pip install opentelemetry-distro
 ```
@@ -64,7 +64,7 @@ Now, we need to install the OpenTelemetry exporter:
 pip install opentelemetry-exporter-otlp
 pip install opentelemetry-exporter-otlp-proto-http
 ```
-Run the following command in terminal to enable auto instrumentation of the application
+Run the following command in the terminal to enable auto-instrumentation of the application
 ```
 OTEL_TRACES_EXPORTER=otlp OTEL_METRICS_EXPORTER=none 
 OTEL_EXPORTER_OTLP_TRACES_ENDPOINT="http://localhost:4318/otlp/v1/traces" 
