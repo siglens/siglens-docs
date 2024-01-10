@@ -39,6 +39,65 @@ tmpfs            3.1G  4.0K  3.1G   1% /run/user/1000
 cd /mnt/nvme1n1
 sudo chmod 777 .
 ```
+6. Configure AWS CLI
+```bash
+sudo apt-get install awscli -y
+aws configure
+```
+
+## Making the dataset
+Make a `data/` directory to store the data, then go to https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page and download the data.
+I used the 2011-2017 yellow taxi trip parquet files.
+Next, you need to convert the parquet files to TSV.
+```
+cd data
+python -m venv taxis
+source taxis/bin/activate
+pip install pandas pyarrow
+```
+Make a file `parquet_to_tsv.py` with the following content.
+```
+import pandas as pd
+import glob
+import os
+import sys
+
+def convert_parquet_to_tsv(input_directory, output_directory):
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
+
+    for parquet_file in glob.glob(os.path.join(input_directory, '*.parquet')):
+        df = pd.read_parquet(parquet_file)
+        base_name = os.path.basename(parquet_file)
+        tsv_file = os.path.join(output_directory, base_name.replace('.parquet', '.tsv'))
+        df.to_csv(tsv_file, index=False)
+        print(f"Converted {parquet_file} to {tsv_file}")
+
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Usage: python script.py <input_directory> <output_directory>")
+        sys.exit(1)
+
+    input_dir = sys.argv[1]
+    output_dir = sys.argv[2]
+    convert_parquet_to_tsv(input_dir, output_dir)
+```
+Now run the conversion with
+```
+python parquet_to_tsv.py . .
+```
+ClickHouse will use the TSV files, but for SigLens we'll use JSON.
+```
+for year in {2011..2017}; do
+    for month in {01..12}; do
+        basefile="yellow_tripdata_$year-$month"
+        go run siglens/tools/sigclient/cmd/utils/converter.go --input "$basefile.tsv" --output "$basefile.json" &
+    done
+done
+wait
+```
+Finally, compress the TSV and JSON files with gzip and upload them to your AWS S3 bucket.
+I ingested the TSV and JSON files into separte directories to make it easier to download all of one type.
 
 ## Benchmark SigLens
 You'll want three terminals. Terminal 1 will run SigLens, Terminal 2 will do some setup and view the logs, and Terminal 3 will send the queries. Terminal 3 can run in your local machine if you setup the server to accept HTTP traffic, but Terminals 1 and 2 should be on the server. Start with Terminal 1.
@@ -53,15 +112,14 @@ If prompted to restart some daemons, you can restart the recommended daemons.
 ### Clone SigLens
 ```bash
 git clone https://github.com/siglens/siglens.git
-git clone https://github.com/sigscalr/sigscalr-client.git
-
 cd siglens
 ```
 
 ### Enable AgileAggs
-Append this to the `server.yaml` config file:
+Open `server.yaml` and add these settings:
 ```yaml
 agileAggsEnabled: true
+pqsEnabled: true
 ```
 
 ### Start SigLens
@@ -83,10 +141,11 @@ INFO[2023-12-06 18:10:38] ----- Siglens UI starting on 0.0.0.0:5122 -----
 Switch to Terminal 2 and run the following:
 ```bash
 curl -X POST -d '{
-    "tableName": "benchmark",
-    "groupByColumns": ["cab_type", "passenger_count", "pickup_date", "trip_distance"],
+    "tableName": "trips",
+    "groupByColumns": ["airport_fee", "passenger_count", "PULocationID", "trip_distance"],
     "measureColumns": ["total_amount"]
-}' http://localhost/api/pqs/aggs
+}' http://localhost:5122/api/pqs/aggs
+echo ""
 ```
 You should get this response:
 ```json
@@ -94,7 +153,7 @@ You should get this response:
 ```
 
 ### Setup an ingestion script
-In Terminal 2 run `cd /mnt/nvme1n1` and then save the following into ingester.py
+In Terminal 2 run `cd /mnt/nvme1n1/siglens/tools/sigclient` and then save the following into ingester.py
 ```python
 import subprocess
 import sys
@@ -119,7 +178,7 @@ def ingest(filename, batch_size=100):
 
 
 def ingest_lines(lines):
-    index_data = '{"index": {"_index": "benchmark", "_type": "_doc"}}'
+    index_data = '{"index": {"_index": "trips", "_type": "_doc"}}'
     data = ''
     for line in lines:
         data += index_data + '\n' + line
@@ -147,38 +206,24 @@ if __name__ == "__main__":
 ```
 
 ### Ingest the data into SigLens
+Make a dataset directory inside sigclient.
+```bash
+mkdir dataset
+```
 Run the following script to download, decompress, and ingest the data into SigLens.
 ```bash
-export NUM_FILES=20
+for year in {2011..2017}; do
+    for month in {01..12}; do
+        {
+            basefile="yellow_tripdata_$year-$month"
 
-cd sigscalr-client
-mkdir benchmark_data
-cd benchmark_data
-
-# Download compressed data.
-echo "Downloading $NUM_FILES of 20 files..."
-for i in $(seq 0 $(($NUM_FILES - 1))); do
-	wget "https://datasets-documentation.s3.eu-west-3.amazonaws.com/nyc-taxi/trips_$i.gz" &
+            aws s3 cp s3://your-bucket/nyc-taxi-benchmark-data/json/$basefile.json.gz dataset/
+            gunzip dataset/$basefile.json.gz
+            python3 ingester.py dataset/$basefile.json
+        } &
+    done
+    wait
 done
-wait
-
-# Decompress.
-gunzip trips_*gz
-
-# Go back to the sigscalr-client base directory.
-cd ..
-
-# Convert to JSON.
-for i in $(seq 0 $(($NUM_FILES - 1))); do
-	go run cmd/utils/converter.go --input "benchmark_data/trips_$i" --output "benchmark_data/trips_$i.json" &
-done
-wait
-
-# Ingest into SigLens.
-for i in $(seq 0 $(($NUM_FILES - 1))); do
-    python3 ../ingester.py benchmark_data/trips_$i.json &
-done
-wait
 ```
 
 ### Restart SigLens
@@ -197,45 +242,43 @@ sudo tail -f siglens.log
 ### Run the Queries in SigLens
 Run the following in Terminal 3.
 If Terminal 3 is on your local machine, make sure to replace `localhost` with the IP of the server.
-You can also append ` | python3 -m json.tool` to each curl request to format the responses nicely.
+You can remove the ` | python3 -m json.tool` if you want, it just formats the JSON response.
 Check the log file `siglens/siglens.log` for the query times.
 ```bash
 curl -X POST -d '{
-    "searchText": "SELECT cab_type, count(*) FROM trips GROUP BY cab_type",
-    "index": "benchmark",
+    "searchText": "SELECT airport_fee, count(*) FROM trips GROUP BY airport_fee",
+    "index": "trips",
     "startEpoch": "now-24h",
     "endEpoch": "now",
     "queryLanguage": "SQL"
-}' http://localhost/api/search
+}' http://localhost:5122/api/search | python3 -m json.tool
 
 curl -X POST -d '{
     "searchText": "SELECT passenger_count, avg(total_amount) FROM trips GROUP BY passenger_count",
-    "index": "benchmark",
+    "index": "trips",
     "startEpoch": "now-24h",
     "endEpoch": "now",
     "queryLanguage": "SQL"
-}' http://localhost/api/search
+}' http://localhost:5122/api/search | python3 -m json.tool
 
 curl -X POST -d '{
-    "searchText": "SELECT passenger_count, pickup_date, count(*) FROM trips GROUP BY passenger_count, pickup_date",
-    "index": "benchmark",
+    "searchText": "SELECT passenger_count, PULocationID, count(*) FROM trips GROUP BY passenger_count, PULocationID",
+    "index": "trips",
     "startEpoch": "now-24h",
     "endEpoch": "now",
     "queryLanguage": "SQL"
-}' http://localhost/api/search
+}' http://localhost:5122/api/search | python3 -m json.tool
 
 curl -X POST -d '{
-    "searchText": "SELECT passenger_count, pickup_date, trip_distance, count(*) FROM trips GROUP BY passenger_count, pickup_date, trip_distance",
-    "index": "benchmark",
+    "searchText": "SELECT passenger_count, PULocationID, trip_distance, count(*) FROM trips GROUP BY passenger_count, PULocationID, trip_distance",
+    "index": "trips",
     "startEpoch": "now-24h",
     "endEpoch": "now",
     "queryLanguage": "SQL"
-}' http://localhost/api/search
+}' http://localhost:5122/api/search | python3 -m json.tool
 ```
 
 ## Benchmark ClickHouse
-### Ingest the data into ClickHouse
-
 ### Install ClickHouse
 ```bash
 # Prepare to install ClickHouse
@@ -255,6 +298,13 @@ sudo apt-get install -y clickhouse-server clickhouse-client
 You should get the prompt `Enter password for default user:`.
 Either create a pasword or just press enter to have no password.
 
+### Configure the ClickHouse data folder
+This is an optional step to specify where ClickHouse should store its data.
+I did this during my testing so that both ClickHouse and SigLens would use the 3.5 TB storage space.
+
+Use `sudo vim /etc/clickhouse-server/config.xml` to change the line
+`<path>/var/lib/clickhouse/</path>` to `<path>/mnt/nvme1n1/clickhouse/</path>`
+
 ### Run ClickHouse
 ```bash
 sudo service clickhouse-server start
@@ -264,55 +314,27 @@ clickhouse-client
 ### Make the ClickHouse Table
 ```
 CREATE TABLE trips (
-    trip_id UInt32,
-    vendor_id Enum8('1' = 1, '2' = 2, 'CMT' = 3, 'VTS' = 4, 'DDS' = 5, 'B02512' = 10, 'B02598' = 11, 'B02617' = 12, 'B02682' = 13, 'B02764' = 14),
-    pickup_date Date,
-    pickup_datetime DateTime,
-    dropoff_date Date,
-    dropoff_datetime DateTime,
-    store_and_fwd_flag UInt8,
-    rate_code_id UInt8,
-    pickup_longitude Float64,
-    pickup_latitude Float64,
-    dropoff_longitude Float64,
-    dropoff_latitude Float64,
-    passenger_count UInt8,
-    trip_distance Float64,
+    VendorID Int32,
+    tpep_pickup_datetime DateTime,
+    tpep_dropoff_datetime DateTime,
+    passenger_count Int32,
+    trip_distance Float32,
+    RatecodeID Int32,
+    store_and_fwd_flag FixedString(1),
+    PULocationID Int32,
+    DOLocationID Int32,
+    payment_type FixedString(3),
     fare_amount Float32,
     extra Float32,
     mta_tax Float32,
     tip_amount Float32,
     tolls_amount Float32,
-    ehail_fee Float32,
     improvement_surcharge Float32,
     total_amount Float32,
-    payment_type_ Enum8('UNK' = 0, 'CSH' = 1, 'CRE' = 2, 'NOC' = 3, 'DIS' = 4),
-    trip_type UInt8,
-    pickup FixedString(25),
-    dropoff FixedString(25),
-    cab_type Enum8('yellow' = 1, 'green' = 2, 'uber' = 3),
-    pickup_nyct2010_gid Int8,
-    pickup_ctlabel Float32,
-    pickup_borocode UInt8,
-    pickup_boroname Enum8('' = 0, 'Manhattan' = 1, 'Bronx' = 2, 'Brooklyn' = 3, 'Queens' = 4, 'Staten Island' = 5),
-    pickup_ct2010 FixedString(16),
-    pickup_boroct2010 FixedString(7),
-    pickup_cdeligibil Enum8(' ' = 0, 'E' = 1, 'I' = 2),
-    pickup_ntacode FixedString(4),
-    pickup_ntaname String,
-    pickup_puma UInt16,
-    dropoff_nyct2010_gid UInt8,
-    dropoff_ctlabel Float32,
-    dropoff_borocode UInt8,
-    dropoff_boroname Enum8('' = 0, 'Manhattan' = 1, 'Bronx' = 2, 'Brooklyn' = 3, 'Queens' = 4, 'Staten Island' = 5),
-    dropoff_ct2010 FixedString(16),
-    dropoff_boroct2010 FixedString(7),
-    dropoff_cdeligibil Enum8(' ' = 0, 'E' = 1, 'I' = 2),
-    dropoff_ntacode FixedString(4),
-    dropoff_ntaname String,
-    dropoff_puma UInt16)
+    congestion_surcharge Float32,
+    airport_fee Float32)
 ENGINE = MergeTree()
-ORDER BY (pickup_date, pickup_datetime)
+ORDER BY (tpep_pickup_datetime)
 SETTINGS index_granularity=8192
 ```
 
@@ -320,55 +342,29 @@ SETTINGS index_granularity=8192
 ```
 INSERT INTO trips
 SELECT
-    trip_id,
-    vendor_id,
-    pickup_date,
-    pickup_datetime,
-    dropoff_date,
-    dropoff_datetime,
-    store_and_fwd_flag,
-    rate_code_id,
-    pickup_longitude,
-    pickup_latitude,
-    dropoff_longitude,
-    dropoff_latitude,
+    VendorID,
+    tpep_pickup_datetime,
+    tpep_dropoff_datetime,
     passenger_count,
     trip_distance,
+    RatecodeID,
+    store_and_fwd_flag,
+    PULocationID,
+    DOLocationID,
+    payment_type,
     fare_amount,
     extra,
     mta_tax,
     tip_amount,
     tolls_amount,
-    ehail_fee,
     improvement_surcharge,
     total_amount,
-    payment_type_,
-    trip_type,
-    pickup,
-    dropoff,
-    cab_type,
-    pickup_nyct2010_gid,
-    pickup_ctlabel,
-    pickup_borocode,
-    pickup_boroname,
-    pickup_ct2010,
-    pickup_boroct2010,
-    pickup_cdeligibil,
-    pickup_ntacode,
-    pickup_ntaname,
-    pickup_puma,
-    dropoff_nyct2010_gid,
-    dropoff_ctlabel,
-    dropoff_borocode,
-    dropoff_boroname,
-    dropoff_ct2010,
-    dropoff_boroct2010,
-    dropoff_cdeligibil,
-    dropoff_ntacode,
-    dropoff_ntaname,
-    dropoff_puma
+    congestion_surcharge,
+    airport_fee
 FROM s3(
-    'https://datasets-documentation.s3.eu-west-3.amazonaws.com/nyc-taxi/trips_{0..19}.gz',
+    's3://your-bucket/nyc-taxi-benchmark-data/tsv/yellow_tripdata_{2011..2017}-{01..12}.tsv.gz',
+    'your_aws_access_key_id',
+    'your_aws_secret_access_key',
     'TabSeparatedWithNames'
 );
 ```
@@ -376,17 +372,16 @@ FROM s3(
 ### Run the Queries in ClickHouse
 ```sql
 # Query 1
-SELECT cab_type, count(*) FROM trips GROUP BY cab_type
+SELECT airport_fee, count(*) FROM trips GROUP BY airport_fee
 
 # Query 2
 SELECT passenger_count, avg(total_amount) FROM trips GROUP BY passenger_count
 
 # Query 3
-SELECT passenger_count, pickup_date, count(*) FROM trips GROUP BY passenger_count, pickup_date
+SELECT passenger_count, PULocationID, count(*) FROM trips GROUP BY passenger_count, PULocationID
 
 # Query 4
-SELECT passenger_count, pickup_date, trip_distance, count(*)
+SELECT passenger_count, PULocationID, trip_distance, count(*)
 FROM trips
-GROUP BY passenger_count, pickup_date, trip_distance
+GROUP BY passenger_count, PULocationID, trip_distance
 ```
-
