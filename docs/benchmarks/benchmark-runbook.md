@@ -91,7 +91,7 @@ ClickHouse will use the TSV files, but for SigLens we'll use JSON.
 for year in {2011..2017}; do
     for month in {01..12}; do
         basefile="yellow_tripdata_$year-$month"
-	    go run siglens/tools/sigclient/cmd/utils/converter.go --input "$basefile.tsv" --output "$basefile.json" &
+        go run siglens/tools/sigclient/cmd/utils/converter.go --input "$basefile.tsv" --output "$basefile.json" &
     done
 done
 wait
