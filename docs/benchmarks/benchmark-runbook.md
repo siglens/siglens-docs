@@ -39,7 +39,7 @@ tmpfs            3.1G  4.0K  3.1G   1% /run/user/1000
 cd /mnt/nvme1n1
 sudo chmod 777 .
 ```
-6. Configure AWS
+6. Configure AWS CLI
 ```bash
 sudo apt-get install awscli -y
 aws configure
@@ -87,7 +87,6 @@ Now run the conversion with
 python parquet_to_tsv.py . .
 ```
 ClickHouse will use the TSV files, but for SigLens we'll use JSON.
-You can `cd siglens/tools/sigclient` and run the following to do the conversion.
 ```
 for year in {2011..2017}; do
     for month in {01..12}; do
@@ -154,8 +153,6 @@ You should get this response:
 ```
 
 ### Setup an ingestion script
-
-### Ingest the data into SigLens
 In Terminal 2 run `cd /mnt/nvme1n1/siglens/tools/sigclient` and then save the following into ingester.py
 ```python
 import subprocess
@@ -207,6 +204,8 @@ def ingest_lines(lines):
 if __name__ == "__main__":
     ingest(sys.argv[1])
 ```
+
+### Ingest the data into SigLens
 Make a dataset directory inside sigclient.
 ```bash
 mkdir dataset
@@ -218,7 +217,7 @@ for year in {2011..2017}; do
         {
             basefile="yellow_tripdata_$year-$month"
 
-            aws s3 cp s3://tests-andrew-us-west-2/nyc-taxi-benchmark-data/json/$basefile.json.gz dataset/
+            aws s3 cp s3://your-bucket/nyc-taxi-benchmark-data/json/$basefile.json.gz dataset/
             gunzip dataset/$basefile.json.gz
             python3 ingester.py dataset/$basefile.json
         } &
@@ -243,7 +242,7 @@ sudo tail -f siglens.log
 ### Run the Queries in SigLens
 Run the following in Terminal 3.
 If Terminal 3 is on your local machine, make sure to replace `localhost` with the IP of the server.
-You can also append ` | python3 -m json.tool` to each curl request to format the responses nicely.
+You can remove the ` | python3 -m json.tool` if you want, it just formats the JSON response.
 Check the log file `siglens/siglens.log` for the query times.
 ```bash
 curl -X POST -d '{
@@ -363,7 +362,7 @@ SELECT
     congestion_surcharge,
     airport_fee
 FROM s3(
-    's3://tests-andrew-us-west-2/nyc-taxi-benchmark-data/tsv/yellow_tripdata_{2011..2017}-{01..12}.tsv.gz',
+    's3://your-bucket/nyc-taxi-benchmark-data/tsv/yellow_tripdata_{2011..2017}-{01..12}.tsv.gz',
     'your_aws_access_key_id',
     'your_aws_secret_access_key',
     'TabSeparatedWithNames'
