@@ -536,10 +536,12 @@ To clear the cache, run:
 curl -k -u "elastic:<your-elastic-password>" -X POST "https://<server-ip>:9200/trips/_cache/clear"
 ```
 
+The responses will have a `took` field, indicating how long the query took in milliseconds.
+
 Note that Query 1 is a little different than Query 1 for the other benchmarked databases.
 This is because Elasticsearch was unable to perform an aggregation on the `airport_fee` column because it was ingested as a text field.
-So instead, this Query 1 aggregates on the `improvement_surcharge_groups` field.
-This should be comparable because the `airport_fee` column only has one bucket, while the `improvement_surcharge_groups` column has only 2, and one of those only accounts for 360 rows of the more than 1 billion rows in the dataset.
+So instead, this Query 1 aggregates on the `improvement_surcharge` field.
+This should be comparable because the `airport_fee` column only has one bucket, while the `improvement_surcharge` column has only 2, and one of those only accounts for 360 rows of the more than 1 billion rows in the dataset.
 
 ```bash
 # Query 1
