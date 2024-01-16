@@ -27,8 +27,6 @@ java -javaagent:opentelemetry-javaagent.jar -jar target/spring-petclinic-3.2.0-S
 Go to the java app at http://localhost:8080 and use it a little to send traces to Siglens.
 After about 10 seconds, you should see the traces on Siglens on http://localhost:5122 then going to Tracing -> Search Traces and clicking the Find Traces button.
 
-![java-app](/static/tutorials/java-app.png)
-
 ## More Details
 OpenTelemetry has full auto-instrumentation for Java, so auto-instrumenting your own Java app is easy.
 Simply follow the Quickstart instructions to run Siglens and download opentelemetry-javaagent.jar, then run your app normally but add the opentelemetry-javaagent.jar and the OTEL environment variables as done in the Quickstart.
