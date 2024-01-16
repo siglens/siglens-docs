@@ -5,7 +5,7 @@
 In this tutorial, we will go through the steps to auto-instrument a Java app to send traces to Siglens.
 
 ## Quickstart
-Start siglens:
+Start Siglens:
 ```bash
 curl -L https://siglens.com/install.sh | sh
 ```
