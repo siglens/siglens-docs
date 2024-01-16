@@ -2,10 +2,10 @@
 
 ## Auto-instrument sample Golang app for traces
 
-In this tutorial, we will go through the steps to auto-instrument a Go app to send traces to Siglens.
+In this tutorial, we will go through the steps to auto-instrument a Go app to send traces to SigLens.
 
 ## Quickstart
-Start siglens:
+Start SigLens:
 ```bash
 curl -L https://siglens.com/install.sh | sh
 ```
@@ -17,11 +17,11 @@ cd bookstore-app
 SERVICE_NAME=my-service OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:8081/otlp go run main.go
 ```
 
-Go to the bookstore app at http://localhost:8090/books and refresh the page a few times (you should see `{"data":[]}`) to send traces to Siglens.
-After about 10 seconds, you should see the traces on Siglens on http://localhost:5122 then going to Tracing -> Search Traces and clicking the Find Traces button.
+Go to the bookstore app at http://localhost:8090/books and refresh the page a few times (you should see `{"data":[]}`) to send traces to SigLens.
+After about 10 seconds, you should see the traces on SigLens on http://localhost:5122 then going to Tracing -> Search Traces and clicking the Find Traces button.
 
 ## More Details
-Instrumenting your existing Go app to send traces to Siglens requires a few extra steps becasue OpenTelemetry doesn't yet have full auto-instrumentation for Go.
+Instrumenting your existing Go app to send traces to SigLens requires a few extra steps becasue OpenTelemetry doesn't yet have full auto-instrumentation for Go.
 Let's say you have an app that uses the [Gin](https://gin-gonic.com/) framework.
 Here's how you would use the `otelgin` package to instrument the `gin` calls:
 
@@ -99,14 +99,14 @@ func main() {
 ```bash
 SERVICE_NAME=my-service OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:8081/otlp go run main.go
 ```
-6. Run Siglens in a different terminal
+6. Run SigLens in a different terminal
 ```bash
 curl -L https://siglens.com/install.sh | sh
 ```
-7. Go to the bookstore app at http://localhost:8090/books and refresh the page a few times (you should see `{"data":[]}`) to send traces to Siglens.
-8. After about 10 seconds, you should see the traces on Siglens on http://localhost:5122 then going to Tracing -> Search Traces and clicking the Find Traces button.
+7. Go to the bookstore app at http://localhost:8090/books and refresh the page a few times (you should see `{"data":[]}`) to send traces to SigLens.
+8. After about 10 seconds, you should see the traces on SigLens on http://localhost:5122 then going to Tracing -> Search Traces and clicking the Find Traces button.
 
-Once you're on the Tracing tab of Siglens, you can search the traces and see health metrics and graphs for each service.
+Once you're on the Tracing tab of SigLens, you can search the traces and see health metrics and graphs for each service.
 
 ![search-go](/static/tutorials/search-traces-go.png)
 
