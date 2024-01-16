@@ -29,7 +29,7 @@ NODE_OPTIONS="--require @opentelemetry/auto-instrumentations-node/register" \
 node app.js
 ```
 
-Go to the app at http://localhost:8090 and refresh the page a few times (you should see the docker whale) to send traces to Siglens.
+Go to the app at http://localhost:8080 and refresh the page a few times (you should see the docker whale) to send traces to Siglens.
 After about 10 seconds, you should see the traces on Siglens on http://localhost:5122 then going to Tracing -> Search Traces and clicking the Find Traces button.
 
 ## More Details
