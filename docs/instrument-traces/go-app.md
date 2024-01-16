@@ -22,7 +22,7 @@ SERVICE_NAME=my-service go run main.go
 Go to the bookstore app at http://localhost:8090/books and refresh the page a few times (you should see `{"data":[]}`) to send traces to Siglens.
 After about 10 seconds, you should see the traces on Siglens on http://localhost:5122 then going to Tracing -> Search Traces and clicking the Find Traces button.
 
-## Instrumenting your Go app
+## More Details
 Instrumenting your existing Go app to send traces to Siglens requires a few extra steps becasue OpenTelemetry doesn't yet have full auto-instrumentation for Go.
 Let's say you have an app that uses the [Gin](https://gin-gonic.com/) framework.
 Here's how you would use the `otelgin` package to instrument the `gin` calls:
@@ -90,7 +90,6 @@ func initTracing() func(context.Context) error {
 
 ```golang
 func main() {
-
     cleanup := initTracing()
     defer cleanup(context.Background())
 
@@ -129,4 +128,4 @@ Once you're on the Tracing tab of Siglens, you can search the traces and see hea
 
 ## Next Steps
 Since OpenTelemetry doesn't yet support full auto-instrumentation for Go like it does for some other languages, how you instrument your app will depend on which packages you're currently using.
-Checkout the [OpenTelemetry Registry](https://opentelemetry.io/ecosystem/registry/) to find instrumented packages that you can use in place of your existing packages.
+Checkout the [OpenTelemetry Registry](https://opentelemetry.io/ecosystem/registry/) to find packages for instrumenting your existing packages.
