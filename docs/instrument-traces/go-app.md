@@ -7,16 +7,14 @@ In this tutorial, we will go through the steps to auto-instrument a Go app to se
 ## Quickstart
 Start siglens:
 ```bash
-git clone https://github.com/siglens/siglens.git
-cd siglens
-go run cmd/siglens/main.go --config server.yaml
+curl -L https://siglens.com/install.sh | sh
 ```
 
 Start a Go app in a separate terminal:
 ```bash
 git clone https://github.com/siglens/bookstore-app.git
 cd bookstore-app
-SERVICE_NAME=my-service go run main.go
+SERVICE_NAME=my-service OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:8081/otlp go run main.go
 ```
 
 Go to the bookstore app at http://localhost:8090/books and refresh the page a few times (you should see `{"data":[]}`) to send traces to Siglens.
@@ -52,11 +50,7 @@ func initTracing() func(context.Context) error {
 
 	exporter, err := otlptrace.New(
 		context.Background(),
-		otlptracehttp.NewClient(
-			otlptracehttp.WithInsecure(), // TODO: remove in production to use https, not http
-			otlptracehttp.WithEndpoint("localhost:8081"),
-			otlptracehttp.WithURLPath("/otlp/v1/traces"),
-		),
+		otlptracehttp.NewClient(),
 	)
 
 	if err != nil {
@@ -103,18 +97,14 @@ func main() {
 4. Run `go mod tidy` to download all the imported packages
 5. Run the app:
 ```bash
-SERVICE_NAME=my-service go run main.go
+SERVICE_NAME=my-service OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:8081/otlp go run main.go
 ```
 6. Run Siglens in a different terminal
 ```bash
-git clone https://github.com/siglens/siglens.git
-cd siglens
-go run cmd/siglens/main.go --config server.yaml
+curl -L https://siglens.com/install.sh | sh
 ```
 7. Go to the bookstore app at http://localhost:8090/books and refresh the page a few times (you should see `{"data":[]}`) to send traces to Siglens.
 8. After about 10 seconds, you should see the traces on Siglens on http://localhost:5122 then going to Tracing -> Search Traces and clicking the Find Traces button.
-
-**Note:** The endpoint for sending the traces to SigLens is `http://localhost:8081/otlp/v1/traces` which is set in the code using the `otlptracehttp.With...` function calls.
 
 Once you're on the Tracing tab of Siglens, you can search the traces and see health metrics and graphs for each service.
 
