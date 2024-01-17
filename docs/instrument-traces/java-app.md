@@ -33,10 +33,10 @@ Simply follow the Quickstart instructions to run SigLens and download openteleme
 
 Once you're on the Tracing tab of SigLens, you can search the traces and see health metrics and graphs for each service.
 
-![search-traces](/static/tutorials/search-traces-java.png)
+![search-traces](../../static/tutorials/search-traces-java.png)
 
-![java-app](/static/tutorials/java-app-red-traces.png)
+![java-app](../../static/tutorials/java-app-red-traces.png)
 
-![graph-1](/static/tutorials/java-app-red-metrics-graph-1.png)
+![graph-1](../../static/tutorials/java-app-red-metrics-graph-1.png)
 
-![graph-2](/static/tutorials/java-app-red-metrics-graph-2.png)
+![graph-2](../../static/tutorials/java-app-red-metrics-graph-2.png)

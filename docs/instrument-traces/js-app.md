@@ -38,10 +38,10 @@ Simply follow the Quickstart instructions but replace the example JavaScript rep
 
 Once you're on the Tracing tab of SigLens, you can search the traces and see health metrics and graphs for each service.
 
-![search-js](/static/tutorials/search-traces-js.png)
+![search-js](../../static/tutorials/search-traces-js.png)
 
-![metrics-js](/static/tutorials/metrics-js.png)
+![metrics-js](../../static/tutorials/metrics-js.png)
 
-![metrics-js-graph-1](/static/tutorials/js-graph-1.png)
+![metrics-js-graph-1](../../static/tutorials/js-graph-1.png)
 
-![metrics-js-graph-2](/static/tutorials/js-graph-2.png)
+![metrics-js-graph-2](../../static/tutorials/js-graph-2.png)
