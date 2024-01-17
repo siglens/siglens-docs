@@ -108,13 +108,13 @@ curl -L https://siglens.com/install.sh | sh
 
 Once you're on the Tracing tab of SigLens, you can search the traces and see health metrics and graphs for each service.
 
-![search-go](/static/tutorials/search-traces-go.png)
+![search-go](../../static/tutorials/search-traces-go.png)
 
-![metrics-go](/static/tutorials/metrics-go.png)
+![metrics-go](../../static/tutorials/metrics-go.png)
 
-![metrics-go-graph-1](/static/tutorials/go-graph-1.png)
+![metrics-go-graph-1](../../static/tutorials/go-graph-1.png)
 
-![metrics-go-graph-2](/static/tutorials/go-graph-2.png)
+![metrics-go-graph-2](../../static/tutorials/go-graph-2.png)
 
 ## Next Steps
 Since OpenTelemetry doesn't yet support full auto-instrumentation for Go like it does for some other languages, how you instrument your app will depend on which packages you're currently using.
