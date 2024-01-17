@@ -1,8 +1,8 @@
-# .Net App
+# .NET App
 
-## Auto-instrument sample Dotnet App for traces
+## Auto-instrument sample .NET App for traces
 
-In this tutorial, we will go through the steps to auto-instrument a .Net app to send traces to Siglens.
+In this tutorial, we will go through the steps to auto-instrument a .NET app to send traces to Siglens.
 
 ## Prerequisites
 - You need to have the .NET SDK installed. You can install `dotnet` using a package manager like homebrew or download it [here](https://dotnet.microsoft.com/en-us/download/dotnet).
@@ -86,7 +86,7 @@ For auto-instrumenting your own .NET app, you'll follow a similar procedure.
 In particular, you will:
 1. Add the following to your program:
 ```csharp
-echo 'using OpenTelemetry.Exporter;
+using OpenTelemetry.Exporter;
 using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
