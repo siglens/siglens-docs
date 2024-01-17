@@ -1,75 +1,42 @@
 # Java App
 
-### Auto-instrument sample Java app for traces
+## Auto-instrument sample Java app for traces
 
-In this tutorial, we will go through the steps to auto-instrument a Java app to send traces to Siglens.
+In this tutorial, we will go through the steps to auto-instrument a Java app to send traces to SigLens.
 
-### Prerequisites
-- Siglens instance should be running on localhost with ingest port-4318. To do so you need to change the ingest port of Siglens to `4318` in `server.yaml`
-- Java app (refer to the documentation below if you don't have the setup for the Java app)
-
-### Set up Java application
-
-Given below are the commands for setting up a Java application.
-
+## Quickstart
+Start SigLens:
+```bash
+curl -L https://siglens.com/install.sh | sh
 ```
-# Clone the Spring PetClinic repository from GitHub
+
+Start a Java app in a separate terminal:
+```bash
 git clone https://github.com/spring-projects/spring-petclinic
-
-# Change into the cloned directory
 cd spring-petclinic
-
-# Comment out the code in the docker-compose.yml file
-
-# Use Maven Wrapper to package the Spring PetClinic application
 ./mvnw package
-
-# Run the Spring PetClinic application using the generated JAR file
-java -jar target/*.jar
-```
-You can access the running app at localhost:8090
-
-![java-app](/tutorials/java-app.png)
-
-### Auto instrumentation setup for Java app
-
-To enable automatic instrumentation of the application, the Jar agent must be activated. This helps in generating traces from the java app and these traces are then sent to Siglens for visualization and analysis.
-
-To download the Java Jar agent, run the below command in your terminal. The JAR file contains the agent and all automatic instrumentation packages:
-```
 curl -L -O https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
+
+OTEL_METRICS_EXPORTER=none \
+OTEL_LOGS_EXPORTER=none \
+OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:8081/otlp" \
+OTEL_RESOURCE_ATTRIBUTES=service.name=my-service \
+java -javaagent:opentelemetry-javaagent.jar -jar target/spring-petclinic-3.2.0-SNAPSHOT.jar
 ```
 
-Run the following command in the terminal to enable auto-instrumentation of the application
-```
-OTEL_TRACES_EXPORTER=otlp OTEL_METRICS_EXPORTER=none OTEL_EXPORTER_OTLP_TRACES_ENDPOINT="http://localhost:4318/otlp/v1/traces" OTEL_EXPORTER_OTLP_PROTOCOL="http/protobuf" OTEL_RESOURCE_ATTRIBUTES=service.name=spring-petclinic java -javaagent:/path/opentelemetry-javaagent.jar -jar target/*.jar
-```
-Note:
-- Write your path in place of the path -`/path/opentelemetry-javaagent.jar`
+Go to the java app at http://localhost:8080 and use it a little to send traces to SigLens.
+After about 10 seconds, you should see the traces on SigLens on http://localhost:5122 then going to Tracing -> Search Traces and clicking the Find Traces button.
 
-The application gets started on the same server - localhost:8090. Make sure that there is no other application running on the same address. If so, then you will have to stop that.
+## More Details
+OpenTelemetry has full auto-instrumentation for Java, so auto-instrumenting your own Java app is easy.
+Simply follow the Quickstart instructions to run SigLens and download opentelemetry-javaagent.jar, then run your app normally but add the opentelemetry-javaagent.jar and the OTEL environment variables as done in the Quickstart.
 
-![terminal-java-app](/tutorials/terminal-java-app.png)
+Once you're on the Tracing tab of SigLens, you can search the traces and see health metrics and graphs for each service.
 
-You can search traces:
+![search-traces](/static/tutorials/search-traces-java.png)
 
-![search-traces](/tutorials/search-traces-java.png)
+![java-app](/static/tutorials/java-app-red-traces.png)
 
-You can view red-metrics traces:
+![graph-1](/static/tutorials/java-app-red-metrics-graph-1.png)
 
-![siglens-java-app](/tutorials/java-app-red-traces.png)
-
-Graph visualization of red-metrics:
-
-![graph-1](/tutorials/java-app-red-metrics-graph-1.png)
-
-![graph-2](/tutorials/java-app-red-metrics-graph-2.png)
-
-
-
-
-
-
-
-
-
+![graph-2](/static/tutorials/java-app-red-metrics-graph-2.png)
