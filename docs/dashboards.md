@@ -15,7 +15,7 @@ import ReactPlayer from 'react-player'
 
 ### ⭐ Create Panel for Spunk QL Query ⭐
 1. **Add and Edit Panel:**
-   - Click on the 'Add Panel' option and then click on edit.
+   - Click on the 'Add Panel' option and then click on Edit.
 
      ![Edit Panel](../static/img/edit-panel.png)
 
@@ -107,7 +107,7 @@ Note: You need to ingest metrics data to get the metrics.
 
 ### ⭐ Create Panel for Traces ⭐ 
 
-Note: You need to ingest traces data to get the traces.
+Note: You need to ingest trace data to get the traces.
 
 1. **Enter Traces Query:**
 

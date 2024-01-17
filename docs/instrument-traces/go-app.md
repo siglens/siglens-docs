@@ -1,46 +1,34 @@
 # Go App
 
-### Auto-instrument sample Golang app for traces
+## Auto-instrument sample Golang app for traces
 
-In this tutorial we will go through the steps to auto instrument a Go app to send traces to Siglens.
+In this tutorial, we will go through the steps to auto-instrument a Go app to send traces to SigLens.
 
-### Prerequisites
-- Siglens instance should be running on localhost with ingest port-4318. To do so you need to change the ingest port of Siglens to `4318` in `server.yaml`
-- Go app (refer the documentation below if you don't have the setup for go app)
-
-### Set up for Go application
-
-Given below are the instructions for setting up a sample Golang application for a bookstore:
-
+## Quickstart
+Start SigLens:
+```bash
+curl -L https://siglens.com/install.sh | sh
 ```
-# Clone the bookstore repository from GitHub
-git clone https://github.com/siglens/bookstore-app
 
-# Change into the cloned directory
+Start a Go app in a separate terminal:
+```bash
+git clone https://github.com/siglens/bookstore-app.git
 cd bookstore-app
-
-# Run the application with the following command:
-go run main.go
+SERVICE_NAME=my-service OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:8081/otlp go run main.go
 ```
-This runs the application at port 8090. Try accessing API at http://localhost:8090/books .
-If you see an empty array as the result, it means your application is working:
 
-![go-app](/tutorials/go-app.png)
+Go to the bookstore app at http://localhost:8090/books and refresh the page a few times (you should see `{"data":[]}`) to send traces to SigLens.
+After about 10 seconds, you should see the traces on SigLens on http://localhost:5122 then going to Tracing -> Search Traces and clicking the Find Traces button.
 
-Below are the APIs available:
-```
-GET    /books                    
-GET    /books/:id               
-POST   /books                    
-PATCH  /books/:id                
-DELETE /books/:id     
-```
-### Auto instrumentation setup for Go app
+## More Details
+Instrumenting your existing Go app to send traces to SigLens requires a few extra steps becasue OpenTelemetry doesn't yet have full auto-instrumentation for Go.
+Let's say you have an app that uses the [Gin](https://gin-gonic.com/) framework.
+Here's how you would use the `otelgin` package to instrument the `gin` calls:
 
-Import the following dependencies related to OpenTelemetry exporter and SDK in `main.go` file:
-```
+1. In your `main.go`, update your imports section:
+```golang
 import (
-    // other imports...
+    // Existing imports ...
 
     "go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
     "go.opentelemetry.io/otel"
@@ -50,46 +38,25 @@ import (
     "go.opentelemetry.io/otel/sdk/resource"
     sdktrace "go.opentelemetry.io/otel/sdk/trace"
 )
-
 ```
-To configure application to send data we have to create a function to initialise Opentelemetry. Update the code in `main.go` file by adding the code given below:
 
-```
-package main
-
-import (
-	"context"
-	"github.com/gin-gonic/gin"
-	"github.com/siglens/bookstore-app/controllers"
-	"github.com/siglens/bookstore-app/models"
-	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
-	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
-	"go.opentelemetry.io/otel/sdk/resource"
-	sdktrace "go.opentelemetry.io/otel/sdk/trace"
-	"log"
-	"os"
-)
-
+2. Setup an `initTracing()` function in your `main.go`:
+```golang
 var (
 	serviceName = os.Getenv("SERVICE_NAME")
 )
 
-func initTracer() func(context.Context) error {
+func initTracing() func(context.Context) error {
 
 	exporter, err := otlptrace.New(
 		context.Background(),
-		otlptracehttp.NewClient(
-			otlptracehttp.WithURLPath("/otlp/v1/traces"),
-			otlptracehttp.WithInsecure(),
-		),
+		otlptracehttp.NewClient(),
 	)
 
 	if err != nil {
 		log.Fatalf("Failed to create exporter: %v", err)
 	}
+
 	resources, err := resource.New(
 		context.Background(),
 		resource.WithAttributes(
@@ -97,6 +64,7 @@ func initTracer() func(context.Context) error {
 			attribute.String("library.language", "go"),
 		),
 	)
+
 	if err != nil {
 		log.Fatalf("Could not set resources: %v", err)
 	}
@@ -110,54 +78,44 @@ func initTracer() func(context.Context) error {
 	)
 	return exporter.Shutdown
 }
+```
 
+3. Call your new `initTracing()` in `main()`:
+
+```golang
 func main() {
+    cleanup := initTracing()
+    defer cleanup(context.Background())
 
-	cleanup := initTracer()
-	defer cleanup(context.Background())
+    r := gin.Default()
+    r.Use(otelgin.Middleware(serviceName))
 
-	r := gin.Default()
-	r.Use(otelgin.Middleware(serviceName))
-	// Connect to database
-	models.ConnectDatabase()
-
-	// Routes
-	r.GET("/books", controllers.FindBooks)
-	r.GET("/books/:id", controllers.FindBook)
-	r.POST("/books", controllers.CreateBook)
-	r.PATCH("/books/:id", controllers.UpdateBook)
-	r.DELETE("/books/:id", controllers.DeleteBook)
-
-	// Run the server
-	r.Run(":8090")
+    // Existing code ...
 }
 ```
-Note:
-- You will have to run `go mod tidy` to download all the packges which are there in the code and populate the `go.sum` file
 
-The endpoint for sending the traces to SigLens is `http://localhost:4318/otlp/v1/traces` which is set in the code using `otlptracehttp.WithURLPath("/otlp/v1/traces")`
-. Now, set the environment variable and run the app:
-
+4. Run `go mod tidy` to download all the imported packages
+5. Run the app:
+```bash
+SERVICE_NAME=my-service OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:8081/otlp go run main.go
 ```
-SERVICE_NAME=goGinApp go run main.go
+6. Run SigLens in a different terminal
+```bash
+curl -L https://siglens.com/install.sh | sh
 ```
-![terminal-go](/tutorials/terminal-go-app.png)
-Now, visit http://localhost:8090/books and refresh the page a couple of times. Wait for 1-2 minutes, then check the data on SigLens.
+7. Go to the bookstore app at http://localhost:8090/books and refresh the page a few times (you should see `{"data":[]}`) to send traces to SigLens.
+8. After about 10 seconds, you should see the traces on SigLens on http://localhost:5122 then going to Tracing -> Search Traces and clicking the Find Traces button.
 
-You can search traces:
+Once you're on the Tracing tab of SigLens, you can search the traces and see health metrics and graphs for each service.
 
-![search-go](/tutorials/search-traces-go.png)
+![search-go](/static/tutorials/search-traces-go.png)
 
-You can view red-metrics:
+![metrics-go](/static/tutorials/metrics-go.png)
 
-![metrics-go](/tutorials/metrics-go.png)
+![metrics-go-graph-1](/static/tutorials/go-graph-1.png)
 
-Graph visualization of red-metrics:
+![metrics-go-graph-2](/static/tutorials/go-graph-2.png)
 
-![metrics-go-graph-1](/tutorials/go-graph-1.png)
-
-![metrics-go-graph-2](/tutorials/go-graph-2.png)
-
-
-
-
+## Next Steps
+Since OpenTelemetry doesn't yet support full auto-instrumentation for Go like it does for some other languages, how you instrument your app will depend on which packages you're currently using.
+Checkout the [OpenTelemetry Registry](https://opentelemetry.io/ecosystem/registry/) to find packages for instrumenting your existing packages.
