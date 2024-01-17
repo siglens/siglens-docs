@@ -95,11 +95,11 @@ For Django specifically, you need to run the app with the `--noreload` flag, so 
 
 Once you're on the Tracing tab of SigLens, you can search the traces and see health metrics and graphs for each service.
 
-![search-python](/static/tutorials/search-traces-python.png)
+![search-python](/static/tutorials/search-traces-py.png)
 
 ![metrics-python](/static/tutorials/metrics-python.png)
 
-![metrics-python-graph-1](/static/tutorials/python-graph-1.png)
+![metrics-python-graph-1](/static/tutorials/metrics-graph-1-py.png)
 
-![metrics-python-graph-2](/static/tutorials/python-graph-2.png)
+![metrics-python-graph-2](/static/tutorials/metrics-graph-2-py.png)
 
