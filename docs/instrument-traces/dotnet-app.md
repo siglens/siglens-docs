@@ -1,128 +1,129 @@
-# .Net App
+# .NET App
 
-### Auto-instrument sample Dotnet App for traces
+## Auto-instrument sample .NET App for traces
 
-In this tutorial, we will go through the steps to auto-instrument a .Net app to send traces to Siglens.
+In this tutorial, we will go through the steps to auto-instrument a .NET app to send traces to Siglens.
 
-### Prerequisites
-- Siglens instance should be running on localhost with ingest port-4318. To do so you need to change the ingest port of Siglens to `4318` in `server.yaml`
-- .Net app (refer to the documentation below if you don't have the setup for the .Net app)
-- To begin with the setup of the .NET app you must have .NET SDK installed locally. You can download it from [here](https://dotnet.microsoft.com/en-us/download/dotnet)
+## Prerequisites
+- You need to have the .NET SDK installed. You can install `dotnet` using a package manager like homebrew or download it [here](https://dotnet.microsoft.com/en-us/download/dotnet).
 
-### Set up for .Net application
-
-To begin, set up an environment in a new directory called dotnet-app. Within that directory, execute the following command:
+## Quickstart
+Start SigLens:
+```bash
+curl -L https://siglens.com/install.sh | sh
 ```
+
+Setup a .NET app:
+```bash
+mkdir dotnet-example
+cd dotnet-example
 dotnet new web
 ```
-You will get a sample code in the `Program.cs` file
-```
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
-
-app.Run();
-```
-Build and run the application with the following command:
-
-```
-dotnet build
-dotnet run
-```
-In the Properties subdirectory, inside `launchSettings.json` you will get the URL for the application:
-```
-"profiles": {
-    "http": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "applicationUrl": "http://localhost:5234",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-}
-```
-You can see the `Hello World!` message when you access the URL `http://localhost:5234`:
-
-![dotnet](/tutorials/dotnet-app.png)
-
-### Auto instrumentation setup for the .NET app
-
-To automatically instrument the application with OpenTelemetry .NET we use the  `OpenTelemetry.AutoInstrumentation` package.
-
-To automatically create traces the `OpenTelemetry.Instrumentation.AspNetCore` package is used for incoming ASP.NET Core requests.
- 
-Install the following dependencies:
-```
-dotnet add package OpenTelemetry
-dotnet add package OpenTelemetry.Exporter.OpenTelemetryProtocol 
-dotnet add package OpenTelemetry.Extensions.Hosting
-dotnet add package OpenTelemetry.Instrumentation.Runtime
-dotnet add package OpenTelemetry.Instrumentation.AspNetCore 
-dotnet add package OpenTelemetry.AutoInstrumentation
-```
-In the Program.cs file, we add OpenTelemetry as a service and configure the following variables:
-
-serviceName - Name of the service.                                                   
-otlpOptions.Endpoint - Endpoint for sending traces to Siglens- `http://localhost:4318/otlp/v1/traces`
-
-Given below is the updated `Program.cs` file with the configured variables:
-```
-using System.Diagnostics;
-using OpenTelemetry.Exporter;
-using OpenTelemetry.Resources;
+Replace the default `Program.cs`:
+```bash
+echo 'using OpenTelemetry.Exporter;
 using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenTelemetry()
-    .ConfigureResource(resource => 
-        resource.AddService(serviceName: "sample-net-app"))
     .WithTracing(tracing => tracing
         .AddAspNetCoreInstrumentation()
-        .AddConsoleExporter()
-        .AddOtlpExporter(otlpOptions =>
-        {
-                        
-            otlpOptions.Endpoint = new Uri("http://localhost:4318/otlp/v1/traces");
-            otlpOptions.Protocol = OtlpExportProtocol.HttpProtobuf;
-        
-        }));
+        .AddOtlpExporter()
+    );
 
 var app = builder.Build();
 
-app.MapGet("/", () => $"Hello World! OpenTelemetry Trace: {Activity.Current?.Id}");
-app.Run();
+app.MapGet("/", () => "Hello World!");
+
+app.Run();' > Program.cs
 ```
-Now run the application:
+
+Replace the default `Properties/launchSettings.json`:
+```bash
+echo '{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:8080",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}' > Properties/launchSettings.json
 ```
-dotnet build
+
+Install OpenTelemetry dependencies:
+```bash
+dotnet add package OpenTelemetry
+dotnet add package OpenTelemetry.Exporter.OpenTelemetryProtocol
+dotnet add package OpenTelemetry.Extensions.Hosting
+dotnet add package OpenTelemetry.Instrumentation.Runtime
+dotnet add package OpenTelemetry.Instrumentation.AspNetCore
+dotnet add package OpenTelemetry.AutoInstrumentation
+```
+
+Run the app:
+```bash
+OTEL_METRICS_EXPORTER=none \
+OTEL_LOGS_EXPORTER=none \
+OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:8081/otlp" \
+OTEL_EXPORTER_OTLP_PROTOCOL="http/protobuf" \
+OTEL_SERVICE_NAME="my-service" \
 dotnet run
 ```
-The application gets started on `http://localhost:5234`. Refresh the page to trigger our app to generate and emit a trace of that transaction (repeat that a few times to generate sample traces).
 
-![dotnet-app](/tutorials/dotnet-app-op.png)
+Go to the app at http://localhost:8080 and refresh the page a few times (you should see `Hello World!`) to send traces to SigLens.
+After about 10 seconds, you should see the traces on SigLens on http://localhost:5122 then going to Tracing -> Search Traces and clicking the Find Traces button.
 
-You can search traces:
+## More Details
+For auto-instrumenting your own .NET app, you'll follow a similar procedure.
+In particular, you will:
+1. Add the following to your program:
+```csharp
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Trace;
 
-![search-dotnet](/tutorials/dotnet-search.png)
+var builder = WebApplication.CreateBuilder(args);
 
-You can view red-metrics:
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing => tracing
+        .AddAspNetCoreInstrumentation()
+        .AddOtlpExporter()
+    );
 
-![metrics-dotnet](/tutorials/dotnet-metrics.png)
+var app = builder.Build();
+```
+2. Install OpenTelemetry dependencies into your project:
+```bash
+dotnet add package OpenTelemetry
+dotnet add package OpenTelemetry.Exporter.OpenTelemetryProtocol
+dotnet add package OpenTelemetry.Extensions.Hosting
+dotnet add package OpenTelemetry.Instrumentation.Runtime
+dotnet add package OpenTelemetry.Instrumentation.AspNetCore
+dotnet add package OpenTelemetry.AutoInstrumentation
+```
+3. Run your app using OTEL environment variables:
+```bash
+OTEL_METRICS_EXPORTER=none \
+OTEL_LOGS_EXPORTER=none \
+OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:8081/otlp" \
+OTEL_EXPORTER_OTLP_PROTOCOL="http/protobuf" \
+OTEL_SERVICE_NAME="my-service" \
+dotnet run
+```
 
-Graph visualization of red-metrics:
+Once you're on the Tracing tab of SigLens, you can search the traces and see health metrics and graphs for each service.
 
-![dotnet-graph-1](/tutorials/dotnet-graph-1.png)
+![search-dotnet](/static/tutorials/dotnet-search.png)
 
-![dotnet-graph-2](/tutorials/dotnet-graph-2.png)
+![metrics-dotnet](/static/tutorials/dotnet-metrics.png)
 
+![dotnet-graph-1](/static/tutorials/dotnet-graph-1.png)
 
-
-
-
-
-
-
+![dotnet-graph-2](/static/tutorials/dotnet-graph-2.png)
