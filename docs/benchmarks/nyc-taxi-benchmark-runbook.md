@@ -1,4 +1,4 @@
-# Benchmark Against ClickHouse
+# Benchmark Against ClickHouse and Elasticsearch
 ## Common setup
 Setup a server to run the benchmarks.
 I used an AWS im4gn.2xlarge running Ubuntu 22.04.
@@ -384,4 +384,262 @@ SELECT passenger_count, PULocationID, count(*) FROM trips GROUP BY passenger_cou
 SELECT passenger_count, PULocationID, trip_distance, count(*)
 FROM trips
 GROUP BY passenger_count, PULocationID, trip_distance
+```
+
+## Benchmark Elasticsearch
+You'll want two terminals in your Elasticsearch server; the first will run Elasticsearch and the second will ingest data.
+Start with Terminal 1.
+
+### Download Elasticsearch
+```bash
+cd /mnt/nvme1n1
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.11.4-linux-aarch64.tar.gz
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.11.4-linux-aarch64.tar.gz.sha512
+shasum -a 512 -c elasticsearch-8.11.4-linux-aarch64.tar.gz.sha512 
+```
+This should output `elasticsearch-8.11.4-linux-aarch64.tar.gz: OK`
+
+```bash
+tar -xzf elasticsearch-8.11.4-linux-aarch64.tar.gz
+cd elasticsearch-8.11.4/
+```
+
+### Configure Elasticsearch
+Add the following to `config/elasticsearch.yml`:
+```
+network.host: 0.0.0.0
+discovery.type: single-node
+```
+Also delete the line `cluster.initial_master_nodes: ["ip-172-31-24-1"]` from that file.
+
+Set a custom heap size. On this machine, if I increased the heap limit past 24 GB, ingestion would crash Elasticsearch.
+```
+echo -e "-Xms24g\n-Xmx24g" > config/jvm.options.d/heap.options
+```
+
+Elasticsearch uses mmapfs for storing indices. You can check the limit with `sudo sysctl vm.max_map_count`.
+I got 65530 and will increase this with
+```
+sudo sysctl -w vm.max_map_count=262144
+```
+
+### Add a template
+```bash
+curl -k -u "elastic:<your-elastic-password>" --location --request PUT 'https://<server-ip>:9200/_template/temp1' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+        "index_patterns": "trips",
+        "settings": { "number_of_shards": 6, "number_of_replicas": 0 },
+        "mappings": {
+            "_source": { "enabled": true },
+            "properties": {
+                "timestamp": { "type": "date", "format": "epoch_millis" }
+            }
+        }
+    }'
+```
+
+### Save the password for later
+If you don't know the password for the `elastic` user, reset it with
+```
+bin/elasticsearch-reset-password -u elastic
+```
+The new password will be printed. Save it for later.
+
+### Run Elasticsearch
+```bash
+./bin/elasticsearch > elastic.log 2>&1
+```
+
+### Ingest the Data
+In Terminal 2, clone siglens to use an ingester script from it.
+```bash
+cd /mnt/nvme1n1
+git clone https://github.com/siglens/siglens.git
+cd siglens/tools/nyc-taxi-benchmark
+```
+In ingester.py, make these changes:
+ 1. Change `index_data = '{"index": {"_index": "trips", "_type": "_doc"}}'` to `index_data = '{"index": {"_index": "trips"}}'`
+ 2. In the curl section, add the `"-k",` option, which allows faking SSL checks
+ 3. In the curl section, add `"-u", "elastic:<your-elastic-password>",`
+ 4. In the curl section, change `"http://localhost:8081/elastic/_bulk",` to `"https://localhost:9200/elastic/_bulk",`
+
+Now download and ingest the data:
+```bash
+mkdir dataset
+
+for year in {2011..2017}; do
+    for month in {01..12}; do
+        {
+            basefile="yellow_tripdata_$year-$month"
+
+            aws s3 cp s3://siglens-benchmark-datasets/nyc-taxi-benchmark-data/json/$basefile.json.gz dataset/
+            gunzip dataset/$basefile.json.gz
+            python3 ingester.py dataset/$basefile.json
+        } &
+    done
+    wait
+done
+```
+
+### Prepare to run queries
+This is an optional step so that we know what to set the `size` parameters to in our queries with group by fields.
+However, you can skip this because the queries in the next section already have the correct `size` values.
+
+The following should indicate 36 unique values.
+```bash
+curl -k -u "elastic:<your-elastic-password>" "https://<server-ip>:9200/trips/_search" -H 'Content-Type: application/json' -d '{
+  "size": 0,
+  "aggs": {
+    "distinct_passenger_count": {
+      "cardinality": {
+        "field": "passenger_count"
+      }
+    }
+  }
+}' | python3 -m json.tool
+```
+
+The following should indicate 265 unique values.
+```bash
+curl -k -u "elastic:<your-elastic-password>" "https://<server-ip>:9200/trips/_search" -H 'Content-Type: application/json' -d '{
+  "size": 0,
+  "aggs": {
+    "distinct_PULocationID": {
+      "cardinality": {
+        "field": "PULocationID"
+      }
+    }
+  }
+}' | python3 -m json.tool
+```
+
+The following should indicate 11473 unique values.
+```bash
+curl -k -u "elastic:<your-elastic-password>" "https://<server-ip>:9200/trips/_search" -H 'Content-Type: application/json' -d '{
+  "size": 0,
+  "aggs": {
+    "distinct_trip_distance": {
+      "cardinality": {
+        "field": "trip_distance"
+      }
+    }
+  }
+}' | python3 -m json.tool
+```
+
+### Run the Queries in Elasticsearch
+To get benchmark results, I had to clear the Elasticsearch cache after every query.
+Otherwise, if I ran a query multiple times then the first time would take a while but every subsequent invocation would return much faster than the original search because it was returning the cached response.
+To clear the cache, run:
+```bash
+curl -k -u "elastic:<your-elastic-password>" -X POST "https://<server-ip>:9200/trips/_cache/clear"
+```
+
+The responses will have a `took` field, indicating how long the query took in milliseconds.
+
+Note that Query 1 is a little different than Query 1 for the other benchmarked databases.
+This is because Elasticsearch was unable to perform an aggregation on the `airport_fee` column because it was ingested as a text field.
+So instead, this Query 1 aggregates on the `improvement_surcharge` field.
+This should be comparable because the `airport_fee` column only has one bucket, while the `improvement_surcharge` column has only 2, and one of those only accounts for 360 rows of the more than 1 billion rows in the dataset.
+
+```bash
+# Query 1
+SELECT airport_fee, count(*) FROM trips GROUP BY airport_fee
+curl -k -u "elastic:<your-elastic-password>" "https://<server-ip>:9200/trips/_search" -H 'Content-Type: application/json' -d '{
+  "size": 0,
+  "aggs": {
+    "improvement_surcharge_groups": {
+      "terms": {
+        "field": "improvement_surcharge",
+        "size": 10
+      },
+      "aggs": {
+        "count": {
+          "value_count": {
+            "field": "improvement_surcharge"
+          }
+        }
+      }
+    }
+  }
+}' | python3 -m json.tool | less
+
+# Query 2
+curl -k -u "elastic:<your-elastic-password>" "https://<server-ip>:9200/trips/_search" -H 'Content-Type: application/json' -d '{
+  "size": 0,
+  "aggs": {
+    "passenger_count_groups": {
+      "terms": {
+        "field": "passenger_count",
+        "size": 36
+      },
+      "aggs": {
+        "average_total_amount": {
+          "avg": {
+            "field": "total_amount"
+          }
+        }
+      }
+    }
+  }
+}' | python3 -m json.tool | less
+
+# Query 3
+curl -k -u "elastic:<your-elastic-password>" "https://<server-ip>:9200/trips/_search" -H 'Content-Type: application/json' -d '{
+  "size": 0,
+  "aggs": {
+    "passenger_count_groups": {
+      "terms": {
+        "field": "passenger_count",
+        "size": 36
+      },
+      "aggs": {
+        "PULocationID_groups": {
+          "terms": {
+            "field": "PULocationID",
+            "size": 265
+          }
+        }
+      }
+    }
+  }
+}' | python3 -m json.tool | less
+
+# Query 4
+# For this query we don't want more than 10,000 buckets, so we'll reduce the "size" parameters.
+curl -k -u "elastic:<your-elastic-password>" "https://<server-ip>:9200/trips/_search" -H 'Content-Type: application/json' -d '{
+  "size": 0,
+  "aggs": {
+    "passenger_count_groups": {
+      "terms": {
+        "field": "passenger_count",
+        "size": 10
+      },
+      "aggs": {
+        "PULocationID_groups": {
+          "terms": {
+            "field": "PULocationID",
+            "size": 10
+          },
+          "aggs": {
+            "trip_distance_groups": {
+              "terms": {
+                "field": "trip_distance",
+                "size": 100
+              },
+              "aggs": {
+                "count": {
+                  "value_count": {
+                    "field": "trip_distance"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}' | python3 -m json.tool | less
 ```
