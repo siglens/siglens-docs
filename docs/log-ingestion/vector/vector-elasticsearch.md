@@ -1,7 +1,7 @@
 # Elasticsearch
 
 - SigLens is compatible with the Elasticsearch plugin for vector. Install vector and start it. Learn more about [installation here](./vector-install).
-- Make sure that the `endpoints` in the configuration has the `/elastic`suffix.
+- Make sure that the `endpoints` in the configuration has the `/elastic` suffix.
 - Create a vector config file with the below [sample configuration](#sample-configuration). Read more about [Vector Config file](#vector-configuration) below.
 - Run the command: `vector --config vector.yaml`.
 
