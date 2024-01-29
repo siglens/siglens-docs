@@ -7,7 +7,7 @@ Metricbeat can be used to ingest logs into Elasticsearch from various servers li
 - Create a metricbeat config file with the below [sample configuration](#sample-configuartion). Read more about [Metricbeat Config file](#metricbeat-configuartion) below.
 - Run the command: `metricbeat -c filebeat_config.yaml`. Read more about [running metricbeat config](#run-metricbeat-config) below.
 
-**Note:** For Linux Systems, Please read the [NOTICE section](#metricbeat-notice) below before proceeding with installation.
+**Note:** For Linux Systems, please read the [NOTICE section](#metricbeat-notice) below before proceeding with installation.
 
 ## Install Metricbeat
 

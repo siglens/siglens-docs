@@ -7,7 +7,7 @@ Filebeat can be used to ingest logs into Elasticsearch from a file. Read more ab
 - Create a filebeat config file with the below [sample configuration](#sample-configuration). Read more about [Filebeat Config file](#filebeat-configuartion) below.
 - Run the command: `filebeat -c filebeat_config.yaml`. Read more about [running filebeat config](#run-filebeat-config) below.
 
-**Note:** For Linux Systems, Please read the [NOTICE section](#filebeat-notice) below before proceeding with installation.
+**Note:** For Linux Systems, please read the [NOTICE section](#filebeat-notice) below before proceeding with installation.
 
 ## Install Filebeat
 
