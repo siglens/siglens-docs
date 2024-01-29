@@ -643,3 +643,97 @@ curl -k -u "elastic:<your-elastic-password>" "https://<server-ip>:9200/trips/_se
   }
 }' | python3 -m json.tool | less
 ```
+
+## Benchmark Loki
+You'll want three terminals. Terminal 1 will run Loki, Terminal 2 will run Promtail, and Terminal 3 will run ingestion and queries.
+### Install Loki
+```bash
+sudo apt install unzip -y
+
+mkdir /mnt/nvme1n1/loki
+cd /mnt/nvme1n1/loki
+
+curl -O -L "https://github.com/grafana/loki/releases/download/v2.9.4/loki-linux-arm64.zip"
+unzip loki-linux-arm64.zip
+chmod a+x loki-linux-arm64
+
+curl -O -L "https://github.com/grafana/loki/releases/download/v2.9.4/promtail-linux-arm64.zip"
+unzip promtail-linux-arm64.zip
+chmod a+x promtail-linux-arm64
+
+wget https://raw.githubusercontent.com/grafana/loki/v2.9.4/cmd/loki/loki-local-config.yaml
+wget https://raw.githubusercontent.com/grafana/loki/v2.9.4/clients/cmd/promtail/promtail-local-config.yaml
+```
+
+### Update the default configs
+In `loki-local-config.yaml`, update these configurations with these new values:
+```yaml
+path_prefix: /mnt/nvme1n1/loki/internal/path
+chunks_directory: /mnt/nvme1n1/loki/internal/chunks
+rules_directory: /mnt/nvme1n1/loki/internal/rules
+```
+
+Also set the ingestion limits to high values to avaid throttling by adding this to the config:
+```yaml
+limits_config:
+  per_stream_rate_limit: 4G
+  per_stream_rate_limit_burst: 4G
+  ingestion_rate_mb: 4096
+  ingestion_burst_size_mb: 4096
+```
+
+In `promtail-local-config.yaml`, change `path` to:
+```yaml
+__path__: /mnt/nvme1n1/data/*.json
+```
+
+### Run Loki and Promtail
+In terminal 1, start Loki with:
+```bash
+./loki-linux-arm64 -config.file=loki-local-config.yaml
+```
+
+In terminal 2, start Promtail with:
+```bash
+./promtail-linux-arm64 -config.file=promtail-local-config.yaml
+```
+
+### Ingest the Data
+```bash
+mkdir /mnt/nvme1n1/data
+cd /mnt/nvme1n1/data
+
+for year in {2011..2017}; do
+    for month in {01..12}; do
+            basefile="yellow_tripdata_$year-$month"
+
+            aws s3 cp s3://siglens-benchmark-datasets/nyc-taxi-benchmark-data/json/$basefile.json.gz .
+            gunzip $basefile.json.gz
+    done
+done
+```
+
+Since Promtail is already running and configured to ingest all JSON files in this `data/` directory, it will start ingesting the logs.
+You can check the progress of the ingestion with this bash:
+```bash
+total=$(curl -s http://localhost:9080/metrics | grep -v '^#' | awk '/promtail_file_bytes_total/ {sum += $2} END {print sum}'); \
+ingested=$(curl -s http://localhost:9080/metrics | grep -v '^#' | awk '/promtail_read_bytes_total/ {sum += $2} END {print sum}'); \
+percent=$(echo "$ingested $total" | awk '{printf "%.2f\n", ($1 / $2) * 100}'); \
+echo "percent ingested: $percent%"
+```
+
+### Run the Queries in Loki
+After ingestion is complete, run the queries.
+```sql
+# Query 1
+sum(count_over_time({job=\"varlogs\"} | json | airport_fee != "" [12h])) by (airport_fee)
+
+# Query 2
+avg_over_time({job=\"varlogs\"} | json | unwrap total_amount [12h]) by (passenger_count)
+
+# Query 3
+sum(count_over_time({job=\"varlogs\"} | json [12h])) by (passenger_count, PULocationID)
+
+# Query 4
+sum(count_over_time({job=\"varlogs\"} | json [12h])) by (passenger_count, PULocationID, trip_distance)
+```
