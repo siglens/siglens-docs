@@ -1,91 +1,117 @@
 # Python App
 
-### Auto-instrument sample Python app for traces
+## Auto-instrument sample Python app for traces
 
-In this tutorial, we will go through the steps to auto-instrument a Python app to send traces to Siglens.
+In this tutorial, we will go through the steps to auto-instrument a Python app to send traces to SigLens.
+Follow along with the [Django Quickstart](#django-quickstart) or [Flask Quickstart](#flask-quickstart) to quickly get an app sending traces to SigLens, then checkout [More Details](#more-details) for more information on getting your existing app to send traces to SigLens.
 
-### Prerequisites
-- Siglens instance should be running on localhost with ingest port-4318. To do so you need to change the ingest port of Siglens to `4318` in `server.yaml`
-- Python app (refer to the documentation below if you don't have the setup for the go app)
+## Django Quickstart
 
-### Set up for Python application
-Let's start by setting up our example application. This application will be a simple server that, when accessed, will respond with the message 'Web App with Python Flask!'. 
+Start SigLens:
 
-To begin, set up an environment in a new directory:
-```
-mkdir python-hello-world-otel
-cd python-hello-world-otel
-python3 -m venv venv
-source ./venv/bin/activate
-```
-Now install Flask:
-```
-pip install 'flask<3' 'werkzeug<3'
-```
-Create a file server.py and add the following code to it:
-```
-from flask import Flask
- 
-app = Flask(__name__)
- 
-@app.route('/')
-def index():
-    return 'Web App with Python Flask!'
- 
-app.run(host='0.0.0.0', port=81)
-```
-Run the application using the following command:
-```
-python3 server.py
+```bash
+curl -L https://siglens.com/install.sh | sh
 ```
 
-You can now access the running app at `http://localhost:81`:
+Setup a simple Python app:
 
-![py-app](/tutorials/python-app.png)
+```bash
+git clone https://github.com/docker/awesome-compose.git
+cd awesome-compose/django/app
+python3 -m venv django
+source django/bin/activate
+pip install -r requirements.txt
+```
 
-### Auto instrumentation setup for Python app
+Install packages for OpenTelemetry Python development:
 
-We have to install all OpenTelemetry components that are required to auto-instrument our app:
-
-Install the opentelemetry-distro package, which contains the OpenTelemetry API, SDK, and also the tools opentelemetry-bootstrap and opentelemetry-instrument you will use below
-```
-pip install opentelemetry-distro
-```
-Then run this command:
-```
-pip install Iv protobuf==3.20.1 
-```
-Run the opentelemetry-bootstrap command:
-```
-opentelemetry-bootstrap --action=install 
-```
-Now, we need to install the OpenTelemetry exporter:
-```
-pip install opentelemetry-exporter-otlp
+```bash
 pip install opentelemetry-exporter-otlp-proto-http
+pip install opentelemetry-distro
+opentelemetry-bootstrap -a install
 ```
-Run the following command in the terminal to enable auto-instrumentation of the application
+
+Install packages for OpenTelemetry Python development with Django:
+
+```bash
+pip install opentelemetry-instrumentation-django
 ```
-OTEL_TRACES_EXPORTER=otlp OTEL_METRICS_EXPORTER=none 
-OTEL_EXPORTER_OTLP_TRACES_ENDPOINT="http://localhost:4318/otlp/v1/traces" 
-OTEL_EXPORTER_OTLP_PROTOCOL="http/protobuf" OTEL_RESOURCE_ATTRIBUTES=service.name=python-app opentelemetry-instrument python3 server.py
+
+Run with OpenTelemetry auto-instrumentation:
+
+```bash
+DJANGO_SETTINGS_MODULE=example.settings \
+OTEL_LOGS_EXPORTER=none \
+OTEL_METRICS_EXPORTER=none \
+OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:8081/otlp" \
+OTEL_EXPORTER_OTLP_PROTOCOL="http/protobuf" \
+OTEL_SERVICE_NAME="my-service" \
+opentelemetry-instrument python3 manage.py runserver --noreload
 ```
-The application gets started on `http://localhost:81`. Refresh the page to trigger our app to generate and emit a trace of that transaction (repeat that a few times to generate sample traces).
 
-![terminal-py-app](/tutorials/terminal-python.png)
+Go to the app at http://localhost:8000 and refresh the page a few times (you should see `The install worked successfully! Congratulations!`) to send traces to SigLens.
+After about 10 seconds, you should see the traces on SigLens on http://localhost:5122 then going to Tracing -> Search Traces and clicking the Find Traces button.
 
-You can search traces:
+## Flask Quickstart
 
-![search-traces-py](/tutorials/search-traces-py.png)
+Start SigLens:
 
-You can view red-metrics traces:
+```bash
+curl -L https://siglens.com/install.sh | sh
+```
 
-![siglens-py-app](/tutorials/metrics-python.png)
+Setup a simple Python app:
 
-Graph visualization of red-metrics:
+```bash
+git clone https://github.com/helloflask/flask-examples.git
+cd flask-examples/hello
+python3 -m venv flask
+source flask/bin/activate
+```
 
-![graph-1-py](/tutorials/metrics-graph-1-py.png)
+Install packages for OpenTelemetry Python development:
 
-![graph-2-py](/tutorials/metrics-graph-2-py.png)
+```bash
+pip install opentelemetry-exporter-otlp-proto-http
+pip install opentelemetry-distro
+opentelemetry-bootstrap -a install
+```
 
+Install packages for OpenTelemetry Python development with Flask:
 
+```bash
+pip install 'flask<3' 'werkzeug<3'
+pip install opentelemetry-instrumentation-flask
+```
+
+Run with OpenTelemetry auto-instrumentation:
+
+```bash
+OTEL_LOGS_EXPORTER=none \
+OTEL_METRICS_EXPORTER=none \
+OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:8081/otlp" \
+OTEL_EXPORTER_OTLP_PROTOCOL="http/protobuf" \
+OTEL_SERVICE_NAME="my-service" \
+opentelemetry-instrument flask run -p 8080
+```
+
+Go to the app at http://localhost:8080 and refresh the page a few times (you should see `Hello, World!`) to send traces to SigLens.
+After about 10 seconds, you should see the traces on SigLens on http://localhost:5122 then going to Tracing -> Search Traces and clicking the Find Traces button.
+
+## More Details
+
+To auto-instrument your own Flask or Django app, you'll follow a similar procedure as in the relevant Quickstart.
+For a Python app using a different framework the process will be largely the same, but instead of installing `opentelemetry-instrumentation-flask` you'll install `opentelemetry-instrumentation-<package>`.
+Check out the [OpenTelemetry Registry](https://opentelemetry.io/ecosystem/registry/) to find the appropriate package for instrumenting your Python app.
+
+For Django specifically, you need to run the app with the `--noreload` flag, so something like `python3 manage.py runserver --noreload`. This lets OpenTelemetry properly instrument the app by disallowing Django from running `main` twice.
+
+Once you're on the Tracing tab of SigLens, you can search the traces and see health metrics and graphs for each service.
+
+![search-python](../../static/tutorials/search-traces-py.png)
+
+![metrics-python](../../static/tutorials/metrics-python.png)
+
+![metrics-python-graph-1](../../static/tutorials/metrics-graph-1-py.png)
+
+![metrics-python-graph-2](../../static/tutorials/metrics-graph-2-py.png)
