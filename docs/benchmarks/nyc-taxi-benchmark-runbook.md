@@ -673,32 +673,41 @@ chunks_directory: /mnt/nvme1n1/loki/internal/chunks
 rules_directory: /mnt/nvme1n1/loki/internal/rules
 ```
 
-Also set the ingestion limits to high values to avaid throttling by adding this to the config:
+Increase the timeout limit by adding these into the `server` section:
+```yaml
+http_server_read_timeout: 12h
+http_server_write_timeout: 12h
+```
+
+Add this to your config to avoid ingestion throttling and increase the number of buckets that queries are allowed to return.
 ```yaml
 limits_config:
   per_stream_rate_limit: 4G
   per_stream_rate_limit_burst: 4G
   ingestion_rate_mb: 4096
   ingestion_burst_size_mb: 4096
+  max_query_series: 1000000
+  query_timeout: 12h
 ```
 
-In `promtail-local-config.yaml`, change `path` to:
+In `promtail-local-config.yaml`, change `__path__` to:
 ```yaml
 __path__: /mnt/nvme1n1/data/*.json
 ```
 
 ### Run Loki and Promtail
-In terminal 1, start Loki with:
+In Terminal 1, start Loki with:
 ```bash
 ./loki-linux-arm64 -config.file=loki-local-config.yaml
 ```
 
-In terminal 2, start Promtail with:
+In Terminal 2, start Promtail with:
 ```bash
 ./promtail-linux-arm64 -config.file=promtail-local-config.yaml
 ```
 
 ### Ingest the Data
+In Terminal 3, run:
 ```bash
 mkdir /mnt/nvme1n1/data
 cd /mnt/nvme1n1/data
@@ -724,16 +733,28 @@ echo "percent ingested: $percent%"
 
 ### Run the Queries in Loki
 After ingestion is complete, run the queries.
-```sql
+```bash
 # Query 1
-sum(count_over_time({job=\"varlogs\"} | json | airport_fee != "" [12h])) by (airport_fee)
+curl -G -s "http://localhost:3100/loki/api/v1/query" \
+  --data-urlencode "query=sum(count_over_time({job=\"varlogs\"} | json | airport_fee != "" [24h])) by (airport_fee)" \
+  --data-urlencode "time=$(date +%s)000000000" \
+  --data-urlencode "stats=true"
 
 # Query 2
-avg_over_time({job=\"varlogs\"} | json | unwrap total_amount [12h]) by (passenger_count)
+curl -G -s "http://localhost:3100/loki/api/v1/query" \
+  --data-urlencode "query=avg_over_time({job=\"varlogs\"} | json | unwrap total_amount [24h]) by (passenger_count)" \
+  --data-urlencode "time=$(date +%s)000000000" \
+  --data-urlencode "stats=true"
 
 # Query 3
-sum(count_over_time({job=\"varlogs\"} | json [12h])) by (passenger_count, PULocationID)
+curl -G -s "http://localhost:3100/loki/api/v1/query" \
+  --data-urlencode "query=sum(count_over_time({job=\"varlogs\"} | json [24h])) by (passenger_count, PULocationID)" \
+  --data-urlencode "time=$(date +%s)000000000" \
+  --data-urlencode "stats=true"
 
 # Query 4
-sum(count_over_time({job=\"varlogs\"} | json [12h])) by (passenger_count, PULocationID, trip_distance)
+curl -G -s "http://localhost:3100/loki/api/v1/query" \
+  --data-urlencode "query=sum(count_over_time({job=\"varlogs\"} | json [24h])) by (passenger_count, PULocationID, trip_distance)" \
+  --data-urlencode "time=$(date +%s)000000000" \
+  --data-urlencode "stats=true"
 ```
