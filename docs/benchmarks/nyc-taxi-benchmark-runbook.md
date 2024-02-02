@@ -646,7 +646,7 @@ curl -k -u "elastic:<your-elastic-password>" "https://<server-ip>:9200/trips/_se
 
 ## Benchmark Loki
 You'll want three terminals. Terminal 1 will run Loki, Terminal 2 will run Promtail, and Terminal 3 will run ingestion and queries.
-### Install Loki
+### Install Loki and Promtail
 ```bash
 sudo apt install unzip -y
 
@@ -736,7 +736,7 @@ After ingestion is complete, run the queries.
 ```bash
 # Query 1
 curl -G -s "http://localhost:3100/loki/api/v1/query" \
-  --data-urlencode "query=sum(count_over_time({job=\"varlogs\"} | json | airport_fee != "" [24h])) by (airport_fee)" \
+  --data-urlencode "query=sum(count_over_time({job=\"varlogs\"} | json [24h])) by (airport_fee)" \
   --data-urlencode "time=$(date +%s)000000000" \
   --data-urlencode "stats=true"
 
