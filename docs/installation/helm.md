@@ -27,8 +27,6 @@ Before proceeding, ensure you have both kubectl and Helm CLI installed. Open you
 
 To install Docker, kubectl, and Helm on different operating systems, you can use the following commands:
 
-Certainly! Here are the commands to install Docker, kubectl, and Helm on Windows, MacOS, and Linux:
-
 <details>
 <summary>Windows</summary>
 
