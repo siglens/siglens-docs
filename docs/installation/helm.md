@@ -2,16 +2,16 @@
 
 This comprehensive guide will help you install SigLens on your local Minikube Kubernetes cluster using Helm. Helm simplifies the deployment of Kubernetes applications, making it a breeze to set up SigLens.
 
-The Helm approach is advantageous for users managing Kubernetes clusters who want a simplified and standardized way to deploy SigLens. Helm simplifies SigLens deployment as a Kubernetes package, providing standardized, scalable, and version-controlled installations. This method is best suited for users who leverage Kubernetes orchestration, offering templating and packaging for easy configuration and sharing within a Kubernetes-native environment.
+The Helm approach is advantageous for users managing Kubernetes clusters who want a simplified and standardized way to deploy SigLens on their Kubernetes clusters. Helm simplifies SigLens deployment as a Kubernetes package, providing standardized, scalable, and version-controlled installations. This method is best suited for users who leverage Kubernetes orchestration, offering templating and packaging for easy configuration and sharing within a Kubernetes-native environment.
 
 ### Prerequisites
 
 Before installing SigLens, ensure you have the following tools installed on your system:
 
-- [Kubernetes command-line interface (kubectl)](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [Helm CLI](https://helm.sh/docs/helm/)
-- [Minikube](https://minikube.sigs.k8s.io/)
 - [Docker](https://docs.docker.com/get-docker/)
+- [Minikube](https://minikube.sigs.k8s.io/)
+- [Kubernetes command-line interface (kubectl)](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
 ## Step-by-Step Installation Guide
 
@@ -53,9 +53,23 @@ Move-Item -Path .\kubectl.exe -Destination C:\Windows\System32\kubectl.exe
 <details>
 <summary>MacOS</summary>
 
+We will be installing `Docker`, `kubectl` and `Helm` using [Homebrew](https://docs.brew.sh/Installation#macos-requirements). If you don’t have Homebrew on you MacOS, use the command below:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+```
+
+Proceed to installing `Docker`, `kubectl` and `Helm`, once Homebrew has been installed.
+
 #### Docker:
-   
-Download and install Docker Desktop from the official Docker website: [Docker Desktop for Mac](https://www.docker.com/products/docker-desktop)
+
+You can install Docker on MacOS using Homebrew:
+
+```bash
+brew install --cask docker
+```
+
+Alternatively, you may also install Docker Desktop from the official Docker website: [Docker Desktop for Mac](https://www.docker.com/products/docker-desktop)
 
 #### kubectl:
    
@@ -69,15 +83,7 @@ brew install kubectl
    
 You can install Helm on MacOS using Homebrew as well:
 
-1. Open a terminal window.
-
-Install Homebrew by running the following command:
-    
- ```bash
- /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
- ```
-
-2. Once Homebrew is installed, run the following command to install Helm:
+1. Once Homebrew is installed, run the following command to install Helm:
    
 ```bash
 brew install helm
@@ -89,7 +95,32 @@ brew install helm
 <summary>Linux</summary>
 
 #### Docker:
-Install Docker on Linux by following the official Docker installation guide for your distribution: [Docker Installation Guide](https://docs.docker.com/engine/install/)
+
+1. Set up Docker's apt repository.
+
+```bash
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+
+2. Install the Docker packages: To install the latest version, run:
+
+```bash
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+Alternatively, install Docker on Linux by following the official Docker installation guide for your Linux distribution at [Docker Installation Guide](https://docs.docker.com/desktop/install/linux-install/)
 
 #### kubectl:
 You can install kubectl on Linux using the following commands:
@@ -126,21 +157,7 @@ sudo yum install helm
 
 Note: Make sure to check for the latest versions on the respective official websites or package managers. And follow any additional commands as required in the official documentation
 
-### Step 3: Adding SigLens Helm Repository
-
-To get started, add the SigLens Helm repository to your Helm configuration:
-
-```bash
-helm repo add siglens-repo https://siglens.github.io/charts
-```
-
-Update the Helm repository to ensure you have the latest charts:
-
-```bash
-helm repo update
-```
-
-### Step 4: Starting Minikube
+### Step 3: Starting Minikube
 
 Now that we have Minikube, kubectl, and Helm installed, let's start our Minikube cluster. In your terminal, enter the following command:
 
@@ -179,6 +196,22 @@ host: Running
 kubelet: Running
 apiserver: Running
 kubeconfig: Configured
+```
+
+> Run `kubectl get nodes` to make sure that the minikube node is up and running.
+
+### Step 4: Adding SigLens Helm Repository
+
+To get started, add the SigLens Helm repository to your Helm configuration:
+
+```bash
+helm repo add siglens-repo https://siglens.github.io/charts
+```
+
+Update the Helm repository to ensure you have the latest charts:
+
+```bash
+helm repo update
 ```
 
 ### Step 5: Installing SigLens
@@ -224,11 +257,21 @@ kubectl port-forward svc/siglens-query-svc 8000:8000
 
 ### Step 7: Clean Up
 
-Once you've finished working with SigLens, you can stop your Minikube cluster to free up resources:
+Once you've finished working with SigLens, you can stop and delete your Minikube cluster to free up resources, all the configuration files and other data related to the Minikube cluster stored on your system:
+
+- Stop the cluster
 
 ```bash
 minikube stop
 ```
+
+- Delete the cluster
+
+```bash
+minikube delete
+```
+
+Before deleting, it's recommended to stop the cluster using `minikube stop`. Otherwise, the deletion might fail.
 
 ## Next Steps
 

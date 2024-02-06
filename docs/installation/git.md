@@ -25,7 +25,7 @@ Before getting started, make sure you have the following prerequisites:
      ```
 
    - **MacOS:**
-     Make sure you have Homebrew installed, then run:
+     Make sure you have [Homebrew](https://docs.brew.sh/Installation#macos-requirements) installed, then run:
      ```bash
      brew update && brew install golang
      ```
@@ -40,7 +40,7 @@ Currently, SigLens does not natively support Windows. However, you can choose on
 
 ## Cloning and Running SigLens
 
-Once you have the prerequisites set up and a Linux or MacOS environment, follow these steps:
+Follow these steps, Once you have the prerequisites set up and a Linux or MacOS environment. For Windows, you can use Linux Virtual Machine or WSL2:
 
 1. Clone the SigLens repository:
    ```bash
@@ -57,7 +57,7 @@ Once you have the prerequisites set up and a Linux or MacOS environment, follow 
    go run cmd/siglens/main.go --config server.yaml
    ```
 
-   Please note: If you're running SigLens in a different environment, adjust the commands accordingly.
+   Please note: If you're running SigLens in a different directory, adjust the commands accordingly.
 
 4. Access the SigLens Dashboard at [http://localhost:5122/](http://localhost:5122/).
 
