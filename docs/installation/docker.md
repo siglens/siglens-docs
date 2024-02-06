@@ -19,13 +19,14 @@ To install SigLens using Docker, execute the following command in your terminal:
 curl -L https://siglens.com/install.sh | sh
 ```
 
-The above command will download and [`install_with_docker.sh`](https://github.com/siglens/siglens/blob/develop/install_with_docker.sh) bash file from Siglens repository.
+The above command will download and run the [`install_with_docker.sh`](https://github.com/siglens/siglens/blob/develop/install_with_docker.sh) bash script from Siglens repository.
 
 This `install_with_docker.sh` performs the following task:
 
 1. **Extracts SigLens Version:** Retrieves the latest SigLens version from the GitHub API.
 
-2. **Checks Sudo Permissions:** Verifies if the script has sudo privileges and prompts the user if needed.
+2. **Checks Sudo Permissions:** Verifies if the script has sudo privileges and prompts the user if needed. 
+> You do not need to run the script as root.
 
 3. **Identifies OS and Package Manager:** Determines the operating system and package manager for Docker installation.
 
