@@ -1,4 +1,4 @@
-# SigLens Local Installation Guide
+# Git
 
 This guide will walk you through the process of cloning the SigLens repository and running it locally. Please follow the steps carefully to ensure a smooth setup.
 
