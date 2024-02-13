@@ -44,7 +44,7 @@
   td-agent-gem list | grep fluent-plugin-elasticsearch
   ```
 
-- Now install a `elasticsearch` gem `version: 7.9`, that is compatible with the SigLens Elasticsearch and the installed `fluent-plugin-elasticsearch` version.
+- Now install the `elasticsearch` gem `version: 7.9`, that is compatible with the SigLens Elasticsearch and the installed `fluent-plugin-elasticsearch` version.
 
 - First uninstall, if any `elasticsearch` gem is installed by running the below command:
 
