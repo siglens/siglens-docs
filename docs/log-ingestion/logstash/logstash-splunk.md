@@ -1,7 +1,7 @@
 # Splunk
 
-- Siglens can be ingested data in Splunk format using Logstash through http plugin. Read more about installation [here](#install-logstash).
-- Make sure that the `hosts` in the configuration should be the Splunk HEC even collector endpoint `/splunk/services/collector/event`.
+- Siglens can ingest data in Splunk format using Logstash through the http plugin. Read more about installation [here](#install-logstash).
+- The `hosts` in the configuration should be the Splunk HEC event collector endpoint: `/splunk/services/collector/event`.
 - Create a logstash config file with the below [sample configuration](#sample-configuration). Read more about [Logstash Config file](#logstash-configuration) below.
 - Run the command: `logstash -c logstash_config.conf`. Read more about [running logstash config](#run-logstash-config) below.
 
