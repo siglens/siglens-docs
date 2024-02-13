@@ -3,7 +3,7 @@
 - Siglens can be ingested data in Elasticsearch format using fluentd. Install fluentd. Read more about installation [here](#install-fluentd).
 - Make sure that the `host` in the configuration has the `/elastic` suffix.
 - Create a fluentd config file with the below [sample configuration](#sample-configuration). Read more about [Fluentd Config file](#fluentd-configuration) below.
-- Run the command: `fluentd -c logstah_config.conf`. Read more about [running fluentd config](#run-fluentd-config) below.
+- Run the command: `fluentd -c fluentd_config.conf`. Read more about [running fluentd config](#run-fluentd-config) below.
 - Read more about Fluentd from the [official docs here](https://docs.fluentd.org/).
 
 ## Install Fluentd
@@ -44,7 +44,29 @@
   td-agent-gem list | grep fluent-plugin-elasticsearch
   ```
 
-- Might need to setup or install ruby modules or development toolkit. If required it is automatically prompted and installed.
+- Now install the `elasticsearch` gem `version: 7.9`, that is compatible with the SigLens Elasticsearch and the installed `fluent-plugin-elasticsearch` version.
+
+- First uninstall, if any `elasticsearch` gem is installed by running the below command:
+
+  ```bash
+  fluent-gem uninstall elasticsearch
+
+  # OR
+
+  td-agent-gem uninstall elasticsearch
+  ```
+
+- Then install the `elasticsearch` gem version: `7.9` by running the below command:
+
+  ```bash
+  fluent-gem install elasticsearch -v 7.9
+
+  # OR
+
+  td-agent-gem install elasticsearch -v 7.9
+  ```
+
+- _Might need to setup or install ruby modules or development toolkit. If required it is automatically prompted and installed._
 
 ## Fluentd Configuration
 

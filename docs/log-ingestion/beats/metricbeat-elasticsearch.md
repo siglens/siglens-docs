@@ -5,7 +5,7 @@ Metricbeat can be used to ingest logs into Elasticsearch from various servers li
 - SigLens can be ingested data in Elasticsearch format through Metricbeat. Install Metricbeat. Learn more about [installation here](#install-metricbeat).
 - Make sure that the `endpoints` in the configuration has the `/elastic` suffix.
 - Create a metricbeat config file with the below [sample configuration](#sample-configuartion). Read more about [Metricbeat Config file](#metricbeat-configuartion) below.
-- Run the command: `metricbeat -c filebeat_config.yaml`. Read more about [running metricbeat config](#run-metricbeat-config) below.
+- Run the command: `metricbeat -c metricbeat_config.yaml`. Read more about [running metricbeat config](#run-metricbeat-config) below.
 
 **Note:** For Linux Systems, please read the [NOTICE section](#metricbeat-notice) below before proceeding with installation.
 
@@ -65,7 +65,7 @@ metricbeat.modules:
 output.elasticsearch:
   # Replace with your custom Elasticsearch endpoint
   hosts: ['http://localhost:8081/elastic/']
-  index: 'filebeat-ind-0' # Custom index name
+  index: 'metricbeat-ind-0' # Custom index name
 
 # Disable template management
 setup.template.enabled: false
@@ -93,12 +93,12 @@ setup.ilm.enabled: false
   - As per the above setup, it is at `C:\Program Files\Metricbeat`
   - Then run command: `.\metricbeat.exe -e -c <<path-of-metricbeat-config>>`
   - -e is an optional argument that is used for logging.
-  - The example below assumes that your Metricbeat config file is at D:\Siglens\filebeat_elasticsearch.yml
+  - The example below assumes that your Metricbeat config file is at D:\Siglens\metricbeat_elasticsearch.yml
   - Note: Open a PowerShell prompt as an Administrator (right-click the PowerShell icon and select **Run As Administrator**).
 
   ```bash
   PS > cd 'C:\Program Files\Metricbeat'
-  PS C:\Program Files\Metricbeat>.\metricbeat.exe -e -c D:\Siglens\filebeat_elasticsearch.yml
+  PS C:\Program Files\Metricbeat>.\metricbeat.exe -e -c D:\Siglens\metricbeat_elasticsearch.yml
   ```
 
 ## Metricbeat NOTICE

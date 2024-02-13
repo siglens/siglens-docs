@@ -3,7 +3,7 @@
 - Siglens can be ingested data in Splunk format using fluentd. Install fluentd. Read more about installation [here](#install-fluentd).
 - Make sure that the `endpoint` in the configuration has the splunk endpoint: `/splunk/services/collector/event`.
 - Create a fluentd config file with the below [sample configuration](#sample-configuration). Read more about [Fluentd Config file](#fluentd-configuration) below.
-- Run the command: `fluentd -c logstah_config.conf`. Read more about [running fluentd config](#run-fluentd-config) below.
+- Run the command: `fluentd -c fluentd_config.conf`. Read more about [running fluentd config](#run-fluentd-config) below.
 - Read more about Fluentd from the [official docs here](https://docs.fluentd.org/).
 
 ## Install Fluentd
@@ -17,14 +17,14 @@
 ### Setup for Splunk
 
 - Fluentd by default comes with various plugins but it does not include a plugin for Splunk.
-- Install the Splunk plugin called [`fluent-plugin-splunk-enterprise`](https://github.com/fluent/fluent-plugin-splunk). Read more about Splunk Plugin [here](https://docs.fluentd.org/v/0.12/output/splunk).
+- Install the Splunk plugin called [`fluent-plugin-splunk-hec`](https://github.com/splunk/fluent-plugin-splunk-hec). Read more about Splunk Plugin [here](https://docs.fluentd.org/v/0.12/output/splunk).
 - ```bash
-  fluent-gem install fluent-plugin-splunk-enterprise
+  fluent-gem install fluent-plugin-splunk-hec
   ```
 - If you're using a ` td-agent`, it's recommended to use `td-agent-gem` instead
 
   ```bash
-  sudo td-agent-gem install fluent-plugin-splunk-enterprise
+  sudo td-agent-gem install fluent-plugin-splunk-hec
   ```
 
 - Check that the gem is installed by running the below command
@@ -37,7 +37,7 @@
   td-agent-gem list | grep fluent-plugin-splunk-hec
   ```
 
-- Might need to setup or install ruby modules or development toolkit. If required it is automatically prompted and installed.
+- _Might need to setup or install ruby modules or development toolkit. If required it is automatically prompted and installed._
 
 ## Fluentd Configuration
 

@@ -102,4 +102,4 @@ setup.ilm.enabled: false
 ## Filebeat NOTICE
 
 - The Filebeat will not work on Linux-based systems because of the go version that is being used in that specific Filebeat version, which the Linux OS is not allowing the creation of a new thread.
-- The image shows the error. The related issue of this can be found here: https://github.com/docker-library/golang/issues/467
+- The related issue of this can be found here: https://github.com/docker-library/golang/issues/467
