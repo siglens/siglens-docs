@@ -3,7 +3,7 @@
 - Siglens can be ingested data in Elasticsearch format using Logstash. Install Logstash. Read more about installation [here](#install-logstash).
 - Make sure that the `hosts` in the configuration has the `/elastic` suffix.
 - Create a logstash config file with the below [sample configuration](#sample-configuration). Read more about [Logstash Config file](#logstash-configuration) below.
-- Run the command: `logstash -c logstah_config.conf`. Read more about [running logstash config](#run-logstash-config) below.
+- Run the command: `logstash -c logstash_config.conf`. Read more about [running logstash config](#run-logstash-config) below.
 
 ## Install Logstash
 
