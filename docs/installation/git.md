@@ -59,7 +59,7 @@ Follow these steps, Once you have the prerequisites set up and a Linux or MacOS 
 
    Please note: If you're running SigLens in a different directory, adjust the commands accordingly.
 
-4. Access the SigLens Dashboard at [http://localhost:5122/](http://localhost:5122/).
+4. Access the SigLens UI at [http://localhost:5122/](http://localhost:5122/).
 
    **Note:** Be mindful of port numbers. If you changed the ports, use the correct port number for the UI dashboard.
 

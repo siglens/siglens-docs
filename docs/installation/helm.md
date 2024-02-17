@@ -250,10 +250,10 @@ kubectl port-forward svc/siglens-ingest-svc 8081:8081
 2. Get data in SigLens by loading sample data, using our supported ingestion methods, or integrating with your existing tools. Forward local port 8000 to the UI / query service using:
    
 ```bash
-kubectl port-forward svc/siglens-query-svc 8000:8000
+kubectl port-forward svc/siglens-query-svc 5122:5122
 ```
 
-3. Open your web browser and navigate to: http://localhost:8000 to access the SigLens UI.
+3. Open your web browser and navigate to: http://localhost:5122 to access the SigLens UI.
 
 ### Step 7: Clean Up
 
