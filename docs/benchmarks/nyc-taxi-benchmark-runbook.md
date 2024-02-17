@@ -643,3 +643,118 @@ curl -k -u "elastic:<your-elastic-password>" "https://<server-ip>:9200/trips/_se
   }
 }' | python3 -m json.tool | less
 ```
+
+## Benchmark Loki
+You'll want three terminals. Terminal 1 will run Loki, Terminal 2 will run Promtail, and Terminal 3 will run ingestion and queries.
+### Install Loki and Promtail
+```bash
+sudo apt install unzip -y
+
+mkdir /mnt/nvme1n1/loki
+cd /mnt/nvme1n1/loki
+
+curl -O -L "https://github.com/grafana/loki/releases/download/v2.9.4/loki-linux-arm64.zip"
+unzip loki-linux-arm64.zip
+chmod a+x loki-linux-arm64
+
+curl -O -L "https://github.com/grafana/loki/releases/download/v2.9.4/promtail-linux-arm64.zip"
+unzip promtail-linux-arm64.zip
+chmod a+x promtail-linux-arm64
+
+wget https://raw.githubusercontent.com/grafana/loki/v2.9.4/cmd/loki/loki-local-config.yaml
+wget https://raw.githubusercontent.com/grafana/loki/v2.9.4/clients/cmd/promtail/promtail-local-config.yaml
+```
+
+### Update the default configs
+In `loki-local-config.yaml`, update these configurations with these new values:
+```yaml
+path_prefix: /mnt/nvme1n1/loki/internal/path
+chunks_directory: /mnt/nvme1n1/loki/internal/chunks
+rules_directory: /mnt/nvme1n1/loki/internal/rules
+```
+
+Increase the timeout limit by adding these into the `server` section:
+```yaml
+http_server_read_timeout: 12h
+http_server_write_timeout: 12h
+```
+
+Add this to your config to avoid ingestion throttling and increase the number of buckets that queries are allowed to return.
+```yaml
+limits_config:
+  per_stream_rate_limit: 4G
+  per_stream_rate_limit_burst: 4G
+  ingestion_rate_mb: 4096
+  ingestion_burst_size_mb: 4096
+  max_query_series: 1000000
+  query_timeout: 12h
+```
+
+In `promtail-local-config.yaml`, change `__path__` to:
+```yaml
+__path__: /mnt/nvme1n1/data/*.json
+```
+
+### Run Loki and Promtail
+In Terminal 1, start Loki with:
+```bash
+./loki-linux-arm64 -config.file=loki-local-config.yaml
+```
+
+In Terminal 2, start Promtail with:
+```bash
+./promtail-linux-arm64 -config.file=promtail-local-config.yaml
+```
+
+### Ingest the Data
+In Terminal 3, run:
+```bash
+mkdir /mnt/nvme1n1/data
+cd /mnt/nvme1n1/data
+
+for year in {2011..2017}; do
+    for month in {01..12}; do
+            basefile="yellow_tripdata_$year-$month"
+
+            aws s3 cp s3://siglens-benchmark-datasets/nyc-taxi-benchmark-data/json/$basefile.json.gz .
+            gunzip $basefile.json.gz
+    done
+done
+```
+
+Since Promtail is already running and configured to ingest all JSON files in this `data/` directory, it will start ingesting the logs.
+You can check the progress of the ingestion with this bash:
+```bash
+total=$(curl -s http://localhost:9080/metrics | grep -v '^#' | awk '/promtail_file_bytes_total/ {sum += $2} END {print sum}'); \
+ingested=$(curl -s http://localhost:9080/metrics | grep -v '^#' | awk '/promtail_read_bytes_total/ {sum += $2} END {print sum}'); \
+percent=$(echo "$ingested $total" | awk '{printf "%.2f\n", ($1 / $2) * 100}'); \
+echo "percent ingested: $percent%"
+```
+
+### Run the Queries in Loki
+After ingestion is complete, run the queries.
+```bash
+# Query 1
+curl -G -s "http://localhost:3100/loki/api/v1/query" \
+  --data-urlencode "query=sum(count_over_time({job=\"varlogs\"} | json [24h])) by (airport_fee)" \
+  --data-urlencode "time=$(date +%s)000000000" \
+  --data-urlencode "stats=true"
+
+# Query 2
+curl -G -s "http://localhost:3100/loki/api/v1/query" \
+  --data-urlencode "query=avg_over_time({job=\"varlogs\"} | json | unwrap total_amount [24h]) by (passenger_count)" \
+  --data-urlencode "time=$(date +%s)000000000" \
+  --data-urlencode "stats=true"
+
+# Query 3
+curl -G -s "http://localhost:3100/loki/api/v1/query" \
+  --data-urlencode "query=sum(count_over_time({job=\"varlogs\"} | json [24h])) by (passenger_count, PULocationID)" \
+  --data-urlencode "time=$(date +%s)000000000" \
+  --data-urlencode "stats=true"
+
+# Query 4
+curl -G -s "http://localhost:3100/loki/api/v1/query" \
+  --data-urlencode "query=sum(count_over_time({job=\"varlogs\"} | json [24h])) by (passenger_count, PULocationID, trip_distance)" \
+  --data-urlencode "time=$(date +%s)000000000" \
+  --data-urlencode "stats=true"
+```
