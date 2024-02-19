@@ -15,13 +15,13 @@
 const sidebars = {
   docsSidebar: [
     'introduction',
-    {
+    { 
       type: 'category',
       label: 'Installation',
       link: {
         type: 'generated-index',
       },
-      items: ['installation/git', 'installation/docker', 'installation/helm'],
+      items: ['installation/docker', 'installation/helm', 'installation/git'],
     },
     {
       type: 'category',
@@ -32,53 +32,23 @@ const sidebars = {
           'Siglens default ingestion server runs on port: 8081. The below are the various ways to ingest logs into Siglens.',
       },
       items: [
-        {
-          type: 'category',
-          label: 'Vector',
-          link: {
-            type: 'generated-index',
-            title: 'Ingestion through Vector',
-            description: `Vector can be used to ingest logs from various sources. Please check the Vector documentation at https://vector.dev/docs/ for more information.`,
-          },
-          items: [
-            'log-ingestion/vector/vector-install',
-            'log-ingestion/vector/vector-elasticsearch',
-            'log-ingestion/vector/vector-splunk-hec-logs',
-            'log-ingestion/vector/vector-splunk-hec-metrics',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Beats',
-          link: {
-            type: 'generated-index',
-            title: 'Ingestion through Beats: Filebeat/Metricbeat',
-            description: `Beats can be used to ingest logs from various sources. Please check the Beats documentation at https://www.elastic.co/guide/en/beats/filebeat/7.9/index.html for more information.`,
-          },
-          items: ['log-ingestion/beats/filebeat-elasticsearch', 'log-ingestion/beats/metricbeat-elasticsearch'],
-        },
-        {
-          type: 'category',
-          label: 'Logstash',
-          link: {
-            type: 'generated-index',
-            title: 'Ingestion through Logstash',
-            description: `Logstash can be used to ingest logs from various sources. Please check the Logstash documentation at https://www.elastic.co/guide/en/logstash/7.9/introduction.html for more information.`,
-          },
-          items: ['log-ingestion/logstash/logstash-elasticsearch', 'log-ingestion/logstash/logstash-splunk'],
-        },
-        {
-          type: 'category',
-          label: 'Fluentd',
-          link: {
-            type: 'generated-index',
-            title: 'Ingestion through Fluentd',
-            description: `Fluentd can be used to ingest logs from various sources. Please check the Fluentd documentation at https://docs.fluentd.org/ for more information.`,
-          },
-          items: ['log-ingestion/fluentd/fluentd-elasticsearch', 'log-ingestion/fluentd/fluentd-splunk'],
-        },
-        'log-ingestion/open-telemetry',
-        'log-ingestion/loki',
+        'log-ingestion/vector-elasticsearch',
+        'log-ingestion/logstash-splunk',
+        'log-ingestion/fluentd',
+        'log-ingestion/filebeat-elasticsearch',
+        'log-ingestion/promtail',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Metric Ingestion',
+      link: {
+        type: 'generated-index',
+      },
+      items: [
+        'metric-ingestion/vector-splunk-hec-metrics',
+        'metric-ingestion/metricbeat-elasticsearch',
+        'metric-ingestion/open-telemetry',
       ],
     },
     {
@@ -95,6 +65,45 @@ const sidebars = {
         'instrument-traces/js-app',
       ],
     },
+    { 
+      type: 'category',
+      label: 'Migration',
+      link: {
+        type: 'generated-index',
+      },
+      items: [
+    {
+      type: 'category',
+      label: 'Migrating from Splunk',
+      link: {
+        type: 'generated-index',
+        title: 'Migrating from Splunk',
+        description: `Migrating from Splunk to Siglens is a simple process. Please follow the below steps to migrate from Splunk to Siglens.`,
+      },
+      items: ['migration/splunk/vector', 'migration/splunk/logstash', 'migration/splunk/fluentd'],
+    },
+    {
+      type: 'category',
+      label: 'Migrating from Elastic Search',
+      link: {
+        type: 'generated-index',
+        title: 'Migrating from Elastic Search',
+        description: `Migrating from Elastic Search to Siglens is a simple process. Please follow the below steps to migrate from Elastic Search to Siglens.`,
+      },
+      items: ['migration/elasticsearch/vector', 'migration/elasticsearch/logstash', 'migration/elasticsearch/fluentd'],
+    },
+    {
+      type: 'category',
+      label: 'Migrating from Loki',
+      link: {
+        type: 'generated-index',
+        title: 'Migrating from Loki',
+        description: `Migrating from Loki to Siglens is a simple process. Please follow the below steps to migrate from Loki to Siglens.`,
+      },
+      items: ['migration/loki/promtail'],
+    },
+  ],
+},
     'searching-logs',
     'log-query-builder',
     'dashboards',
