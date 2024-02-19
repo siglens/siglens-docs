@@ -4,7 +4,7 @@
 
 ## 1. Install Vector
 
-Begin by installing Vector using the instructions provided [here](../../log-ingestion/vector-elasticsearch.md#1-installation). Once installed, you can refer back to this guide for configuration and starting Vector.
+Begin by installing Vector using the instructions provided [here](../../log-ingestion/vector.md#1-installation). Once installed, you can refer back to this guide for configuration and starting Vector.
 
 ## 2. Configure Vector
 

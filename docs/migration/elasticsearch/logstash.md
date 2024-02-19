@@ -4,7 +4,7 @@
 
 ## 1. Install Logstash
 
-Begin by installing Logstash using the instructions provided [here](../../log-ingestion/logstash-splunk.md#1-installation). Once installed, you can refer back to this guide for configuration and starting Logstash.
+Begin by installing Logstash using the instructions provided [here](../../log-ingestion/logstash.md#1-installation). Once installed, you can refer back to this guide for configuration and starting Logstash.
 
 ## 2. Configure Logstash
 
