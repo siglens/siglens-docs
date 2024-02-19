@@ -2,7 +2,7 @@
 
 *Ingesting logs into Siglens using Promtail*
 
-## 1. Installation
+## 1. Install Promtail
 
 - Download the correct binary for Promtail based on your operating system and unzip it in your local system. 
 
@@ -17,7 +17,7 @@ curl -O -L "https://github.com/grafana/loki/releases/download/v2.8.2/promtail-da
  unzip promtail-darwin-amd64.zip
 
 ```
-## 2. Configuration
+## 2. Configure Promtail
 
 - Create a promtail config file with the below [sample configuration](#sample-configuration-file). 
 ### Sample Configuration file

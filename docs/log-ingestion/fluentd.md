@@ -1,7 +1,7 @@
 # Fluentd
 *Ingesting logs into Siglens using Fluentd*
 
-## 1. Installation
+## 1. Install Fluentd
 
 - Follow the instructions to install the Fluentd package from the [official docs](https://docs.fluentd.org/installation).
 
@@ -9,7 +9,7 @@
     - [macOS](https://docs.fluentd.org/installation/obsolete-installation/treasure-agent-v4-installation/install-by-dmg-td-agent-v4)
     - [Windows](https://docs.fluentd.org/installation/install-by-msi)
 
-## 2. Configuration
+## 2. Configure Fluentd
 
 - Create a Fluentd config file with the below [sample configuration](#sample-configuration-file). 
 
@@ -55,7 +55,7 @@
 </match>
 ```
 
-## 3. Run Fluentd Config
+## 3. Run Fluentd
 
 Navigate to the Fluentd directory and run `fluentd -c <<path-of-fluentd-config>>`. On Linux, prepend the command with `sudo`. If using td-agent, replace `fluentd` with `td-agent`. On Windows, run the command as an Administrator.
 

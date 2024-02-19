@@ -2,11 +2,11 @@
 
 *Migrating from Elastic Search to Siglens using Logstash*
 
-## 1. Installation
+## 1. Install Logstash
 
 Begin by installing Logstash using the instructions provided [here](../../log-ingestion/logstash-splunk.md#1-installation). Once installed, you can refer back to this guide for configuration and starting Logstash.
 
-## 2. Configuration
+## 2. Configure Logstash
 
 - Create a logstash config file with the below [sample configuration](#sample-configuration-file). 
 
@@ -30,7 +30,7 @@ output {
 }
 ```
 
-## 3. Run Logstash Config
+## 3. Run Logstash
 
 - Run `bin/logstash -f <<path-of-logstash-config>>` in the logstash directory (prepend with sudo on Linux, or run as Administrator on Windows).
 

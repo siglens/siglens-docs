@@ -2,7 +2,7 @@
 
 *Migrating from Splunk to Siglens using Fluentd*
 
-## 1. Installation
+## 1. Install Fluentd
 
 - Follow the instructions to install the Fluentd package from the [official docs](https://docs.fluentd.org/installation).
 
@@ -36,7 +36,7 @@
 
 - _You might need to setup or install ruby modules or development toolkit. If required, it will be automatically prompted and installed._
 
-## 2. Configuration
+## 2. Configure Fluentd
 
 ### Sample Configuration file
 
@@ -69,7 +69,7 @@
 </match>
 ```
 
-## 3. Run Fluentd Config
+## 3. Run Fluentd
 
 Navigate to the Fluentd directory and run `fluentd -c <<path-of-fluentd-config>>`. On Linux, prepend the command with `sudo`. If using td-agent, replace `fluentd` with `td-agent`. On Windows, run the command as an Administrator.
 

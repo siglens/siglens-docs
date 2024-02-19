@@ -3,7 +3,7 @@
 
 > :warning: **Note:** For Linux Systems, the Filebeat will not work due to the Go version used in the specific Filebeat version, which prevents the creation of a new thread on Linux OS. The related issue can be found [here](https://github.com/docker-library/golang/issues/467).
 
-## 1. Installation
+## 1. Install Filebeat
 
 Download the [`filebeat-oss-7.9.3`](https://www.elastic.co/downloads/past-releases/filebeat-oss-7-9-3) version and extract it to the appropriate directory based on your OS.
 
@@ -30,7 +30,7 @@ PS C:\Program Files\Filebeat> .\install-service-filebeat.ps1
 
 - More details about the installation process can be found [here](https://www.elastic.co/guide/en/beats/filebeat/7.9/filebeat-installation-configuration.html)
 
-## 2. Configuration
+## 2. Configure Filebeat
 
 ### Sample Configuration File
 
@@ -59,7 +59,7 @@ setup.ilm.enabled: false
 # logging.level: debug
 ```
 
-## 3. Run Filebeat Config
+## 3. Run Filebeat
 
 For Linux, navigate to the Filebeat directory and run 
 ```bash

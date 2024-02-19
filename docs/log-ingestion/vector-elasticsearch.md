@@ -1,7 +1,7 @@
 # Vector
 *Ingesting logs into Siglens using Vector*
 
-## 1. Installation
+## 1. Install Vector
 Read more info about installation of Vector from [here](https://vector.dev/docs/setup/installation/).
 
 ### For Unix-based Systems
@@ -31,7 +31,7 @@ brew install vector
 curl --proto '=https' --tlsv1.2 -sSfL https://sh.vector.dev | VECTOR_VERSION=0.34.1 bash
 ```
 
-## 2. Configuration
+## 2. Configure Vector
 
 - Make sure that the `endpoints` in the configuration has the `/elastic` suffix.
 
