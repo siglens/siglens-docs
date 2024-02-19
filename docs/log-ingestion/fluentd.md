@@ -1,4 +1,5 @@
 # Fluentd
+*Ingesting logs into Siglens using Fluentd*
 
 ## 1. Installation
 

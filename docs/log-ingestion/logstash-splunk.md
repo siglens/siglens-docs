@@ -1,4 +1,5 @@
 # Logstash
+*Ingesting logs into Siglens using Logstash*
 
 ## 1. Installation
 

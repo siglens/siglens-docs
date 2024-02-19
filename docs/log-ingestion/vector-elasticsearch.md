@@ -1,4 +1,5 @@
 # Vector
+*Ingesting logs into Siglens using Vector*
 
 ## 1. Installation
 Read more info about installation of Vector from [here](https://vector.dev/docs/setup/installation/).

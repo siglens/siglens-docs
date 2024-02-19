@@ -1,4 +1,5 @@
 # Filebeat
+*Ingesting logs into Siglens using Filebeat*
 
 > :warning: **Note:** For Linux Systems, the Filebeat will not work due to the Go version used in the specific Filebeat version, which prevents the creation of a new thread on Linux OS. The related issue can be found [here](https://github.com/docker-library/golang/issues/467).
 
