@@ -2,9 +2,28 @@
 
 This comprehensive guide will help you install SigLens on your local Minikube Kubernetes cluster using Helm. Helm simplifies the deployment of Kubernetes applications, making it a breeze to set up SigLens.
 
-The Helm approach is advantageous for users managing Kubernetes clusters who want a simplified and standardized way to deploy SigLens on their Kubernetes clusters. Helm simplifies SigLens deployment as a Kubernetes package, providing standardized, scalable, and version-controlled installations. This method is best suited for users who leverage Kubernetes orchestration, offering templating and packaging for easy configuration and sharing within a Kubernetes-native environment.
+Helm streamlines SigLens deployment on Kubernetes, offering a standardized, scalable, and version-controlled approach. Ideal for Kubernetes users, it simplifies installation as a Kubernetes package, providing templating and packaging for easy configuration and sharing within Kubernetes-native environments.
 
-### Prerequisites
+## Quickstart
+
+This is a quickstart if you are already familiar with the prerequisites and have the setup ready. For a detailed installation guide, refer [Step-by-Step Installation Guide](#step-by-step-installation-guide).
+
+**Install SigLens using Helm**
+```
+helm repo add siglens-repo https://siglens.github.io/charts
+helm repo update
+```
+
+**Port forward the ingestion and query server**
+```
+helm install siglens siglens-repo/siglens
+kubectl port-forward svc/siglens-ingest-svc 8081:8081
+kubectl port-forward svc/siglens-query-svc 5122:5122
+```
+
+Access the SigLens UI at: http://localhost:5122.
+
+## Prerequisites
 
 Before installing SigLens, ensure you have the following tools installed on your system:
 

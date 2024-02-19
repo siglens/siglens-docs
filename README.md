@@ -23,7 +23,7 @@ This repository is the source of the [Official SigLens documentation](https://si
 
 ## Introduction
 
-SigLens is engineered for excellence in managing massive volumes of data, from terabytes to petabytes, without compromising on speed or efficiency. At the heart of SigLens is our proprietary microindexing technology, which ensures that micro indices are only 1/100th the size of traditional indices, resulting in smaller index sizes and faster ingestion speeds. Moreover, SigLens utilizes dynamic columnar compression to reduce on-disk storage size to often just 10% of the incoming volume. This innovation not only enhances query times but also substantially lowers storage and compute requirements.
+SigLens is engineered for excellence in managing massive volumes of data, from terabytes to petabytes, without compromising on speed or efficiency. At the heart of SigLens is our proprietary microindexing technology, which ensures that micro indices are only 1/100th the size of traditional indices, resulting in smaller index sizes and faster ingestion speeds. Moreover, SigLens utilizes dynamic columnar compression to reduce on-disk storage size to often just 1% of the incoming volume. This innovation not only enhances query times but also substantially lowers storage and compute requirements.
 
 ## Getting Started
 
@@ -172,6 +172,6 @@ Thank you to all the contributors who have helped grow SigLens. Your efforts are
 <!-- <a href="#" target="_blank">
 <img src=https://img.shields.io/badge/dev.to-%2308090A.svg?&style=for-the-badge&logo=dev.to&logoColor=white alt=SigLens_dev.to style="margin-bottom: 5px;" />
 </a> -->
-<a href="https://www.linkedin.com/company/sigscalr-io/" target="_blank">
+<a href="https://www.linkedin.com/company/sigscalr-io/?miniCompanyUrn=urn%3Ali%3Afs_miniCompany%3A77978282" target="_blank">
 <img src=https://img.shields.io/badge/linkedin-%231E77B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white alt=SigLens_linkedin style="margin-bottom: 5px;" />
 </a> 
