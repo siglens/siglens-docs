@@ -20,6 +20,8 @@ curl -O -L "https://github.com/grafana/loki/releases/download/v2.8.2/promtail-da
 ## 2. Configure Promtail
 
 - Create a promtail config file with the below [sample configuration](#sample-configuration-file). 
+- If you are looking for a sample log dataset you can download it from [here](https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz), untar it and update the `_path_` accordinly in the config file.
+
 ### Sample Configuration file
 ```
 server:

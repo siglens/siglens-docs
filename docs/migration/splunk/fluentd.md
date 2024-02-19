@@ -24,7 +24,7 @@
   fluent-gem list | grep fluent-plugin-splunk-hec
   ```
 
-- For td-agent (recommended):
+- For td-agent:
 
     ```bash
     sudo td-agent-gem install fluent-plugin-splunk-hec

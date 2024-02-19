@@ -34,7 +34,8 @@ curl --proto '=https' --tlsv1.2 -sSfL https://sh.vector.dev | VECTOR_VERSION=0.3
 ## 2. Configure Vector
 
 - Make sure that the `endpoints` in the configuration has the `/elastic` suffix.
-
+- If you are looking for a sample log dataset you can download it from [here](https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz) and untar it.
+ 
 
 ### Sample Configuration file
 
@@ -64,7 +65,7 @@ sources:
   read_from_file:
     type: file
     include:
-      - /mnt/d/Siglens/SplunkExport.json
+      - /mnt/d/Siglens/2kevents.json
 
 # Transforms Reference: Transform the data from Sources into desired format
 transforms:
@@ -108,7 +109,7 @@ sinks:
       "read_from_file": {
           "type": "file",
           "include": [
-              "./migration1/SplunkExport.json"
+              "./migration1/2kevents.json"
           ],
       }
   },

@@ -1,8 +1,6 @@
 # Helm 
 
-
-
-
+*Installing Siglens using Helm*
 
 ```
 $ helm repo add siglens-repo https://siglens.github.io/charts
