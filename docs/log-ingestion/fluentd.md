@@ -12,21 +12,17 @@
 ## 2. Configure Fluentd
 
 - Create a Fluentd config file with the below [sample configuration](#sample-configuration-file). 
+- If you are looking for a sample log dataset you can download it from [here](https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz) and untar it.
 
 ### Sample Configuration File
 
 ```conf
 <source>
   @type tail
-  path D:\Siglens\data\Android_2k.log
-  pos_file D:\Siglens\fluentd_logs\Android_2k.log.pos
+  path D:\Siglens\data\2kevents.json
+  pos_file D:\Siglens\fluentd_logs\2kevents.json.pos
   tag my.logs
   read_from_head true
-  <parse>
-    @type regexp
-    expression /^(?<Date>\d{2}-\d{2})\s(?<Time>\d{2}:\d{2}:\d{2}.\d{3})\s+(?<Pid>\d+)\s+(?<Tid>\d+)\s+(?<Level>\w+)\s(?<Component>[^:]+):\s(?<Content>.*)$/
-    time_format %m-%d %H:%M:%S.%L
-  </parse>
 </source>
 
 <filter my.logs>

@@ -31,6 +31,8 @@ PS C:\Program Files\Filebeat> .\install-service-filebeat.ps1
 - More details about the installation process can be found [here](https://www.elastic.co/guide/en/beats/filebeat/7.9/filebeat-installation-configuration.html)
 
 ## 2. Configure Filebeat
+- Create a Filebeat config file with the below [sample configuration](#sample-configuration-file).
+- If you are looking for a sample log dataset you can download it from [here](https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz) and untar it.
 
 ### Sample Configuration File
 
@@ -39,7 +41,7 @@ filebeat.inputs:
   - type: log
     enabled: true
     paths:
-      - C:\Program Files\Filebeat\SplunkExport.json # Ensure this is the correct path
+      - C:\Program Files\Filebeat\2kevents.json # Ensure this is the correct path
 
 output.elasticsearch:
   # Custom Elasticsearch endpoint

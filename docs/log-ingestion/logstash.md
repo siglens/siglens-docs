@@ -37,13 +37,14 @@ PS C:\Logstash> bin/logstash --version
 ## 2. Configure Logstash
 
 - Create a logstash config file with the below [sample configuration](#sample-configuration-file). 
+- If you are looking for a sample log dataset you can download it from [here](https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz) and untar it.
 
 ### Sample Configuration file
 
 ```conf
 input {
   file {
-    path => "D:/Siglens/SplunkExport3.json"
+    path => "D:/Siglens/2kevents.json"
     start_position => "beginning"
   }
 }

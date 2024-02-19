@@ -1,5 +1,7 @@
 # Git
 
+*Installing Siglens using Git*
+
 We are going to clone the SigLens repository and run it locally. Please ensure that you have [git](https://git-scm.com/) set up on your system.
 
 ## Windows Support
