@@ -16,33 +16,31 @@ Fluentd comes with various plugins, including an Elasticsearch plugin (`fluent-p
 
 1. **Uninstall the default Elasticsearch plugin:** Make sure you are either in the fluentd-command-prompt (on Windows) or the path variables are set up or in the fluentd directory.
 
-  ```bash
-  fluent-gem uninstall fluent-plugin-elasticsearch
-  ```
-  - For td-agent
-  ```bash
-  td-agent-gem uninstall fluent-plugin-elasticsearch
-  ```
+    ```bash
+    fluent-gem uninstall fluent-plugin-elasticsearch
+    ```
+  - For td-agent:
+
+    ```bash
+    td-agent-gem uninstall fluent-plugin-elasticsearch
+    ```
 2. Install the compatible Elasticsearch plugin (version 4.3.3):
 
-- ```bash
-  fluent-gem install fluent-plugin-elasticsearch -v 4.3.3
-  ```
-- If you're using a ` td-agent`, it's recommended to use `td-agent-gem` instead
+-  ```bash
+    fluent-gem install fluent-plugin-elasticsearch -v 4.3.3
+    ```
 
-  ```bash
-  td-agent-gem uninstall fluent-plugin-elasticsearch
-  ```
-  ```bash
-  sudo td-agent-gem install fluent-plugin-elasticsearch -v 4.3.3
-  ```
+-  ```bash
+    sudo td-agent-gem install fluent-plugin-elasticsearch -v 4.3.3
+    ```
 
 3. Verify the installation:
 
-    ```bash
+-   ```bash
     fluent-gem list | grep fluent-plugin-elasticsearch
     ```
-  - For td-agent: 
+    For td-agent: 
+
     ```bash
     td-agent-gem list | grep fluent-plugin-elasticsearch
     ```

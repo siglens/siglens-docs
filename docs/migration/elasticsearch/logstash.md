@@ -4,7 +4,39 @@
 
 ## 1. Install Logstash
 
-Begin by installing Logstash using the instructions provided [here](../../log-ingestion/logstash.md#1-installation). Once installed, you can refer back to this guide for configuration and starting Logstash.
+## Install Logstash
+
+- Download this exact version of [Logstash: `logstash-oss-7.9.3`](https://www.elastic.co/downloads/past-releases/logstash-oss-7-9-3).
+
+### Linux based Systems
+
+```bash
+sudo dpkg -i logstash-oss-7.9.3-amd64.deb
+# OR
+tar xzvf logstash-oss-7.9.3-linux-x86_64.tar.gz
+```
+
+### Windows
+
+- Download the Zip version of Logstash, extract its contents into the C drive, rename the directory to "Logstash", then open a PowerShell prompt as an Administrator and run the below commands to install Logstash as a Windows service
+
+```bash
+PS > cd 'C:\Logstash'
+PS C:\Logstash> bin/logstash --version
+```
+
+### JVM Options
+
+#### Append at the end of Logstash/config/jvm.options
+
+```options
+--add-opens java.base/sun.nio.ch=ALL-UNNAMED
+--add-opens java.base/java.io=ALL-UNNAMED
+
+--add-opens java.base/sun.nio.ch=ALL-UNNAMED
+--add-opens java.base/java.io=ALL-UNNAMED
+--add-opens java.base/java.security=ALL-UNNAMED
+```
 
 ## 2. Configure Logstash
 
