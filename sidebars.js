@@ -15,6 +15,7 @@
 const sidebars = {
   docsSidebar: [
     'introduction',
+    'key-concepts',
     {
       type: 'category',
       label: 'Installation',
