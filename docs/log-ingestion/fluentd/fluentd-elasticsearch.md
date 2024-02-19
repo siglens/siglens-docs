@@ -102,7 +102,7 @@
 </match>
 ```
 
-## Run Fluentd Config
+## Run Fluentd
 
 - Navigate to the Fluentd installed directory, if fluentd environment is not setup.
 - Windows can open the fluentd command prompt and open it as an **Administrator**.

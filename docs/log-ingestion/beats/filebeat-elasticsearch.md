@@ -73,7 +73,7 @@ setup.ilm.enabled: false
 # logging.level: debug
 ```
 
-## Run Filebeat Config
+## Run Filebeat
 
 - ### Linux based systems
 

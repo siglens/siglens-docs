@@ -95,7 +95,7 @@ output {
 }
 ```
 
-## Run Logstash Config
+## Run Logstash
 
 - Navigate to Logstash folder.
 - Then run the command: `bin/logstash -f <<path-of-logstash-config>>`

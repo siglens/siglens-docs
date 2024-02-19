@@ -75,7 +75,7 @@ setup.ilm.enabled: false
 # logging.level: debug
 ```
 
-## Run Metricbeat Config
+## Run Metricbeat
 
 - ### Linux based systems
 

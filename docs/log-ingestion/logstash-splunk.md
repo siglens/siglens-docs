@@ -72,7 +72,7 @@ output {
 }
 ```
 
-## 3. Run Logstash Config
+## 3. Run Logstash
 
 - Run `bin/logstash -f <<path-of-logstash-config>>` in the logstash directory (prepend with sudo on Linux, or run as Administrator on Windows).
 
