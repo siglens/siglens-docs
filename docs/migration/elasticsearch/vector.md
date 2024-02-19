@@ -1,6 +1,6 @@
 # Vector
 
-M*igrating from Elastic Search to Splunk using Vector
+Migrating from Elastic Search to Splunk using Vector
 
 If you are looking to migrate from Elastic Search to Siglens you can use Vector. Find more about the installation and configuration of vector [here](../../log-ingestion/vector/vector-install.md)
 
