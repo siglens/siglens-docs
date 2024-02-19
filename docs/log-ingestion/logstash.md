@@ -1,7 +1,7 @@
 # Logstash
 *Ingesting logs into Siglens using Logstash*
 
-## 1. Instal Logstash
+## 1. Install Logstash
 
 - Download Logstash-OSS version from [here](https://www.elastic.co/downloads/logstash-oss) and install using the procedure below
 ### Linux based Systems
