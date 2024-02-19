@@ -9,7 +9,7 @@ Welcome to the official documentation repository for SigLens, the cutting-edge, 
 
 This repository is the source of the [Official SigLens documentation](https://siglens.github.io/siglens-docs). We appreciate your interest in contributing and welcome your participation in making this resource even better. If you have any questions, please reach out to us on [Slack](https://www.siglens.com/slack.html).
 
-# Table of Contents
+## Table of Contents
 
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
@@ -27,14 +27,9 @@ SigLens is engineered for excellence in managing massive volumes of data, from t
 
 ## Getting Started
 
-Before you start contributing to SigLens Documentation, here are a few things you should know:
+**SigLens Platform**: We encourage you to try out SigLens using
 
-- **Markdown**: Our documentation is written in Markdown. Familiarity with Markdown syntax is helpful but not required.
-- **Git and GitHub**: Contributions are made via GitHub. A basic understanding of how to fork a repository, create branches, and submit pull requests is necessary.
-
-**SigLens Platform**: Having a basic understanding of what SigLens offers will help you write better documentation. We encourage you to try out SigLens using 
-
-- The [Siglens Playground](http://playground.sigscalr.io:5122/), or
+- The [SigLens Playground](http://playground.sigscalr.io:5122/), or
 - Installing SigLens in your local machine
 
 ### &emsp; <a href="https://siglens.github.io/siglens-docs/installation/git" target="_blank">Git</a> &emsp; | &emsp; <a href="https://siglens.github.io/siglens-docs/installation/docker" target="_blank">Docker</a> &emsp;| &emsp; <a href="https://siglens.github.io/siglens-docs/installation/helm" target="_blank">Helm</a>
@@ -47,7 +42,7 @@ To host this documentation on your local machine, follow these steps.
 
 1. Clone the repository
     ```
-    git clone https://github.com/<username>/siglens-docs.git
+    git clone https://github.com/siglens/siglens-docs.git
     ```
 2. Install the dependencies
     ```
@@ -126,6 +121,12 @@ Please ensure your contributions fit into the appropriate section for consistenc
 ## How to Contribute
 
 If you've encountered any inaccuracy or have suggestion on we can make the documentations better, please open an issue on the [siglens-docs issue tracker](https://github.com/siglens/siglens-docs/issues), or let us about the request on [Slack](https://www.siglens.com/slack.html).
+
+Before you start contributing to SigLens Documentation, here are a few things you should know:
+
+- **Markdown**: Our documentation is written in Markdown. Familiarity with Markdown syntax is helpful but not required.
+- **Git and GitHub**: Contributions are made via GitHub. A basic understanding of how to fork a repository, create branches, and submit pull requests is necessary.
+- Foundational understanding of **SigLens** and **observability** would be beneficial.
 
 To contribute to the SigLens Documentation, follow these steps:
 
