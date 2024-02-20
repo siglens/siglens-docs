@@ -2,11 +2,15 @@
 
 *Ingesting logs into Siglens using Promtail*
 
+Promtail is an open-source log collector that ships the logs from the local system to a Loki instance. It is part of the Loki log aggregation system and is typically deployed to every machine that has applications needed to be monitored.
+
+In this guide, we will walk through the process of using Promtail to send logs to Siglens.
+
 ## 1. Install Promtail
 
 - Download the correct binary for Promtail based on your operating system and unzip it in your local system. 
 
-***The process below uses the MacOS binary files.***
+***The process below uses binary files for MacOS systems with Intel processors.***
 
     - If you are on a Linux host, download and use the correct Binary file from the [Loki releases](https://github.com/grafana/loki/releases/). The Linux binary for x86 architecture is called `promtail-linux-amd64.zip`.
 

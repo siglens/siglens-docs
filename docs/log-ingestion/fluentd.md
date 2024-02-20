@@ -1,5 +1,11 @@
 # Fluentd
+
 *Ingesting logs into Siglens using Fluentd*
+
+Fluentd is an open-source data collector that unifies data collection and consumption for better use and understanding of data. It's designed to handle various types of data sources with different types and formats, making it a popular choice for logging solutions.
+
+In this guide, we will walk through the process of using Fluentd to send logs to Siglens.
+
 
 ## 1. Install Fluentd
 
