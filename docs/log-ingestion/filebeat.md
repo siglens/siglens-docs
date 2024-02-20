@@ -5,7 +5,7 @@ Filebeat is a lightweight, open-source log shipper from Elastic that forwards an
 
 In this guide, we will walk through the process of using Filebeat to send logs to Siglens.
 
-> :warning: **Note:** For Linux Systems, the Filebeat will not work due to the Go version used in the specific Filebeat version, which prevents the creation of a new thread on Linux OS. The related issue can be found [here](https://github.com/docker-library/golang/issues/467).
+> :warning: **Note:** For Linux Systems, the Filebeat might not work due to the Go version used in the specific Filebeat version, which prevents the creation of a new thread on Linux OS. The related issue can be found [here](https://github.com/docker-library/golang/issues/467).
 
 ## 1. Install Filebeat
 
