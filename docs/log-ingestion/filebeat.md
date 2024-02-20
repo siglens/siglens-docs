@@ -1,6 +1,10 @@
 # Filebeat
 *Ingesting logs into Siglens using Filebeat*
 
+Filebeat is a lightweight, open-source log shipper from Elastic that forwards and centralizes log data. Installed as an agent on your servers, Filebeat monitors the log files or locations that you specify, collects log events, and forwards them to either Elasticsearch or Logstash for indexing.
+
+In this guide, we will walk through the process of using Filebeat to send logs to Siglens.
+
 > :warning: **Note:** For Linux Systems, the Filebeat will not work due to the Go version used in the specific Filebeat version, which prevents the creation of a new thread on Linux OS. The related issue can be found [here](https://github.com/docker-library/golang/issues/467).
 
 ## 1. Install Filebeat
@@ -8,12 +12,20 @@
 Download the [`filebeat-oss-7.9.3`](https://www.elastic.co/downloads/past-releases/filebeat-oss-7-9-3) version and extract it to the appropriate directory based on your OS.
 
 ### Linux based Systems
-Run either of the following commands:
+
+The installation method depends on the type of Linux distribution you are using.
+
+For Debian-based systems (like Ubuntu), you can use the `.deb` package with the following command:
 
 ```bash
 sudo dpkg -i filebeat-oss-7.9.3-amd64.deb
 ```
-OR
+
+For Red Hat-based systems (like CentOS or Fedora), you would use the `.rpm` package.
+```bash 
+sudo rpm -ivh filebeat-oss-7.9.3-x86_64.rpm
+```
+For other Linux based systems, you would use the `.tar.gz` file.
 
 ```bash
 tar xzvf filebeat-oss-7.9.3-linux-x86_64.tar.gz
@@ -66,6 +78,11 @@ setup.ilm.enabled: false
 For Linux, navigate to the Filebeat directory and run 
 ```bash
 sudo filebeat -e -c /home/filebeat-config/filebeat.yaml
+```
+If you've installed Filebeat by extracting it from a `.tar.gz` file, or if filebeat is not in your PATH for any other reason, you might need to provide the full path to the filebeat binary, like this:
+
+```bash
+sudo ./filebeat-oss-7.9.3-linux-x86_64/filebeat -e -c /home/filebeat-config/filebeat.yaml
 ```
 
 For Windows, open a PowerShell prompt as an Administrator, navigate to `C:\Program Files\Filebeat`, and run 

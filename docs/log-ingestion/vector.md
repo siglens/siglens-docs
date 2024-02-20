@@ -1,6 +1,10 @@
 # Vector
 *Ingesting logs into Siglens using Vector*
 
+Vector is a high-performance, open-source observability data pipeline that allows you to collect, transform, and route all your logs and metrics. It's designed to be robust, efficient, and easy to use, making it a popular choice for observability data pipelines.
+
+In this guide, we will walk through the process of using Vector to send logs to Siglens.
+
 ## 1. Install Vector
 Read more info about installation of Vector from [here](https://vector.dev/docs/setup/installation/).
 
@@ -25,7 +29,7 @@ Install using Homebrew:
 brew install vector
 ```
 
-### For Windows
+### For Windows (Using WSL)
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSfL https://sh.vector.dev | VECTOR_VERSION=0.34.1 bash

@@ -2,6 +2,10 @@
 
 *Ingesting metrics into Siglens using Metricbeat*
 
+Metricbeat is a lightweight, open-source shipper from Elastic that collects metrics from your systems and services. Metricbeat simplifies the collection and transport of your systems and services metrics.
+
+In this guide, we will walk through the process of using Metricbeat to send metrics to Siglens.
+
 > :warning: **Note:** For Linux Systems, the Metricbeat will not work due to the Go version used in the specific Metricbeat version, which prevents the creation of a new thread on Linux OS. The related issue can be found [here](https://github.com/docker-library/golang/issues/467).
 
 ## 1. Install Metricbeat
@@ -9,7 +13,7 @@
 Download the [`metricbeat-oss-7.9.3`](https://www.elastic.co/downloads/past-releases/metricbeat-oss-7-9-3) version and extract it to the appropriate directory based on your OS.
 
 ### Linux based Systems
-Run either of the following commands:
+Run either of the following commands based on your linx distribution:
 ```bash
 sudo dpkg -i metricbeat-oss-7.9.3-amd64.deb
 ```

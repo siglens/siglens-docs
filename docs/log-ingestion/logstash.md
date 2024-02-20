@@ -1,6 +1,10 @@
 # Logstash
 *Ingesting logs into Siglens using Logstash*
 
+Logstash is an open-source data processing pipeline that ingests data from a multitude of sources simultaneously, transforms it, and then sends it to your favorite "stash". 
+
+In this guide, we will walk through the process of using Logstash to send logs to Siglens.
+
 ## 1. Install Logstash
 
 - Download Logstash-OSS version from [here](https://www.elastic.co/downloads/logstash-oss) and install using the procedure below
