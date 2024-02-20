@@ -2,6 +2,10 @@
 
 *Ingesting metrics into Siglens using Vector*
 
+Vector is a high-performance, open-source observability data pipeline that allows you to collect, transform, and route all your logs and metrics. It's designed to be robust, efficient, and easy to use, making it a popular choice for observability data pipelines.
+
+In this guide, we will walk through the process of using Vector to send metrics to Siglens.
+
 ## 1. Install Vector 
 
 Begin by installing Vector using the instructions provided [here](../log-ingestion/vector.md#1-installation). Once installed, you can refer back to this guide for configuration and starting Vector.
