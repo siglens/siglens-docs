@@ -15,6 +15,7 @@
 const sidebars = {
   docsSidebar: [
     'introduction',
+    'key-concepts',
     {
       type: 'category',
       label: 'Installation',
@@ -83,7 +84,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Instrumention for Traces',
+      label: 'Instrumentation for Traces',
       link: {
         type: 'generated-index',
       },
