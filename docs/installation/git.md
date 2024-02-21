@@ -1,6 +1,6 @@
 # Git
 
-This guide will walk you through the process of cloning the SigLens repository and running it locally. Please follow the steps carefully to ensure a smooth setup.
+*Installing Siglens using Git*
 
 The Git approach for installing SigLens is ideal for users who prefer a hands-on experience and want to customize settings directly. Cloning the repository and running locally provides transparency and control, making it ideal for developers and system administrators who enjoy a more involved installation process.
 

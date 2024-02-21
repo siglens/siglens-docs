@@ -1,1 +1,2 @@
 # Minion Searches
+### 🚀 Coming soon

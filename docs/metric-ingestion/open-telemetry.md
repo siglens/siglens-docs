@@ -1,5 +1,11 @@
 # Open Telemetry
 
+OpenTelemetry provides a single set of APIs, libraries, agents, and collector services to capture distributed traces and metrics from your application.
+
+In this guide, we will walk through the process of using OpenTelemetry to send metrics to Siglens.
+
+*Ingesting metrics into Siglens using Open Telemetry*
+
 - To ingest traces, you can run siglens and follow the below steps. 
 - If Siglens is running with ingestPort: 8081 in the server.yaml file, you'll follow these steps:
 

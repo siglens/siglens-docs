@@ -1,5 +1,7 @@
 # Docker
 
+*Installing Siglens using Docker*
+
 If you prefer to use Docker for SigLens installation on your Linux or macOS machine, follow this straightforward "one command" guide. Docker provides a convenient and isolated environment for running SigLens.
 
 Installing SigLens with Docker streamlines deployment, encapsulating all dependencies within a container. This method is user-friendly, ensuring consistent environments and efficient resource usage. It's perfect for those who want a straightforward, hassle-free installation.
