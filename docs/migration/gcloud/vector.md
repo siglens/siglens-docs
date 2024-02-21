@@ -6,7 +6,7 @@
 
 Prerequisites: 
 - Google Cloud CLI (Verify your Google Cloud CLI installation with `gcloud version` or you can install it from [here](https://cloud.google.com/sdk/docs/install-sdk))
-- Vector (You can follow <a href="../../log-ingestion/vector#1-installation" target="_blank">this guide</a> to get started with installing vector)
+- Vector (You can follow [this guide](../../log-ingestion/vector.md) to get started with installing vector)
 <details>
 <summary>Setup Google Cloud Pub/Sub</summary>
 
