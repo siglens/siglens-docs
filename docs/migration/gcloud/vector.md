@@ -54,7 +54,7 @@ Replace `<logging_service_account>` with the service account name displayed afte
 #### 5. Create a Service Account
 > Skip this step if you have an existing service account
 
-If you have a service account and a key from a different project, and you want to use it in your current project, you can skip to [Step 8](#8-grant-pubsub-subscriber-role-to-an-existing-service-account-from-a-different-project)
+If you have a service account and a key from a different project, and you want to use it in your current project, you can skip to [Step 8](./vector#8-grant-pubsub-subscriber-role-to-an-existing-service-account-from-a-different-project)
 
 If you don't have a service account, create one:
 
