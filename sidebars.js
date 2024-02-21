@@ -109,7 +109,7 @@ const sidebars = {
       link: {
         type: 'generated-index',
         title: 'Migrating from Google Cloud',
-        description: `Migrating from GOogle Cloud to Siglens is a simple process. Please follow the below steps to migrate from Loki to Siglens.`,
+        description: `Migrating from Google Cloud to Siglens is a simple process. Please follow the below steps to migrate from Loki to Siglens.`,
       },
       items: ['migration/gcloud/vector'],
     },
