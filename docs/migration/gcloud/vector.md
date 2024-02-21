@@ -10,7 +10,7 @@ Prerequisites:
 <details>
 <summary>Setup Google Cloud Pub/Sub</summary>
 
-### 1. Set or Create a Google Cloud Project
+#### 1. Set or Create a Google Cloud Project
 
 If you already have a Google Cloud project, set it as your current project:
 
@@ -26,7 +26,7 @@ If you don't have a project, create one:
 gcloud projects create <project_id>
 ```
 
-### 2. Create a Pub/Sub Topic
+#### 2. Create a Pub/Sub Topic
 
 Create a Pub/Sub topic where logs will be published:
 
@@ -34,14 +34,14 @@ Create a Pub/Sub topic where logs will be published:
 gcloud pubsub topics create <topic_name>
 ```
 
-### 3. Create a Logging Sink
+#### 3. Create a Logging Sink
 
 When you create a sink, Google Cloud automatically creates a new service account. This service account, known as the logging service account, is used by the sink to write logs.
 
 ```bash
 gcloud logging sinks create <sink_name> pubsub.googleapis.com/projects/<project_id>/topics/<topic_name>
 ```
-### 4. Grant Permissions to the Logging Service Account
+#### 4. Grant Permissions to the Logging Service Account
 
 Grant the `pubsub.publisher` role to the logging service account:
 
@@ -51,7 +51,7 @@ gcloud projects add-iam-policy-binding <project_id> --member=serviceAccount:<log
 
 Replace `<logging_service_account>` with the service account name displayed after creating the sink.
 
-### 5. Create a Service Account
+#### 5. Create a Service Account
 > Skip this step if you have an existing service account
 
 If you have a service account and a key from a different project, and you want to use it in your current project, you can skip to [Step 8](./vector#8-grant-pubsub-subscriber-role-to-an-existing-service-account-from-a-different-project)
@@ -62,7 +62,7 @@ If you don't have a service account, create one:
 gcloud iam service-accounts create <service_account_name> --display-name "My Service Account"
 ```
 
-### 6. Grant Pub/Sub Editor Role to the New Service Account
+#### 6. Grant Pub/Sub Editor Role to the New Service Account
 > Skip this step if you have an existing service account.
 
 Grant the `pubsub.editor` role to the service account:
@@ -71,7 +71,7 @@ Grant the `pubsub.editor` role to the service account:
 gcloud projects add-iam-policy-binding <project_id> --member serviceAccount:<service_account_name>@<project_id>.iam.gserviceaccount.com --role roles/pubsub.editor
 ```
 
-### 7. Generate Key for the New Service Account(Skip if you have an existing one)
+#### 7. Generate Key for the New Service Account(Skip if you have an existing one)
 > Skip this step if you have an existing service account key.
 
 If you don't have a service account key, create one:
@@ -79,7 +79,7 @@ If you don't have a service account key, create one:
 ```bash
 gcloud iam service-accounts keys create ~/key.json --iam-account <service_account_name>@<project_id>.iam.gserviceaccount.com
 ```
-### 8. Grant Pub/Sub Subscriber Role to an Existing Service Account from a Different Project
+#### 8. Grant Pub/Sub Subscriber Role to an Existing Service Account from a Different Project
 > Skip this step if you're not using a service account from a different project
 
 If you have a service account and a key from a different project, you need to add the necessary permissions to the service account in your current project like this: 
@@ -87,7 +87,7 @@ If you have a service account and a key from a different project, you need to ad
 ```bash
 gcloud projects add-iam-policy-binding <project_id> --member=serviceAccount:<service_account_name>@<existing_project_id>.iam.gserviceaccount.com --role=roles/pubsub.subscriber
 ```
-### 9. Create a Pub/Sub Subscription
+#### 9. Create a Pub/Sub Subscription
 
 Create a Pub/Sub subscription to the topic:
 
@@ -95,7 +95,7 @@ Create a Pub/Sub subscription to the topic:
 gcloud pubsub subscriptions create <subscription_name> --topic <topic_name>
 ```
 
-### 10. Test the Subscription (Optional)
+#### 10. Test the Subscription (Optional)
 
 Pull messages from the subscription to test it:
 
