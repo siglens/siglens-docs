@@ -101,7 +101,6 @@ Pull messages from the subscription to test it:
 ```bash
 gcloud pubsub subscriptions pull --auto-ack <subscription_name>
 ```
----
 
 Remember to replace `<project_id>`, `<logging_service_account>`, `<service_account_name>` and `<existing_project_id>` with your actual project ID and service account names.
 
