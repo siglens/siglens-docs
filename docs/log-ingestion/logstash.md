@@ -1,13 +1,15 @@
 # Logstash
-*Ingesting logs into Siglens using Logstash*
 
-Logstash is an open-source data processing pipeline that ingests data from a multitude of sources simultaneously, transforms it, and then sends it to your favorite "stash". 
+_Ingesting logs into Siglens using Logstash_
+
+Logstash is an open-source data processing pipeline that ingests data from a multitude of sources simultaneously, transforms it, and then sends it to your favorite "stash".
 
 In this guide, we will walk through the process of using Logstash to send logs to Siglens.
 
 ## 1. Install Logstash
 
 - Download Logstash-OSS version from [here](https://www.elastic.co/downloads/logstash-oss) and install using the procedure below
+
 ### Linux based Systems
 
 ```bash
@@ -40,7 +42,7 @@ PS C:\Logstash> bin/logstash --version
 
 ## 2. Configure Logstash
 
-- Create a logstash config file with the below [sample configuration](#sample-configuration-file). 
+- Create a logstash config file with the below [sample configuration](#sample-configuration-file).
 - If you are looking for a sample log dataset you can download it from [here](https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz) and untar it.
 
 ### Sample Configuration file
@@ -54,15 +56,15 @@ input {
 }
 
 filter {
-  mutate {
-    add_field => {
-      "index" => "logstash3_splunk_access_logs"
-      "source" => "logstash3_source"
-    }
+  json {
+    source => "message"
+    remove_field => ["message", "file", "source_type", "path"]
   }
-  date {
-    match => [ "logdate", "ISO8601" ]
-    target => "@timestamp"
+  mutate {
+    add_field => { "index" => "logstash_http" }
+  }
+  if ![first_name] {
+    drop { }
   }
 }
 
