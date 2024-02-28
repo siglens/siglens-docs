@@ -113,6 +113,16 @@ const sidebars = {
       },
       items: ['migration/gcloud/vector'],
     },
+    {
+      type: 'category',
+      label: 'Migrating from Datadog',
+      link: {
+        type: 'generated-index',
+        title: 'Migrating from Datadog',
+        description: `Migrating from Datadog to Siglens is a simple process. Please follow the below steps to migrate from Datadog to Siglens.`,
+      },
+      items: ['migration/datadog/vector'],
+    },
   ],
 },
     'searching-logs',
