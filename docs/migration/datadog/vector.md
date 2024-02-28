@@ -10,7 +10,12 @@ Prerequisites:
 
 ### Configure Datadog Agent
 
-1. Navigate to the Datadog Agent's configuration file. By default, it's located at `/opt/datadog-agent/etc/datadog.yaml`.
+1. Navigate to the Datadog Agent's configuration file. The default location varies based on your operating system:
+
+   - For Linux: `/etc/datadog-agent/datadog.yaml`
+   - For macOS: `~/.datadog-agent/datadog.yaml`
+
+> :warning: **Note:** These paths can change based on the version of the software or the specific configuration of the system.  Refer to the [official Datadog documentation](https://docs.datadoghq.com/agent/guide/agent-configuration-files) for up-to-date information.
 
 2. Open the `datadog.yaml` file and set your Datadog API key. You can find your API key by following the instructions at [this link](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token). Once you have your API key, you can set it in your Datadog Agent's configuration file.
 
@@ -23,7 +28,7 @@ Prerequisites:
 api_key : <YOUR_DATADOG_API_KEY>
 ```
 
-3. Configure Vector. Replace `<VECTOR_SOURCE_PORT>` with the host and port of your Vector source.
+3. Configure Vector. Replace `<VECTOR_SOURCE_PORT>` with the port that your Vector source is listening on. This is the port that the Datadog Agent will send logs to.
 
 ```yaml
 ## @param observability_pipelines_worker - custom object - optional
@@ -31,8 +36,8 @@ api_key : <YOUR_DATADOG_API_KEY>
 ## https://www.datadoghq.com/product/observability-pipelines/
 ## Note: This config is interchangeable with `vector`
 vector:
-  logs.enabled: true
-  logs.url: http://localhost:<VECTOR_SOURCE_PORT>
+    logs.enabled: true
+    logs.url: http://localhost:<VECTOR_SOURCE_PORT>
 ```
 
 4. Enable log collection in the Datadog Agent's configuration file.
@@ -67,7 +72,12 @@ Remember to replace `<YOUR_DATADOG_API_KEY>` and `<VECTOR_SOURCE_PORT>` with you
 
 Here are the general steps to configure the Datadog Agent to collect logs from a file:
 
-1. Navigate to the `conf.d` directory inside the Datadog Agent's directory. By default, it's located at `/etc/datadog-agent/conf.d/`.
+1. Navigate to the `conf.d` directory inside the Datadog Agent's directory. The default location varies based on your operating system:
+
+   - For Linux: `/etc/datadog-agent/conf.d/`
+   - For macOS: `~/.datadog-agent/conf.d/`
+
+> **Note:** This path can change based on the version of the software or the specific configuration of the system. Refer to the [official Datadog documentation](https://docs.datadoghq.com/agent/guide/agent-configuration-files) for up-to-date information.
 
 2. Inside the `conf.d` directory, create a new `.yaml` configuration file for your service. The file name should be `<YOUR_SERVICE>.yaml`, where `<YOUR_SERVICE>` is the name of your service. For example, if your service is named `my_service`, the file name should be `my_service.yaml`.
 
@@ -82,7 +92,7 @@ logs:
     service: <SERVICE_NAME>
     source: <LOG_SOURCE>
   - type: tcp
-    port: 10518 # Update this with the actual port number as required
+    port: <YOUR_APP_PORT> # Update this with the actual port number that your application is sending logs to
     service: <SERVICE_NAME>
     source: <LOG_SOURCE>
 ```
@@ -120,7 +130,7 @@ data_dir: /var/lib/vector
 sources:
   datadog_agent_logs:
     type: "datadog_agent"
-    address: "0.0.0.0:9000" # Update this port number to match the one in your Datadog configuration
+    address: "0.0.0.0:<VECTOR_SOURCE_PORT>" # Update this port number to match the one in your Datadog configuration
 
 transforms:
   datadog_logs_remap:
