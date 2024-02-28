@@ -1,11 +1,13 @@
 # Vector
-*Ingesting logs into Siglens using Vector*
+
+_Ingesting logs into Siglens using Vector_
 
 Vector is a high-performance, open-source observability data pipeline that allows you to collect, transform, and route all your logs and metrics. It's designed to be robust, efficient, and easy to use, making it a popular choice for observability data pipelines.
 
 In this guide, we will walk through the process of using Vector to send logs to Siglens.
 
 ## 1. Install Vector
+
 Read more info about installation of Vector from [here](https://vector.dev/docs/setup/installation/).
 
 ### For Unix-based Systems
@@ -21,6 +23,7 @@ Install using APT (Debian, Ubuntu):
 ```bash
 sudo apt-get install vector
 ```
+
 ### For macOS
 
 Install using Homebrew:
@@ -39,7 +42,6 @@ curl --proto '=https' --tlsv1.2 -sSfL https://sh.vector.dev | VECTOR_VERSION=0.3
 
 - Make sure that the `endpoints` in the configuration has the `/elastic` suffix.
 - If you are looking for a sample log dataset you can download it from [here](https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz) and untar it.
- 
 
 ### Sample Configuration file
 
@@ -82,6 +84,17 @@ transforms:
     source: |
       structured = parse_json!(.message)
       ., err = merge(., structured)
+      del(.message)
+      del(.file)
+      del(.source_type)
+
+  filter_logs:
+    type: filter
+    inputs:
+      - 'remap_file_log'
+    condition:
+      type: 'vrl'
+      source: 'exists(.first_name)'
 
 # Sinks Reference: Ingest the data from Sources to Siglens Sink
 sinks:
@@ -90,7 +103,7 @@ sinks:
     type: 'elasticsearch'
     # The inputs sources name to ingest the data. This is a list of sources. You can add multiple sources.
     inputs:
-      - 'remap_file_log'
+      - 'filter_logs'
     # The ingestion endpoint of Siglens
     endpoints:
       - http://localhost:8081/elastic/
@@ -123,14 +136,22 @@ sinks:
               "read_from_file"
           ],
           "type": "remap",
-          "source": "structured = parse_json!(.message) ., err = merge(., structured)"
+          "source": "structured = parse_json!(.message)\n., err = merge(., structured)\ndel(.message)\ndel(.file)\ndel(.source_type)"
+      },
+    "filter_logs": {
+      "type": "filter",
+      "inputs": ["remap_file_log"],
+      "condition": {
+        "type": "vrl",
+        "source": "exists(.first_name)"
       }
+    }
   },
   "sinks": {
       "siglens": {
           "type": "elasticsearch",
           "inputs": [
-              "remap_file_log"
+              "filter_logs"
           ],
           "endpoints": [
               "http://localhost:8081/elastic/"
@@ -155,10 +176,10 @@ sinks:
 
 For in-depth information on Vector configuration, visit the [official vector documentation](https://vector.dev/docs/reference/configuration/).
 
-
 ## 3. Start Vector
 
 Vector needs to be started with the `--config` argument to specify the path to the configuration file. Run the following command:
 
 ```bash
 vector --config vector.yaml
+```
