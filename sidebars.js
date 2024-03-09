@@ -103,6 +103,26 @@ const sidebars = {
       },
       items: ['migration/loki/promtail'],
     },
+    {
+      type: 'category',
+      label: 'Migrating from Google Cloud',
+      link: {
+        type: 'generated-index',
+        title: 'Migrating from Google Cloud',
+        description: `Migrating from Google Cloud to Siglens is a simple process. Please follow the below steps to migrate from Loki to Siglens.`,
+      },
+      items: ['migration/gcloud/vector'],
+    },
+    {
+      type: 'category',
+      label: 'Migrating from Datadog',
+      link: {
+        type: 'generated-index',
+        title: 'Migrating from Datadog',
+        description: `Migrating from Datadog to Siglens is a simple process. Please follow the below steps to migrate from Datadog to Siglens.`,
+      },
+      items: ['migration/datadog/vector'],
+    },
   ],
 },
     'searching-logs',
