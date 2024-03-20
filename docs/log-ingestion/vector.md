@@ -1,52 +1,84 @@
-# Vector
-
-_Ingesting logs into Siglens using Vector_
-
-Vector is a high-performance, open-source observability data pipeline that allows you to collect, transform, and route all your logs and metrics. It's designed to be robust, efficient, and easy to use, making it a popular choice for observability data pipelines.
-
-In this guide, we will walk through the process of using Vector to send logs to Siglens.
-
-## 1. Install Vector
-
-Read more info about installation of Vector from [here](https://vector.dev/docs/setup/installation/).
-
-### For Unix-based Systems
-
-Add the Vector repo:
-
-```bash
-bash -c "$(curl -L https://setup.vector.dev)"
-```
-
-Install using APT (Debian, Ubuntu):
-
-```bash
-sudo apt-get install vector
-```
-
-### For macOS
-
-Install using Homebrew:
-
-```bash
-brew install vector
-```
-
-### For Windows (Using WSL)
-
-```bash
-curl --proto '=https' --tlsv1.2 -sSfL https://sh.vector.dev | VECTOR_VERSION=0.34.1 bash
-```
-
-## 2. Configure Vector
-
-- Make sure that the `endpoints` in the configuration has the `/elastic` suffix.
-- If you are looking for a sample log dataset you can download it from [here](https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz) and untar it.
-
-### Sample Configuration file
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+
+# Vector
+_Ingesting logs into Siglens using Vector_
+
+### 1. Install Vector
+
+<Tabs
+  className="bg-light"
+  defaultValue="unix"
+  values={[
+    {label: 'Unix-based Systems', value: 'unix'},
+    {label: 'macOS', value: 'mac'},
+    {label: 'Windows', value: 'windows'},
+    {label: 'Other', value:'other'}
+  ]
+}>
+
+<TabItem value="unix">
+Install <a href="https://vector.dev/docs/setup/installation/operating-systems/" target="_blank">Vector</a> for Unix-based systems:
+<details>
+<summary>Debian and Ubuntu</summary>
+
+Add the Vector repo and install using APT:
+
+```bash
+curl -1sLf 'https://setup.vector.dev' \
+| sudo -E bash
+sudo apt-get install vector
+```
+</details>
+
+<details>
+<summary>CentOS, Redhat, and Amazon Linux</summary>
+
+Add the Vector repo and install using YUM:
+
+```bash
+curl -1sLf 'https://setup.vector.dev' \
+| sudo -E bash
+sudo yum install vector
+```
+</details>
+
+</TabItem>
+
+<TabItem value="mac">
+
+Install <a href="https://vector.dev/docs/setup/installation/operating-systems/macos/" target="_blank">Vector</a> using Homebrew:
+```bash
+brew tap vectordotdev/brew && brew install vector
+```
+</TabItem>
+
+<TabItem value="windows">
+Install <a href="https://vector.dev/docs/setup/installation/operating-systems/windows/" target="_blank">Vector</a> using the official installer for Windows:
+```bash
+powershell Invoke-WebRequest https://packages.timber.io/vector/0.36.1/vector-x64.msi -OutFile vector-0.36.1-x64.msi
+msiexec /i vector-0.36.1-x64.msi
+```
+</TabItem>
+
+
+<TabItem value="other">
+Install <a href="https://vector.dev/docs/setup/installation/manual/vector-installer/" target="_blank">Vector</a> using the Vector installer:
+```bash
+curl --proto '=https' --tlsv1.2 -sSfL https://sh.vector.dev | bash
+```
+</TabItem>
+
+</Tabs>
+
+### 2. Configure Vector
+
+Download the sample events file using the following command:
+```bash
+curl -s -L https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz -o 2kevents.json.tar.gz && tar -xvf 2kevents.json.tar.gz
+```
+
+Create a vector config file with the Siglens Vector sink.
 
 <html>
 <Tabs
@@ -62,56 +94,22 @@ import TabItem from '@theme/TabItem';
 <TabItem value="yaml">
 
 ```yaml
-# The directory used for persisting Vector state, such as on-disk buffers, file checkpoints, and more. Please make sure the Vector project has write permissions to this directory.
 data_dir: /var/lib/vector
 
-# Sources Reference
 sources:
-  # The type: "file" will read the data from the file
   read_from_file:
     type: file
     include:
-      - /mnt/d/Siglens/2kevents.json
+      - 2kevents.json # Path to the log file
 
-# Transforms Reference: Transform the data from Sources into desired format
-transforms:
-  remap_file_log:
-    inputs:
-      - 'read_from_file'
-    type: 'remap'
-    # The path to the file containing the remap rules. Parsing the message which is the data read from the file.
-    # The parsed json is stored in the structured variable. The structured variable is merged with the other data/fields.
-    source: |
-      structured = parse_json!(.message)
-      ., err = merge(., structured)
-      del(.message)
-      del(.file)
-      del(.source_type)
-
-  filter_logs:
-    type: filter
-    inputs:
-      - 'remap_file_log'
-    condition:
-      type: 'vrl'
-      source: 'exists(.first_name)'
-
-# Sinks Reference: Ingest the data from Sources to Siglens Sink
 sinks:
   siglens:
-    # The request parameters are optional.
-    type: 'elasticsearch'
-    # The inputs sources name to ingest the data. This is a list of sources. You can add multiple sources.
+    type: elasticsearch
     inputs:
-      - 'filter_logs'
-    # The ingestion endpoint of Siglens
+      - read_from_file
     endpoints:
       - http://localhost:8081/elastic/
-    id_key: hostname
-    compression: none
     mode: bulk
-    query:
-      X-Powered-By: Vector
     healthcheck:
       enabled: false
 ```
@@ -123,49 +121,25 @@ sinks:
 {
   "data_dir": "/var/lib/vector",
   "sources": {
-      "read_from_file": {
-          "type": "file",
-          "include": [
-              "./migration1/2kevents.json"
-          ],
-      }
-  },
-  "transforms": {
-      "remap_file_log": {
-          "inputs": [
-              "read_from_file"
-          ],
-          "type": "remap",
-          "source": "structured = parse_json!(.message)\n., err = merge(., structured)\ndel(.message)\ndel(.file)\ndel(.source_type)"
-      },
-    "filter_logs": {
-      "type": "filter",
-      "inputs": ["remap_file_log"],
-      "condition": {
-        "type": "vrl",
-        "source": "exists(.first_name)"
-      }
+    "read_from_file": {
+      "type": "file",
+      "include": [
+        "2kevents.json"
+      ]
     }
   },
   "sinks": {
-      "siglens": {
-          "type": "elasticsearch",
-          "inputs": [
-              "filter_logs"
-          ],
-          "endpoints": [
-              "http://localhost:8081/elastic/"
-          ],
-          "id_key": "hostname",
-          "compression": "none",
-          "mode": "bulk",
-          "query": {
-              "X-Powered-By": "Vector"
-          },
-          "healthcheck": {
-              "enabled": false
-          }
+    "siglens": {
+      "type": "elasticsearch",
+      "inputs": [
+        "read_from_file"
+      ],
+      "endpoint": "http://localhost:8081/elastic/",
+      "mode": "bulk",
+      "healthcheck": {
+        "enabled": false
       }
+    }
   }
 }
 ```
@@ -176,9 +150,7 @@ sinks:
 
 For in-depth information on Vector configuration, visit the [official vector documentation](https://vector.dev/docs/reference/configuration/).
 
-## 3. Start Vector
-
-Vector needs to be started with the `--config` argument to specify the path to the configuration file. Run the following command:
+### 3. Run Vector
 
 ```bash
 vector --config vector.yaml

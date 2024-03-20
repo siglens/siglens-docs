@@ -155,7 +155,7 @@ sinks:
 3. Remember to adjust the `transforms` section in the configuration to match the format of your data. For detailed information on how to configure transforms for your specific logs, refer to the [Transforms section](https://vector.dev/docs/reference/configuration/transforms/) in the official Vector documentation.
 
 
-## 3. Start Vector
+## 3. Run Vector
 
 Vector needs to be started with the `--config` argument to specify the path to the configuration file. Run the following command:
 
