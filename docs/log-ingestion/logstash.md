@@ -11,7 +11,7 @@ _Ingesting logs into Siglens using Logstash_
   className="bg-light"
   defaultValue="unix"
   values={[
-    {label: 'Unix-based Systems', value: 'unix'},
+    {label: 'Linux', value: 'unix'},
     {label: 'macOS', value: 'mac'},
     {label: 'Windows', value: 'windows'},
   ]

@@ -66,7 +66,7 @@ For more information on customizing your `fluentd.conf` file according to your l
   className="bg-light"
   defaultValue="unix"
   values={[
-    {label: 'Unix-based Systems', value: 'unix'},
+    {label: 'Linux', value: 'unix'},
     {label: 'macOS', value: 'mac'},
     {label: 'Windows', value: 'windows'}
   ]

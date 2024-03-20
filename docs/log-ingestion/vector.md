@@ -10,7 +10,7 @@ _Ingesting logs into Siglens using Vector_
   className="bg-light"
   defaultValue="unix"
   values={[
-    {label: 'Unix-based Systems', value: 'unix'},
+    {label: 'Linux', value: 'unix'},
     {label: 'macOS', value: 'mac'},
     {label: 'Windows', value: 'windows'},
     {label: 'Other', value:'other'}
@@ -18,7 +18,7 @@ _Ingesting logs into Siglens using Vector_
 }>
 
 <TabItem value="unix">
-Install <a href="https://vector.dev/docs/setup/installation/operating-systems/" target="_blank">Vector</a> for Unix-based systems:
+Install <a href="https://vector.dev/docs/setup/installation/operating-systems/" target="_blank">Vector</a> for Linux:
 <details>
 <summary>Debian and Ubuntu</summary>
 

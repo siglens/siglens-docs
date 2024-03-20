@@ -11,13 +11,13 @@ import TabItem from '@theme/TabItem';
   className="bg-light"
   defaultValue="unix"
   values={[
-    {label: 'Unix-based Systems', value: 'unix'},
+    {label: 'Linux', value: 'unix'},
     {label: 'macOS', value: 'mac'},
   ]
 }>
 
 <TabItem value="unix">
-Install <a href="https://grafana.com/docs/loki/latest/clients/promtail/installation/" target="_blank">Promtail</a> for Unix-based systems:
+Install <a href="https://grafana.com/docs/loki/latest/clients/promtail/installation/" target="_blank">Promtail</a> for Linux:
 
 <details>
 <summary>Debian and Ubuntu</summary>
@@ -93,7 +93,7 @@ For more information on customizing your `promtail.yaml` file according to your 
   className="bg-light"
   defaultValue="unix"
   values={[
-    {label: 'Unix-based Systems', value: 'unix'},
+    {label: 'Linux', value: 'unix'},
     {label: 'macOS', value: 'mac'},
   ]
 }>
