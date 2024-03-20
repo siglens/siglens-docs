@@ -91,16 +91,36 @@ output.elasticsearch:
 setup.template.enabled: false
 setup.ilm.enabled: false
 ```
+For more information on customizing your `filebeat.yml` file according to your logs, refer to the [Filebeat documentation](https://www.elastic.co/guide/en/beats/filebeat/current/configuring-howto-filebeat.html)
 
 ### 3. Run Filebeat
 
-On Linux:
+<Tabs
+  className="bg-light"
+  defaultValue="unix"
+  values={[
+    {label: 'Unix-based Systems', value: 'unix'},
+    {label: 'macOS', value: 'mac'},
+    {label: 'Windows', value: 'windows'}
+  ]
+}>
+
+<TabItem value="unix">
 ```bash
 sudo ./filebeat -e -c $(pwd)/filebeat.yml
 ```
+</TabItem>
+<TabItem value="mac">
+```bash
+sudo ./filebeat -e -c $(pwd)/filebeat.yml
+```
+</TabItem>
+<TabItem value="windows">
+Run the following command in PowerShell as an Administrator:
 
-On Windows (as Administrator):
 ```bash
 .\filebeat.exe -e -c C:\path\to\filebeat.yml
 ```
-Make sure to set the correct path to Filebeat and its config file.
+</TabItem>
+</Tabs>
+Navigate to the directory where Filebeat is installed and run the above command, make sure to set the correct path to the config file.

@@ -127,6 +127,8 @@ output {
 }
 ```
 
+For more information on customizing your `logstash.conf` file according to your logs, refer to the [Logstash documentation](https://www.elastic.co/guide/en/logstash/current/configuration.html).
+
 ### 3. Run Logstash
 
 ```bash

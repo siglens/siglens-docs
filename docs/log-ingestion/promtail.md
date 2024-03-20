@@ -85,6 +85,8 @@ scrape_configs:
       job: varlogs
       __path__: /var/log/*log # Path to the log file
 ```
+For more information on customizing your `promtail.yaml` file according to your logs, refer to the [Promtail documentation](https://grafana.com/docs/loki/latest/clients/promtail/configuration/).
+
 ### 3. Run Promtail
 
 <Tabs
