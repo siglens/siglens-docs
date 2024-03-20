@@ -40,7 +40,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath : '/',
+          routeBasePath : '/siglens-docs/',
           sidebarPath: './sidebars.js',
         },
         theme: {
