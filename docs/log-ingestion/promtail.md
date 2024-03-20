@@ -66,7 +66,7 @@ curl -s -L https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kev
 
 Create a config file:
 
-```yml title="promtail_config.yaml"
+```yml title="promtail.yaml"
 server:
   http_listen_port: 9080
   grpc_listen_port: 0
@@ -101,14 +101,14 @@ For more information on customizing your `promtail.yaml` file according to your 
 <TabItem value="unix">
 
 ```bash
-./promtail-linux-amd64 -config.file=promtail_config.yaml
+./promtail-linux-amd64 -config.file=promtail.yaml
 ```
 </TabItem>
 
 <TabItem value="mac">
 
 ```bash
-promtail -config.file=promtail_config.yaml
+promtail -config.file=promtail.yaml
 ```
 </TabItem>
 </Tabs>
