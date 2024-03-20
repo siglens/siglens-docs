@@ -1,33 +1,72 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Promtail
 
 *Ingesting logs into Siglens using Promtail*
 
-Promtail is an open-source log collector that ships the logs from the local system to a Loki instance. It is part of the Loki log aggregation system and is typically deployed to every machine that has applications needed to be monitored.
+### 1. Install Promtail
 
-In this guide, we will walk through the process of using Promtail to send logs to Siglens.
+<Tabs
+  className="bg-light"
+  defaultValue="unix"
+  values={[
+    {label: 'Unix-based Systems', value: 'unix'},
+    {label: 'macOS', value: 'mac'},
+  ]
+}>
 
-## 1. Install Promtail
+<TabItem value="unix">
+Install <a href="https://grafana.com/docs/loki/latest/clients/promtail/installation/" target="_blank">Promtail</a> for Unix-based systems:
 
-- Download the correct binary for Promtail based on your operating system and unzip it in your local system. 
+<details>
+<summary>Debian and Ubuntu</summary>
 
-***The process below uses binary files for MacOS systems with Intel processors.***
+Download and install the Promtail binary:
 
-    - If you are on a Linux host, download and use the correct Binary file from the [Loki releases](https://github.com/grafana/loki/releases/). The Linux binary for x86 architecture is called `promtail-linux-amd64.zip`.
-
--  Download and unzip the Promtail Binary
+```bash
+curl -O -L "https://github.com/grafana/loki/releases/download/v2.9.5/promtail-linux-amd64.zip"
+sudo apt install unzip
+unzip "promtail-linux-amd64.zip"
+sudo chmod a+x "promtail-linux-amd64"
 ```
-curl -O -L "https://github.com/grafana/loki/releases/download/v2.8.2/promtail-darwin-amd64.zip"
+</details>
 
- unzip promtail-darwin-amd64.zip
+<details>
+<summary>CentOS, Redhat, and Amazon Linux</summary>
 
+Download and install the Promtail binary:
+
+```bash
+curl -O -L "https://github.com/grafana/loki/releases/download/v2.9.5/promtail-linux-amd64.zip"
+sudo yum install unzip
+unzip "promtail-linux-amd64.zip"
+sudo chmod a+x "promtail-linux-amd64"
 ```
-## 2. Configure Promtail
+</details>
 
-- Create a promtail config file with the below [sample configuration](#sample-configuration-file). 
-- If you are looking for a sample log dataset you can download it from [here](https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz), untar it and update the `_path_` accordinly in the config file.
+</TabItem>
 
-### Sample Configuration file
+<TabItem value="mac">
+
+Install <a href="https://grafana.com/docs/loki/latest/clients/promtail/installation/" target="_blank">Promtail</a> using Homebrew:
+```bash
+brew install promtail
 ```
+</TabItem>
+
+</Tabs>
+
+### 2. Configure Promtail
+
+Download the sample events file using the following command:
+```bash
+curl -s -L https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz -o 2kevents.json.tar.gz && tar -xvf 2kevents.json.tar.gz
+```
+
+Create a config file:
+
+```yml title="promtail_config.yaml"
 server:
   http_listen_port: 9080
   grpc_listen_port: 0
@@ -44,17 +83,30 @@ scrape_configs:
       - localhost
     labels:
       job: varlogs
-      __path__: /var/log/*log
+      __path__: /var/log/*log # Path to the log file
 ```
-## 3. Run Promtail
+### 3. Run Promtail
 
-- Run the binary with the `promtail-local-config.yaml` configuration file.
+<Tabs
+  className="bg-light"
+  defaultValue="unix"
+  values={[
+    {label: 'Unix-based Systems', value: 'unix'},
+    {label: 'macOS', value: 'mac'},
+  ]
+}>
+
+<TabItem value="unix">
 
 ```bash
-./promtail-darwin-amd64 -config.file=promtail-local-config.yaml
+./promtail-linux-amd64 -config.file=promtail_config.yaml
 ```
+</TabItem>
 
-You should see an output similar to the one below if the logs are successfully ingested. 
+<TabItem value="mac">
 
-![](../../static/tutorials/loki-ingestion.png)
-
+```bash
+promtail -config.file=promtail_config.yaml
+```
+</TabItem>
+</Tabs>

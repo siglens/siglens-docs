@@ -93,9 +93,9 @@ Download the sample events file using the following command:
 curl -s -L https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz -o 2kevents.json.tar.gz && tar -xvf 2kevents.json.tar.gz
 ```
 
-Create a logstash.conf file:
+Create a config file:
 
-```conf
+```ruby title="logstash.conf"
 input {
   file {
     path => "/Users/username/logstash/2kevents.json" # Path to the log file
