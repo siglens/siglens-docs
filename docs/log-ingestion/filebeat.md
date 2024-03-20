@@ -96,7 +96,7 @@ setup.ilm.enabled: false
 
 On Linux:
 ```bash
-sudo ./filebeat -e -c $(pwd)/filebeat.yaml
+sudo ./filebeat -e -c $(pwd)/filebeat.yml
 ```
 
 On Windows (as Administrator):
