@@ -64,8 +64,13 @@ Expand-Archive -Path filebeat-oss-7.9.3-windows-x86_64.zip -DestinationPath C:\P
 
 ### 2. Configure Filebeat
 
+Download the sample events file using the following command:
+```bash
+curl -s -L https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz -o 2kevents.json.tar.gz && tar -xvf 2kevents.json.tar.gz
+```
+Create a config file:
 
-```yaml
+```yml title="filebeat.yml"
 filebeat.inputs:
   - type: log
     enabled: true
@@ -95,7 +100,7 @@ sudo ./filebeat -e -c $(pwd)/filebeat.yaml
 ```
 
 On Windows (as Administrator):
-```powershell
-.\filebeat.exe -e -c D:\Siglens\filebeat.yml
+```bash
+.\filebeat.exe -e -c C:\path\to\filebeat.yml
 ```
 Make sure to set the correct path to Filebeat and its config file.

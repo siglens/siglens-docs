@@ -55,7 +55,7 @@ brew tap vectordotdev/brew && brew install vector
 
 <TabItem value="windows">
 Install <a href="https://vector.dev/docs/setup/installation/operating-systems/windows/" target="_blank">Vector</a> using the official installer for Windows:
-```bash
+```powershell
 powershell Invoke-WebRequest https://packages.timber.io/vector/0.36.1/vector-x64.msi -OutFile vector-0.36.1-x64.msi
 msiexec /i vector-0.36.1-x64.msi
 ```
@@ -93,7 +93,7 @@ Create a vector config file with the Siglens Vector sink.
 >
 <TabItem value="yaml">
 
-```yaml
+```yml title="vector.yaml"
 data_dir: /var/lib/vector
 
 sources:
@@ -117,7 +117,7 @@ sinks:
 </TabItem>
 
 <TabItem value="json">
-```json
+```json title="vector.json"
 {
   "data_dir": "/var/lib/vector",
   "sources": {
@@ -147,6 +147,7 @@ sinks:
 </Tabs>
 
 </html>
+Please note that you might need to add transforms to your Vector configuration according to the structure of your data to ensure it is processed correctly.
 
 For in-depth information on Vector configuration, visit the [official vector documentation](https://vector.dev/docs/reference/configuration/).
 

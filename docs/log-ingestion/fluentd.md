@@ -1,31 +1,27 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Fluentd
 
 _Ingesting logs into Siglens using Fluentd_
 
-Fluentd is an open-source data collector that unifies data collection and consumption for better use and understanding of data. It's designed to handle various types of data sources with different types and formats, making it a popular choice for logging solutions.
+### 1. Install Fluentd
 
-In this guide, we will walk through the process of using Fluentd to send logs to Siglens.
+Install <a href="https://docs.fluentd.org/installation" target="_blank">Fluentd</a> on your server
 
-## 1. Install Fluentd
+### 2. Configure Fluentd
 
-- Follow the instructions to install the Fluentd package from the [official docs](https://docs.fluentd.org/installation).
+Download the sample events file using the following command:
+```bash
+curl -s -L https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz -o 2kevents.json.tar.gz && tar -xvf 2kevents.json.tar.gz
+```
 
-  - [Debian/Ubuntu](https://docs.fluentd.org/installation/install-by-deb#installing-fluent-package)
-  - [macOS](https://docs.fluentd.org/installation/obsolete-installation/treasure-agent-v4-installation/install-by-dmg-td-agent-v4)
-  - [Windows](https://docs.fluentd.org/installation/install-by-msi)
-
-## 2. Configure Fluentd
-
-- Create a Fluentd config file with the below [sample configuration](#sample-configuration-file).
-- If you are looking for a sample log dataset you can download it from [here](https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz) and untar it.
-
-### Sample Configuration File
-
-```conf
+Create a fluentd.conf file:
+```xml title="fluentd.conf"
 <source>
   @type tail
-  path D:\Siglens\data\2kevents.json
-  pos_file D:\Siglens\fluentd_logs\2kevents.json.pos
+  path /Users/username/logstash/2kevents.json # Path to the log file
+  pos_file /Users/username/logstash/2kevents.json  # Path to the position file
   tag my.logs
   read_from_head true
   <parse>
@@ -44,7 +40,7 @@ In this guide, we will walk through the process of using Fluentd to send logs to
   @type grep
   <regexp>
     key first_name
-    pattern /.+/  # Ensures first_name exists and is not empty
+    pattern /.+/
   </regexp>
 </filter>
 
@@ -62,16 +58,44 @@ In this guide, we will walk through the process of using Fluentd to send logs to
   </buffer>
 </match>
 ```
+For more information on customizing your `fluentd.conf` file according to your logs, refer to the [Fluentd documentation](https://docs.fluentd.org/configuration).
 
-## 3. Run Fluentd
+### 3. Run Fluentd
 
-Navigate to the Fluentd directory and run `fluentd -c <<path-of-fluentd-config>>`. On Linux, prepend the command with `sudo`. If using td-agent, replace `fluentd` with `td-agent`. On Windows, run the command as an Administrator.
+<Tabs
+  className="bg-light"
+  defaultValue="unix"
+  values={[
+    {label: 'Unix-based Systems', value: 'unix'},
+    {label: 'macOS', value: 'mac'},
+    {label: 'Windows', value: 'windows'}
+  ]
+}>
 
-- **Linux**:
-  ```bash
-  sudo fluentd -c /home/fluentd_config.conf
-  ```
-- **Windows**: Open the fluentd command prompt as an Administrator and run
-  ```bash
-  fluentd -c /home/fluentd_config.conf
-  ```
+<TabItem value="unix">
+Navigate to the Fluentd directory and run the following command. If using td-agent, replace `fluentd` with `td-agent`.
+
+```bash
+sudo fluentd -c /home/fluentd.conf
+```
+</TabItem>
+
+<TabItem value="mac">
+Navigate to the Fluentd directory and run the following command. If using td-agent, replace `fluentd` with `td-agent`.
+
+```bash
+sudo fluentd -c /Users/username/fluentd.conf
+```
+</TabItem>
+
+<TabItem value="windows">
+Open powershell as an Administrator and run the following command. If using td-agent, replace `fluentd` with `td-agent`.
+
+```bash
+fluentd -c C:\path\to\fluentd.conf
+```
+</TabItem>
+
+</Tabs>
+
+Make sure to set the correct path to Fluentd and its config file.
