@@ -61,7 +61,7 @@ sinks:
 For in-depth information on Vector configuration, visit the [official vector documentation](https://vector.dev/docs/reference/configuration/).
 
 
-## 3. Start Vector
+## 3. Run Vector
 
 Vector needs to be started with the `--config` argument to specify the path to the configuration file. Run the following command:
 

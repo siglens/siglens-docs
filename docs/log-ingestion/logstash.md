@@ -1,56 +1,104 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Logstash
 
 _Ingesting logs into Siglens using Logstash_
 
-Logstash is an open-source data processing pipeline that ingests data from a multitude of sources simultaneously, transforms it, and then sends it to your favorite "stash".
+### 1. Install Logstash
 
-In this guide, we will walk through the process of using Logstash to send logs to Siglens.
+<Tabs
+  className="bg-light"
+  defaultValue="unix"
+  values={[
+    {label: 'Unix-based Systems', value: 'unix'},
+    {label: 'macOS', value: 'mac'},
+    {label: 'Windows', value: 'windows'},
+  ]
+}>
 
-## 1. Install Logstash
+<TabItem value="unix">
 
-- Download Logstash-OSS version from [here](https://www.elastic.co/downloads/logstash-oss) and install using the procedure below
+<details>
+<summary>Debian and Ubuntu</summary>
 
-### Linux based Systems
+Install <a href="https://www.elastic.co/guide/en/logstash/current/installing-logstash.html" target="_blank">Logstash<i class="fas fa-external-link-alt"></i></a> using APT:
 
 ```bash
-sudo dpkg -i logstash-oss-7.9.3-amd64.deb
-# OR
-tar xzvf logstash-oss-7.9.3-linux-x86_64.tar.gz
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+sudo apt-get update && sudo apt-get install logstash
 ```
+</details>
 
-### Windows
+<details>
+<summary>CentOS, Redhat, and Amazon Linux</summary>
 
-- Download the Zip version of Logstash, extract its contents into the C drive, rename the directory to "Logstash", then open a PowerShell prompt as an Administrator and run the below commands to install Logstash as a Windows service
+Install <a href="https://www.elastic.co/guide/en/logstash/current/installing-logstash.html" target="_blank">Logstash<i class="fas fa-external-link-alt"></i></a> using YUM:
 
 ```bash
-PS > cd 'C:\Logstash'
-PS C:\Logstash> bin/logstash --version
+sudo rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+echo "[logstash-7.x]
+name=Elastic repository for 7.x packages
+baseurl=https://artifacts.elastic.co/packages/7.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md" | sudo tee /etc/yum.repos.d/logstash.repo
+sudo yum install logstash
+```
+</details>
+
+</TabItem>
+
+<TabItem value="mac">
+Install <a href="https://www.elastic.co/guide/en/logstash/7.9/installing-logstash.html" target="_blank">Logstash<i class="fas fa-external-link-alt"></i></a> on macOS:
+
+```bash
+brew install logstash
+```
+</TabItem>
+<TabItem value="windows">
+
+Install <a href="https://www.elastic.co/guide/en/logstash/current/installing-logstash.html" target="_blank">Logstash <i class="fas fa-external-link-alt"></i></a> using the official installer for Windows:
+
+```bash
+# Download and install the Public Signing Key:
+wget https://artifacts.elastic.co/GPG-KEY-elasticsearch
+rpm --import GPG-KEY-elasticsearch
+
+# Add the repository definition to your /etc/yum.repos.d/ directory:
+echo "[logstash-7.x]
+name=Elastic repository for 7.x packages
+baseurl=https://artifacts.elastic.co/packages/7.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md" | sudo tee /etc/yum.repos.d/logstash.repo
+
+# And finally, install Logstash:
+sudo yum install logstash
+```
+</TabItem>
+
+</Tabs>
+
+### 2. Configure Logstash
+
+
+Download the sample events file using the following command:
+```bash
+curl -s -L https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz -o 2kevents.json.tar.gz && tar -xvf 2kevents.json.tar.gz
 ```
 
-### JVM Options
-
-#### Append at the end of Logstash/config/jvm.options
-
-```options
---add-opens java.base/sun.nio.ch=ALL-UNNAMED
---add-opens java.base/java.io=ALL-UNNAMED
-
---add-opens java.base/sun.nio.ch=ALL-UNNAMED
---add-opens java.base/java.io=ALL-UNNAMED
---add-opens java.base/java.security=ALL-UNNAMED
-```
-
-## 2. Configure Logstash
-
-- Create a logstash config file with the below [sample configuration](#sample-configuration-file).
-- If you are looking for a sample log dataset you can download it from [here](https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz) and untar it.
-
-### Sample Configuration file
+Create a logstash.conf file:
 
 ```conf
 input {
   file {
-    path => "D:/Siglens/2kevents.json"
+    path => "/Users/username/logstash/2kevents.json" # Path to the log file
     start_position => "beginning"
   }
 }
@@ -79,20 +127,10 @@ output {
 }
 ```
 
-## 3. Run Logstash
+### 3. Run Logstash
 
-- Run `bin/logstash -f <<path-of-logstash-config>>` in the logstash directory (prepend with sudo on Linux, or run as Administrator on Windows).
+```bash
+sudo logstash -f $(pwd)/logstash.conf
+```
 
-- ### Linux based systems
-
-  ```bash
-  # Assuming the config is in the Logstash directory
-  sudo bin/logstash -f ./logstash_config.conf
-  ```
-
-- ### Windows
-
-  ```bash
-  # Assuming the config is in the Logstash directory
-  bin/logstash -f ./logstash_config.conf
-  ```
+Please ensure to replace ```$(pwd)/logstash.conf``` with the absolute path to your Logstash configuration file.
