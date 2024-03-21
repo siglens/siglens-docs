@@ -11,7 +11,7 @@ _Ingesting logs into Siglens using Filebeat_
   className="bg-light"
   defaultValue="unix"
   values={[
-    {label: 'Unix-based Systems', value: 'unix'},
+    {label: 'Linux', value: 'unix'},
     {label: 'macOS', value: 'mac'},
     {label: 'Windows', value: 'windows'}
   ]
@@ -64,8 +64,13 @@ Expand-Archive -Path filebeat-oss-7.9.3-windows-x86_64.zip -DestinationPath C:\P
 
 ### 2. Configure Filebeat
 
+Download the sample events file using the following command:
+```bash
+curl -s -L https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz -o 2kevents.json.tar.gz && tar -xvf 2kevents.json.tar.gz
+```
+Create a config file:
 
-```yaml
+```yml title="filebeat.yml"
 filebeat.inputs:
   - type: log
     enabled: true
@@ -86,16 +91,36 @@ output.elasticsearch:
 setup.template.enabled: false
 setup.ilm.enabled: false
 ```
+For more information on customizing your `filebeat.yml` file according to your logs, refer to the [Filebeat documentation](https://www.elastic.co/guide/en/beats/filebeat/current/configuring-howto-filebeat.html)
 
 ### 3. Run Filebeat
 
-On Linux:
-```bash
-sudo ./filebeat -e -c $(pwd)/filebeat.yaml
-```
+<Tabs
+  className="bg-light"
+  defaultValue="unix"
+  values={[
+    {label: 'Linux', value: 'unix'},
+    {label: 'macOS', value: 'mac'},
+    {label: 'Windows', value: 'windows'}
+  ]
+}>
 
-On Windows (as Administrator):
-```powershell
-.\filebeat.exe -e -c D:\Siglens\filebeat.yml
+<TabItem value="unix">
+```bash
+sudo ./filebeat -e -c $(pwd)/filebeat.yml
 ```
-Make sure to set the correct path to Filebeat and its config file.
+</TabItem>
+<TabItem value="mac">
+```bash
+sudo ./filebeat -e -c $(pwd)/filebeat.yml
+```
+</TabItem>
+<TabItem value="windows">
+Run the following command in PowerShell as an Administrator:
+
+```bash
+.\filebeat.exe -e -c C:\path\to\filebeat.yml
+```
+</TabItem>
+</Tabs>
+Navigate to the directory where Filebeat is installed and run the above command, make sure to set the correct path to the config file.
