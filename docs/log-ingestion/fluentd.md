@@ -21,7 +21,7 @@ Create a fluentd.conf file:
 <source>
   @type tail
   path /Users/username/logstash/2kevents.json # Path to the log file
-  pos_file /Users/username/logstash/2kevents.json  # Path to the position file
+  pos_file /Users/username/logstash/2kevents.json.pos  # Path to the position file
   tag my.logs
   read_from_head true
   <parse>
