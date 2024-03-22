@@ -11,7 +11,7 @@ _Ingesting logs into Siglens using Logstash_
   className="bg-light"
   defaultValue="unix"
   values={[
-    {label: 'Unix-based Systems', value: 'unix'},
+    {label: 'Linux', value: 'unix'},
     {label: 'macOS', value: 'mac'},
     {label: 'Windows', value: 'windows'},
   ]
@@ -93,9 +93,9 @@ Download the sample events file using the following command:
 curl -s -L https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz -o 2kevents.json.tar.gz && tar -xvf 2kevents.json.tar.gz
 ```
 
-Create a logstash.conf file:
+Create a config file:
 
-```conf
+```ruby title="logstash.conf"
 input {
   file {
     path => "/Users/username/logstash/2kevents.json" # Path to the log file
@@ -126,6 +126,8 @@ output {
   }
 }
 ```
+
+For more information on customizing your `logstash.conf` file according to your logs, refer to the [Logstash documentation](https://www.elastic.co/guide/en/logstash/current/configuration.html).
 
 ### 3. Run Logstash
 

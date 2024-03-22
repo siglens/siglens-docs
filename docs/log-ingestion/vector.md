@@ -10,7 +10,7 @@ _Ingesting logs into Siglens using Vector_
   className="bg-light"
   defaultValue="unix"
   values={[
-    {label: 'Unix-based Systems', value: 'unix'},
+    {label: 'Linux', value: 'unix'},
     {label: 'macOS', value: 'mac'},
     {label: 'Windows', value: 'windows'},
     {label: 'Other', value:'other'}
@@ -18,7 +18,7 @@ _Ingesting logs into Siglens using Vector_
 }>
 
 <TabItem value="unix">
-Install <a href="https://vector.dev/docs/setup/installation/operating-systems/" target="_blank">Vector</a> for Unix-based systems:
+Install <a href="https://vector.dev/docs/setup/installation/operating-systems/" target="_blank">Vector</a> for Linux:
 <details>
 <summary>Debian and Ubuntu</summary>
 
@@ -55,7 +55,7 @@ brew tap vectordotdev/brew && brew install vector
 
 <TabItem value="windows">
 Install <a href="https://vector.dev/docs/setup/installation/operating-systems/windows/" target="_blank">Vector</a> using the official installer for Windows:
-```bash
+```powershell
 powershell Invoke-WebRequest https://packages.timber.io/vector/0.36.1/vector-x64.msi -OutFile vector-0.36.1-x64.msi
 msiexec /i vector-0.36.1-x64.msi
 ```
@@ -93,7 +93,7 @@ Create a vector config file with the Siglens Vector sink.
 >
 <TabItem value="yaml">
 
-```yaml
+```yml title="vector.yaml"
 data_dir: /var/lib/vector
 
 sources:
@@ -117,7 +117,7 @@ sinks:
 </TabItem>
 
 <TabItem value="json">
-```json
+```json title="vector.json"
 {
   "data_dir": "/var/lib/vector",
   "sources": {
@@ -147,6 +147,7 @@ sinks:
 </Tabs>
 
 </html>
+Please note that you might need to add transforms to your Vector configuration according to the structure of your data to ensure it is processed correctly.
 
 For in-depth information on Vector configuration, visit the [official vector documentation](https://vector.dev/docs/reference/configuration/).
 
