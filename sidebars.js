@@ -38,6 +38,7 @@ const sidebars = {
         'log-ingestion/fluentd',
         'log-ingestion/filebeat',
         'log-ingestion/promtail',
+        'log-ingestion/open-telemetry',
       ],
     },
     {
