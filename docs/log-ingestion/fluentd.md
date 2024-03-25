@@ -47,7 +47,7 @@ Create a fluentd.conf file:
 <match my.logs>
   @type http
 
-  endpoint http://127.0.0.1:8081/splunk/services/collector/event?source=fluentd_source
+  endpoint http://127.0.0.1:8081/services/collector/event?source=fluentd_source
   open_timeout 2
   <format>
     @type json

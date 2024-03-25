@@ -8,9 +8,7 @@ Begin by installing Vector using the instructions provided [here](../../log-inge
 
 ## 2. Configure Vector
 
-- Make sure that the `endpoints` in the configuration has the `/splunk` suffix.
-
-###  Sample Configuration
+Store the following example config in `vector.yaml`.
 
 ```yaml
 data_dir: /var/lib/vector
@@ -45,7 +43,7 @@ sinks:
     inputs:
       - generate_syslog
       - remap_file_log
-    endpoint: http://localhost:8081/splunk/
+    endpoint: http://localhost:8081
     host_key: hostname
     index: 'ind-0'
     indexed_fields:

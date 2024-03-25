@@ -35,7 +35,7 @@ sinks:
     type: splunk_hec_metrics
     inputs:
       - nginx_metrics
-    endpoint: http://localhost:8081/splunk/
+    endpoint: http://localhost:8081
     compression: none
     default_namespace: 'nginx' # Corrected spelling here
     default_token: 'A94A8FE5CCB19BA61C4C08'
