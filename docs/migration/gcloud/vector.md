@@ -137,7 +137,7 @@ sinks:
     type: splunk_hec_logs
     inputs:
       - gcp_pubsub_logs
-    endpoint: http://localhost:8081/splunk/ # Ensure your endpoint has /splunk suffix
+    endpoint: http://localhost:8081
     host_key: hostname
     index: 'siglens-gcloud' # Replace with desired index
     indexed_fields:
@@ -150,9 +150,8 @@ sinks:
     batch:
       max_events: 1
 ```
-1. When creating your Vector configuration file, ensure the endpoint has a `/splunk` suffix and replace the placeholders as needed.
-2. The `<credentials_path>` should point to your service account key, which would be `key.json` which would be key.json if you followed the Google Cloud Pub/Sub setup steps above.
-3. Remember to adjust the `transforms` section in the configuration to match the format of your data. For detailed information on how to configure transforms for your specific logs, refer to the [Transforms section](https://vector.dev/docs/reference/configuration/transforms/) in the official Vector documentation.
+1. The `<credentials_path>` should point to your service account key, which would be `key.json` which would be key.json if you followed the Google Cloud Pub/Sub setup steps above.
+2. Remember to adjust the `transforms` section in the configuration to match the format of your data. For detailed information on how to configure transforms for your specific logs, refer to the [Transforms section](https://vector.dev/docs/reference/configuration/transforms/) in the official Vector documentation.
 
 
 ## 3. Run Vector
