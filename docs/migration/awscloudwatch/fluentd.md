@@ -15,7 +15,7 @@ Install [Fluentd](https://docs.fluentd.org/installation) on your server.
 
 ### 2. IAM Role Configuration
 
-1. Create an IAM role with the below permissions.
+1. Create an IAM role with the following permissions to allow Fluentd to access CloudWatch Logs:
 
     ```json
     {
@@ -32,10 +32,22 @@ Install [Fluentd](https://docs.fluentd.org/installation) on your server.
         ]
     }
     ```
-2. Obtain IAM Role Access Key and Secret Key for authentication.
-3. This is required for the Authentication purposes.
+2. For authentication purposes, Fluentd requires the IAM Role's Access Key ID and Secret Access Key:
+- **For EC2 instances**: If Fluentd is running on an EC2 instance, instead of manually managing Access Keys, it's recommended to use an IAM role attached to the EC2 instance. This approach simplifies credential management and enhances security. 
 
-**Note**: For EC2 instances, use an *`IAM service role`* instead.
+    1. Navigate to the EC2 dashboard within the AWS Management Console.
+    2. Select the instance you want to attach the IAM role to.
+    3. In the `Actions` menu, choose `Security`, then `Modify IAM role`.
+    4. Choose the IAM role that has the necessary permissions outlined above from the dropdown list.
+    5. Click `Save` to attach the role to the instance.
+
+    By attaching an IAM role, EC2 instances will automatically have access to AWS services based on the role's permissions without the need for Access Keys.
+- **For non-EC2 setups**: If Fluentd is not running on an EC2 instance, you will need to manually manage and provide Access Keys for authentication.
+
+    1. Navigate to the IAM console.
+    2. Find the IAM role you created with the necessary permissions.
+    3. Under the `Security credentials` tab, create a new Access Key.
+    4. Securely store the Access Key ID and Secret Access Key presented to you.
 
 ### 3. Environment Setup (skip if using EC2 IAM role)
 

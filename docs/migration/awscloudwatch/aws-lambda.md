@@ -42,9 +42,10 @@ import TabItem from '@theme/TabItem';
 4. Click `Add`.
 
 ### 3. Environment Variables Setup
-Set the following variables in the AWS Lambda function:
-- `SIGLENS_INGEST_URL`: `https://yourhost.com:8081/services/collector/event`.
-- `SIGLENS_TOKEN`: Ingestion token, e.g., `A94A8FE5CCB19BA61C4C08`.
+Configure the following environment variables in your AWS Lambda function:
+- **SIGLENS_INGEST_URL**: Specify the endpoint for log ingestion, for example, `https://yourhost.com:8081/services/collector/event`.
+- **SIGLENS_TOKEN**: This is the ingestion token required for authenticating requests to SigLens. Use this if you are utilizing a SigLens SaaS account. To find your ingestion token, navigate to `My Org` -> `API Keys` -> `Ingest Token` within your SigLens dashboard.
+
 
 ### 4. Lambda Function Deployment
 1. In the Code section, navigate to `index.mjs`, replace its contents with the below code, and save.
