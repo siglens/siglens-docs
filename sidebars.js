@@ -116,6 +116,16 @@ const sidebars = {
     },
     {
       type: 'category',
+      label: 'Migrating from AWS CloudWatch',
+      link: {
+        type: 'generated-index',
+        title: 'Migrating from AWS CloudWatch',
+        description: `Migrating/Streaming Logs from AWS CloudWatch to Siglens is a simple process. Please follow the below steps to migrate to Siglens.`,
+      },
+      items: ['migration/awscloudwatch/aws-lambda', 'migration/awscloudwatch/fluentd'],
+    },
+    {
+      type: 'category',
       label: 'Migrating from Datadog',
       link: {
         type: 'generated-index',
