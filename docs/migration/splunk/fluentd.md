@@ -58,7 +58,7 @@
   hec_token A94A8FE5CCB19BA61C4C08
   hec_host localhost
   hec_port 8081
-  hec_endpoint /splunk/services/collector/event
+  hec_endpoint /services/collector/event
   protocol http
   index fluentd-ind-0
   # Buffer configuration
