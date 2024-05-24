@@ -12,7 +12,7 @@ Create a vector config file with the Siglens Vector sink.
 
 _Note: This sample configuration file is for exporting Nginx metrics to Siglens._
 
-```yaml
+```yml title="vector.yaml"
 # The directory used for persisting Vector state, such as on-disk buffers, file checkpoints, and more. Please make sure the Vector project has write permissions to this directory.
 data_dir: /var/lib/vector
 
