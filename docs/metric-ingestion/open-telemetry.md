@@ -1,28 +1,55 @@
-# Open Telemetry
+# OpenTelemetry
 
-OpenTelemetry provides a single set of APIs, libraries, agents, and collector services to capture distributed traces and metrics from your application.
+_Ingesting metrics into Siglens using OpenTelemetry_
 
-In this guide, we will walk through the process of using OpenTelemetry to send metrics to Siglens.
+### 1. Install OpenTelemetry Collector
 
-*Ingesting metrics into Siglens using Open Telemetry*
+Pull the docker image for OTEL Collector:
 
-- To ingest traces, you can run siglens and follow the below steps. 
-- If Siglens is running with ingestPort: 8081 in the server.yaml file, you'll follow these steps:
-
-1. git clone https://github.com/open-telemetry/opentelemetry-demo.git
-2. cd opentelemetry-demo/
-3. Update `src/otelcollector/otelcol-config-extras.yml` to be:
-
+```bash
+docker pull otel/opentelemetry-collector
 ```
+
+### 2. Configure OpenTelemetry Collector
+
+_Note: This sample configuration file is for exporting system metrics to Siglens._
+
+```yml title="otel_collector_config.yaml"
+receivers:
+  hostmetrics:
+    collection_interval: 10s
+    scrapers:
+      cpu:
+      memory:
+      disk:
+      network:
+
 exporters:
-otlphttp/siglens:
-    endpoint: "http://host.docker.internal:8081/otlp"
+  prometheusremotewrite:
+    endpoint: "http://localhost:8081/promql/api/v1/write"
+    # If Siglens is running on the host machine where your OTEL Docker container is running, then use `host.docker.internal:8081`.
+
+processors:
+  batch:
+    send_batch_size: 5000
+    timeout: 10s
 
 service:
-pipelines:
-    traces:
-    exporters: [spanmetrics, otlphttp/siglens]
+  pipelines:
+    metrics:
+      receivers: [hostmetrics]
+      processors: [batch]
+      exporters: [prometheusremotewrite]
 ```
-4. Run the command `make start`.
 
-    After the docker containers start and you wait a few seconds, you should see traces getting ingested into siglens.
+You can configure OpenTelemetry to collect different types of metrics according to your needs. For more information on configuring OpenTelemetry, please refer to the [OpenTelemetry Collector Documentation](https://opentelemetry.io/docs/collector/configuration)
+
+
+### 3. Run OpenTelemetry Collector
+
+```bash 
+docker run --rm \
+  -v "${PWD}/otel_collector_config.yaml:/etc/otel/config.yaml" \
+  otel/opentelemetry-collector \
+  --config /etc/otel/config.yaml
+```
