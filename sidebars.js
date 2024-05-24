@@ -49,7 +49,6 @@ const sidebars = {
       },
       items: [
         'metric-ingestion/vector-metrics',
-        'metric-ingestion/metricbeat',
         'metric-ingestion/open-telemetry',
       ],
     },
