@@ -1,20 +1,18 @@
 # Vector Metrics
 
-*Ingesting metrics into Siglens using Vector*
+_Ingesting metrics into Siglens using Vector_
 
-Vector is a high-performance, open-source observability data pipeline that allows you to collect, transform, and route all your logs and metrics. It's designed to be robust, efficient, and easy to use, making it a popular choice for observability data pipelines.
-
-In this guide, we will walk through the process of using Vector to send metrics to Siglens.
-
-## 1. Install Vector 
+### 1. Install Vector
 
 Begin by installing Vector using the instructions provided [here](../log-ingestion/vector.md#1-installation). Once installed, you can refer back to this guide for configuration and starting Vector.
 
-## 2. Configure Vector Metrics
+### 2. Configure Vector Metrics
 
-### Sample Configuration file
+Create a vector config file with the Siglens Vector sink.
 
-```yaml
+_Note: This sample configuration file is for exporting Nginx metrics to Siglens._
+
+```yml title="vector.yaml"
 # The directory used for persisting Vector state, such as on-disk buffers, file checkpoints, and more. Please make sure the Vector project has write permissions to this directory.
 data_dir: /var/lib/vector
 
@@ -32,27 +30,21 @@ sources:
 
 sinks:
   siglens:
-    type: splunk_hec_metrics
+    type: http
     inputs:
       - nginx_metrics
-    endpoint: http://localhost:8081
-    compression: none
-    default_namespace: 'nginx' # Corrected spelling here
-    default_token: 'A94A8FE5CCB19BA61C4C08'
-    host_key: hostname
-    index: 'ind-nginx'
-    source: 'nginx_metrics'
-    sourcetype: 'nginx_metrics'
-    batch:
-      max_events: 1
+    uri: http://localhost:8081/otsdb/api/put
+    encoding:
+      codec: json
 ```
+
+Please note that you might need to add transforms to your Vector configuration according to the structure of your data to ensure it is processed correctly.
 
 For in-depth information on Vector configuration, visit the [official vector documentation](https://vector.dev/docs/reference/configuration/).
 
 
-## 3. Start Vector
-
-Vector needs to be started with the `--config` argument to specify the path to the configuration file. Run the following command:
+### 3. Run Vector
 
 ```bash
 vector --config vector.yaml
+```
