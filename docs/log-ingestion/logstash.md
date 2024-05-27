@@ -121,7 +121,7 @@ output {
     format => "json"
     content_type => "application/json"
     http_method => "post"
-    url => "http://localhost:8081/splunk/services/collector/event"
+    url => "http://localhost:8081/services/collector/event"
     headers => ['Authorization', 'A94A8FE5CCB19BA61C4C08']
   }
 }
