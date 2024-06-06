@@ -29,7 +29,7 @@ SigLens is engineered for excellence in managing massive volumes of data, from t
 
 **SigLens Platform**: We encourage you to try out SigLens using
 
-- The [SigLens Playground](http://playground.sigscalr.io:5122/), or
+- The [SigLens Playground](http://playground.siglens.com:5122/), or
 - Installing SigLens in your local machine
 
 ### &emsp; <a href="https://siglens.github.io/siglens-docs/installation/git" target="_blank">Git</a> &emsp; | &emsp; <a href="https://siglens.github.io/siglens-docs/installation/docker" target="_blank">Docker</a> &emsp;| &emsp; <a href="https://siglens.github.io/siglens-docs/installation/helm" target="_blank">Helm</a>
