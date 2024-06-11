@@ -12,6 +12,28 @@ import ReactPlayer from 'react-player'
   ></iframe>
 </div>
 
+### Supported Splunk - SPL Commands
+
+Our system supports the following SPL (Search Processing Language) commands:
+
+1. **Search**: Searches for events that match the specified criteria. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Search).
+2. **Regex**: Matches events with a regular expression. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Regex).
+3. **Dedup**: Removes duplicate events that share common values. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Dedup).
+4. **Transaction**: Groups events that are related to the same transaction. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Transaction).
+5. **Stats**: Computes summary statistics for your events. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Stats).
+6. **Timechart**: Creates time-based charts from your events. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Timechart).
+7. **Eval**: Evaluates expressions and adds the result to your events. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Eval).
+8. **Rex**: Extracts fields using regular expression named groups. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Rex).
+9. **Sort**: Sorts events based on specified fields. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Sort).
+10. **Head**: Returns the first N events from your search results. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Head).
+11. **Fields**: Selects which fields to keep or remove from your events. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Fields).
+12. **Top**: Returns the most frequent values of a field. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Top).
+13. **Rare**: Returns the least frequent values of a field. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Rare).
+14. **Rename**: Renames fields in your events. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Rename).
+
+For detailed usage and examples, please refer to the specific command documentation.
+
+
 ### ⭐ Steps for Using the Logs Search ⭐
 
 1. **Select or Enter Queries:**
