@@ -8,8 +8,8 @@ _This list includes functions that manipulates text data._
 This function splits `<str>` with the delimiter `<delim>` and return these parts as a multivalue field.
 
 #### Usage
-- `<str>` argument can be either a string literal or a field name. 
-- `<delim>` is a string literal referring the delimiter. 
+- `<str>` argument can be a string literal or a field name. 
+- `<delim>` is a string literal specifying the delimiter. 
 - One can use this function with an eval command.
 
 #### Example
