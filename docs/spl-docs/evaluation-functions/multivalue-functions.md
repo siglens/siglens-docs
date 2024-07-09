@@ -1,6 +1,6 @@
 # Multivalue functions
 
-_This list includes functions that manipulates text data._
+_This list includes functions that can be used to return multivalue fields or can operate on multivalue fields._
 
 
 

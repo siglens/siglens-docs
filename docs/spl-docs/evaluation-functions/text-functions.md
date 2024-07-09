@@ -104,7 +104,7 @@ The following command returns the right trimmed version (without any trailing sp
 
 The following command trims the characters _a_, _Z_ and space from the right side of the given string and returns this new string `"  aaBcDe"`.
 ```
-... | eval left_trimmed_str=rtrim("  aaBcDeZ ", "aZ ")
+... | eval right_trimmed_str=rtrim("  aaBcDeZ ", "aZ ")
 ```
 
 
@@ -151,7 +151,7 @@ The following command returns the last -5 characters of the given string i.e. `"
 This function returns the length of `<str>`.
 
 #### Usage
-- `<str>` argument can be a string literal or a field name. 
+- `<str>` argument can be a field name. 
 - One can use this function with an eval command.
 
 #### Example
@@ -160,9 +160,20 @@ The following command returns the length of the string in field name.
 ... | eval len_name=len(name)
 ```
 
-The following command returns the length of the given string i.e. `5`.
+
+
+
+## urldecode(\<url\>)
+This function decodes `<url>` and returns this decoded url.
+
+#### Usage
+- `<url>` argument can be a string literal or a field name. 
+- One can use this function with an eval command.
+
+#### Example
+The following command decodes the given url and returns `"https://www.siglens.com/index.html"`.
 ```
-... | eval len_str=len("AbcD ")
+... | eval decoded_url=urldecode("https%3A%2F%2Fwww.siglens.com%2Findex.html")
 ```
 
 

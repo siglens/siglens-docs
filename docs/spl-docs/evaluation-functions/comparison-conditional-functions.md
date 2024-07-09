@@ -1,6 +1,6 @@
 # Comparison and Conditional functions
 
-_This list includes functions that manipulates text data._
+_This list includes functions that can be used to return values based on conditions or compare different values._
 
 
 ## case(\<condition\>, \<value\>, ...)
@@ -21,7 +21,7 @@ If the sales_amount is `3000`, then first two conditions will evaluate to false 
                                     sales_amount >= 5000, "Good", 
                                     sales_amount >= 1000, "Average", 
                                     sales_amount > 0, "Below Average", 
-                                    sales_amount == 0, "No Sale")
+                                    sales_amount = 0, "No Sale")
 ```
 
 
