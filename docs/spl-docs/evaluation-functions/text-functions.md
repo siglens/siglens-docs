@@ -7,7 +7,7 @@ This function returns a new string that is lowercase version of `<str>`.
 
 #### Usage
 - `<str>` argument can be a string literal or a field name. 
-- One can use this function with an eval and where commands.
+- One can use this function with eval and where commands.
 
 #### Example
 The following command returns lowercase version of the string in field name.
@@ -31,7 +31,7 @@ This function returns a new string that is uppercase version of `<str>`.
 
 #### Usage
 - `<str>` argument can be a string literal or a field name. 
-- One can use this function with an eval and where commands.
+- One can use this function with eval and where commands.
 
 #### Example
 The following command returns uppercase version of the string in field name.
@@ -54,7 +54,7 @@ This function trims the characters present in the `<trim_chars>` from the both s
 #### Usage
 - `<str>` argument can be a string literal or a field name. 
 - `<trim_chars>` is a string containing characters that needs to be trimmed. 
-- One can use this function with an eval and where commands.
+- One can use this function with eval and where commands.
 
 #### Example
 The following command returns the trimmed version (without any leading or trailing spaces and tabs) of the address.
@@ -77,7 +77,7 @@ This function trims the characters present in the `<trim_chars>` from the left s
 #### Usage
 - `<str>` argument can be a string literal or a field name. 
 - `<trim_chars>` is a string containing characters that needs to be trimmed. 
-- One can use this function with an eval and where commands.
+- One can use this function with eval and where commands.
 
 #### Example
 The following command returns the left trimmed version (without any leading spaces or tabs) of the address.
@@ -99,7 +99,7 @@ This function trims the characters present in the `<trim_chars>` from the right 
 #### Usage
 - `<str>` argument can be either a string literal or a field name. 
 - `<trim_chars>` is a string containing characters that needs to be trimmed. 
-- One can use this function with an eval and where commands.
+- One can use this function with eval and where commands.
 
 #### Example
 The following command returns the right trimmed version (without any trailing spaces or tabs) of the address.
@@ -120,7 +120,7 @@ This function substitutes every occurence of the regular expression `<regex>` ma
 - `<str>` argument can be either a string literal or a field name. 
 - `<regex>` is a string containing regular expression pattern. 
 - `<replacement>` is a string literal.
-- One can use this function with an eval and where commands.
+- One can use this function with eval and where commands.
 
 #### Example
 The following command replaces the prefix of the string in field email with `"xxxxx"` and returns this new string which is a masked email.
@@ -138,7 +138,7 @@ This functions returns a substring of `<str>` starting at index `<start>`. `<len
 - `<str>` argument can be a string literal or a field name. 
 - `<length>` argument is optional if not present would return the rest of the string.
 - Indexes start at 1 not 0. Negative indexes can be used to indicate start from the end of the string.
-- One can use this function with an eval and where commands.
+- One can use this function with eval and where commands.
 
 #### Example
 The following command returns the first 4 characters of string in field name.
@@ -157,7 +157,7 @@ This function returns the length of `<str>`.
 
 #### Usage
 - `<str>` argument can be a field name. 
-- One can use this function with an eval and where commands.
+- One can use this function with eval and where commands.
 
 #### Example
 The following command returns the length of the string in field name.
@@ -173,7 +173,7 @@ This function decodes `<url>` and returns this decoded url.
 
 #### Usage
 - `<url>` argument can be a string literal or a field name. 
-- One can use this function with an eval and where commands.
+- One can use this function with eval and where commands.
 
 #### Example
 The following command decodes the given url and returns `"https://www.siglens.com/index.html"`.
