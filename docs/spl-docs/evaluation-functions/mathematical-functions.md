@@ -87,7 +87,7 @@ The `<num>` argument can be the name of a numeric field or a numeric literal.
 
 ### Example
 
-The following example creates a field called y, whose values are the exponent of 3. In other words, the below example returns `y=e^3`
+The following example creates a field called y, whose values are Euler's number raised to the third power. In other words, the below example returns `y=e^3`
 
 ```
 ... | eval y=exp(3)
@@ -194,14 +194,14 @@ This ensures that shipping charges are calculated based on whole kilograms, adhe
 
 ## round(\<num>, \<precision>)
 
-This function returns a number rounded to the decimal places specified by the precision. 
+This function returns a number rounded to the decimal places specified by the precision.
 
 ### Usage
 
-The `<num>` argument can be the name of a numeric field or a numeric literal. 
+The `<num>` argument can be either a numeric field or a numeric literal.
 
-The `<precision>` is optional, and if omitted the round function rounds to an integer.
-You cannot specify a negative number for the precision.
+The `<precision>` argument is optional. If omitted, the function rounds the number to the nearest integer. 
+`<precision>` must be a non-negative integer that specifies the number of decimal places to round to.
 
 ### Example
 
@@ -346,9 +346,15 @@ The following example calculates the area of a circle, which is `pi()` multiplie
 
 **Calculate future investment value with compound interest**
 
-**Problem:** A user wants to calculate the future value of an investment based on compound interest. The formula for compound interest is given by `Future_Value = Principal * (1 + annual_interest_rate/times_compounded_per_year)^(times_compounded_per_year * years)`.
+**Problem:** A user wants to calculate the future value of an investment based on compound interest. The formula for compound interest is given by 
+```
+Future_Value = Principal * (1 + annual_interest_rate/times_compounded_per_year)^(times_compounded_per_year * years)
+```
 
-**Solution:** The `pow()` command can be used to compute `(1 + annual_interest_rate/times_compounded_per_year)^(times_compounded_per_year * years)`.
+**Solution:** The `pow()` command can be used to compute 
+```
+(1 + annual_interest_rate/times_compounded_per_year)^(times_compounded_per_year * years)
+```
 
 ```
 index=investment_data
@@ -403,7 +409,7 @@ This function returns the square root of a number.
 
 ### Usage
 
-The `<num>` argument can be the name of a numeric field or a numeric literal.
+The `<num>` argument can be the name of a numeric field or a numeric literal and the value must be a positive number.
 
 ### Example
 
@@ -415,27 +421,26 @@ The following example returns `3`:
 
 ### Use-Case Example
 
-**Calculate the hypotenuse of a right triangle**
+**Calculate the Root Mean Square Error (RMSE) of predictions**
 
-**Problem:** A user wants to calculate the hypotenuse of a right triangle given the lengths of the other two sides (a and b). The formula for the hypotenuse is given by `c = sqrt(a^2 + b^2)`, where:
-- `c` is the hypotenuse.
-- `a` and `b` are the lengths of the other two sides of the triangle.
+**Problem:** A user wants to evaluate the accuracy of a predictive model by calculating the Root Mean Square Error (RMSE) between the predicted values and the actual values. RMSE is a measure of the differences between predicted and observed values.
 
-**Solution:** The `sqrt()` command can be used to calculate the square root as part of the hypotenuse calculation.
+**Solution:** The `sqrt()` command can be used to calculate the square root as part of the RMSE calculation.
 
 ```
-index=triangle_data
-| eval a = 3
-| eval b = 4
-| eval hypotenuse = sqrt(pow(a, 2) + pow(b, 2))
-| fields a, b, hypotenuse
+index=model_predictions
+| eval squared_error = pow(predicted_value - actual_value, 2)
+| stats avg(squared_error) as mean_squared_error
+| eval rmse = sqrt(mean_squared_error)
+| fields rmse
 ```
 
 **Explanation:**
-1. The `eval` command assigns values to the sides `a` and `b` of the triangle.
-2. The `eval` command calculates the hypotenuse using the Pythagorean theorem `sqrt(pow(a, 2) + pow(b, 2))`.
+1. The `eval` command calculates the squared error for each prediction using `pow(predicted_value - actual_value, 2)`.
+2. The `stats` command calculates the mean of the squared errors (`mean_squared_error`).
+3. The `eval` command calculates the RMSE by taking the square root of the mean squared error using `sqrt(mean_squared_error)`.
 
-This ensures that the user can accurately calculate the hypotenuse of a right triangle given the lengths of the other two sides.
+This use case demonstrates how the `sqrt()` function can be applied to evaluate the accuracy of a predictive model by calculating the RMSE, providing insights into the model's performance.
 
 
 

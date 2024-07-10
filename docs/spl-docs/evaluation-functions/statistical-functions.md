@@ -73,11 +73,11 @@ server2   1720350060   89
 
 ## min(\<values>)
 
-This function one or more numeric or string values and returns the minimum value. Strings are greater than numbers.
+This function takes one or more numeric or string values and returns the minimum value. Strings are greater than numbers.
 
 ### Usage
 
-The `<values>` argument can be list of strings or numbers or a field name.
+The each element in `<values>` argument can be a literal string, literal number, or a field name.
 
 ### Example
 
@@ -142,7 +142,7 @@ server2   1720350060   70
 
 ## random()
 
-This function returns a pseudo-random integer ranging from `0 to 231-1`.
+This function returns a pseudo-random integer ranging from `0 to (2^31)-1`.
 
 ### Example
 
@@ -162,24 +162,25 @@ This example takes a random number and uses the modulo mathematical operator `( 
 
 ### Use-Case Example
 
-**Simulate random discounts for a marketing campaign**
+**Randomly sample data for performance analysis**
 
-**Problem:** A user wants to apply random discount values to transactions for a marketing simulation. The discount should be a random percentage between 5% and 20%.
+**Problem:** A user wants to perform an analysis on data for a certain time frame, but the dataset is too large, making the analysis time-consuming. The user needs to randomly select a small percentage of records within that time frame for a quicker analysis.
 
-**Solution:** The `random()` command within an `eval` function can be used to generate random discount percentages.
+**Solution:** The `random()` command within an `eval` function can be used to randomly sample a subset of the data.
 
 ```
-index=transaction_data
-| eval discount_percentage = (random() % 16) + 5
-| eval discount_amount = amount * (discount_percentage / 100)
-| eval final_amount = amount - discount_amount
-| fields transaction_id, amount, discount_percentage, discount_amount, final_amount
+index=large_dataset
+| eval sample_flag = if(random() % 100 < 10, 1, 0)
+| where sample_flag = 1
+| fields - sample_flag
 ```
 
 **Explanation:**
-1. The `eval` command uses the `random()` function to generate a random integer between 0 and 15, then adds 5 to ensure the discount percentage is between 5% and 20%.
-2. The discount percentage is used to calculate the `discount_amount` on the original `amount`.
-3. The `final_amount` is calculated by subtracting the `discount_amount` from the original `amount`.
-4. The `fields` command selects the relevant fields (`transaction_id`, `amount`, `discount_percentage`, `discount_amount`, `final_amount`) for output.
+1. The `eval` command uses the `random()` function to generate a random integer. The modulo operator (`%`) is used to determine if the record should be flagged for sampling.
+2. The condition `random() % 100 < 10` flags approximately 10% of the records (randomly selected) by setting `sample_flag` to 1.
+3. The `where` command filters the dataset to include only the records where `sample_flag` is 1.
+4. The `fields - sample_flag` command removes the `sample_flag` field from the output, keeping the dataset clean.
+
+This approach allows the user to quickly perform an analysis on a random sample of the data, reducing the time required for processing large datasets.
 
 

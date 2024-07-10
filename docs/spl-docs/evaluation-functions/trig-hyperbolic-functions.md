@@ -14,7 +14,7 @@ This example returns `1.5707963267948966`.
 ... | eval n=acos(0)
 ```
 
-The following example calculates 180 divided by pi and multiplies the result by the arc cosine of 0. This example returns `90.0000000003`.
+The following example converts the `acos(0)` from radians to degrees. This example returns `90.0000000003`.
 
 ```
 ... | eval degrees=acos(0)*180/pi()
@@ -44,7 +44,7 @@ This example returns 1.5707963267948966.
 ... | eval n=asin(1)
 ```
 
-The following example calculates 180 divided by pi and multiplies that by the arc sine of 1.
+The following example converts the `asin(1)` from radians to degrees.
 
 ```
 ... | eval degrees=asin(1)*180/pi()
@@ -169,21 +169,3 @@ This example returns `0.7615941559557649`.
 ```
 ... | eval n=tanh(1)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
