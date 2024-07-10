@@ -131,6 +131,18 @@ The following command checks if the value in the field first_name starts with `A
 ```
 ... | eval starts_with_a=if(like(first_name, "A%"), "yes", "no")
 ```
+The following example can also be useful for analyzing which devices are most commonly used to access your service.
+```
+| eval 
+    device_type=case(
+        like(lower(user_agent), "%iphone%"), "iPhone",
+        like(lower(user_agent), "%android%"), "Android",
+        like(lower(user_agent), "%windows%"), "Windows",
+        like(lower(user_agent), "%macintosh%"), "Mac",
+        like(user_agent, "%", "Other")
+    )
+| stats count by device_type
+```
 
 
 

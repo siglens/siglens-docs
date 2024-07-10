@@ -153,6 +153,16 @@ const sidebars = {
   },
   items: ['spl-docs/evaluation-functions/overview', 'spl-docs/evaluation-functions/informational-functions', 'spl-docs/evaluation-functions/conversion-functions', 'spl-docs/evaluation-functions/time-functions'],
 },
+{
+  type: 'category',
+  label: 'SPL Commands',
+  link: {
+    type: 'generated-index',
+    title: 'SPL Commands',
+    description: `Use stats functions to perform statistical calculations over your events`,
+  },
+  items: ['spl-docs/fields-command', 'spl-docs/search-command', 'spl-docs/head-command', 'spl-docs/tail-command', 'spl-docs/regex-command'],
+}
 ],
 },
     'searching-logs',
