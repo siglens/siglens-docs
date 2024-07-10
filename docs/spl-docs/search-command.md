@@ -5,7 +5,6 @@
 The search command is a versatile tool that allows you to retrieve events from your indexes and filter the results of previous search commands in your pipeline. 
 You can use keywords, quoted phrases, wildcards, and field-value expressions to specify the events you want to retrieve from your indexes. 
 The search command is implied at the beginning of any search, so you don't need to explicitly include it when defining your search criteria.
-Additionally, you can use the search command later in your search pipeline to filter the results from the previous command.
 
 ## Syntax
 
