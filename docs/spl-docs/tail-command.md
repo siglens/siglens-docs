@@ -7,7 +7,7 @@ The records are returned in reverse order meaning that the last record of the se
 By default if N is not specified, it would be considered as 10.
 
 ## Syntax
-Required arguments are in bold.
+Required arguments are in **bold**.
 
 **tail** [\<N\>]
 

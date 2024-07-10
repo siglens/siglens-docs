@@ -7,7 +7,7 @@ This command retrieves the initial N results as they appear in the search sequen
 Two forms of constraints can be utilized: a fixed count of results, or a conditional expression that continues to return results until the specified condition is no longer met.
 
 ## Syntax
-Required arguments are in bold.
+Required arguments are in **bold**.
 
 **head**
 [\<N\> | (\<eval-expression\>)]

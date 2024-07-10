@@ -111,7 +111,6 @@ This function checks if the `<value>` is present in the `<list>`. If present it 
 The following command checks for valid status in the status field and returns `true` if value present in the status field is in the given list of values `(200, 201, 202)`. Else returns `false`. Based on this evaluation we get value `TRUE` or `FALSE` from the if function.
 ```
 ... | eval is_valid=if(in(status, 200, 201, 202), "TRUE", "FALSE")
-
 ```
 
 
@@ -133,15 +132,13 @@ The following command checks if the value in the field first_name starts with `A
 ```
 The following example can also be useful for analyzing which devices are most commonly used to access your service.
 ```
-| eval 
-    device_type=case(
-        like(lower(user_agent), "%iphone%"), "iPhone",
-        like(lower(user_agent), "%android%"), "Android",
-        like(lower(user_agent), "%windows%"), "Windows",
-        like(lower(user_agent), "%macintosh%"), "Mac",
-        like(user_agent, "%", "Other")
-    )
-| stats count by device_type
+... | eval device_type=case( 
+        like(lower(user_agent), "%iphone%"), "iPhone", 
+        like(lower(user_agent), "%android%"), "Android", 
+        like(lower(user_agent), "%windows%"), "Windows", 
+        like(lower(user_agent), "%macintosh%"), "Mac", 
+        like(user_agent, "%"), "Other") 
+    | stats count by device_type
 ```
 
 

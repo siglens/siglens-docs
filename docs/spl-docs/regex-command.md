@@ -6,7 +6,7 @@ This command can be used to filter out the results that either match or do not m
 
 
 ## Syntax
-Required arguments are in bold.
+Required arguments are in **bold**.
 
 **regex**
 (\<field\>=\<regex-expression\> | \<field\>!=\<regex-expression\> | **\<regex-expression\>**)

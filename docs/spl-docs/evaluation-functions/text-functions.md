@@ -18,7 +18,12 @@ The following command returns lowercase version of the given string i.e. `"abc z
 ```
 ... | eval lowercase_str=lower("Abc Z")
 ```
+This example demonstrates how to convert job titles to lowercase to accurately count the number of individuals in various job positions. Normalizing data to a consistent case helps avoid discrepancies caused by data entry variations. The technique can also be applied using the upper function defined below for similar consistency.
 
+```
+... | eval lowercase_job_title=lower(job_title)
+    | stats count by lowercase_job_title
+```
 
 
 ## upper(\<str\>)

@@ -6,7 +6,7 @@ This command allows you to filter the fields that you want to display in the sea
 By default Siglens adds timestamp and _index fields in the search result.
 
 ## Syntax
-Required arguments are in bold.
+Required arguments are in **bold**.
 
 **fields** [+|-] **\<field-list\>**
 
