@@ -285,9 +285,9 @@ This function returns the logarithm of a number using a base.
 
 ### Usage
 
-The `<num>` argument can be the name of a numeric field or a numeric literal.
+The `<num>` argument can be the name of a numeric field or a numeric literal. The value of `<num>` must be greater than 0.
 
-The `<base>` is optional, and if omitted the log function uses base 10.
+The `<base>` is optional, and if omitted the log function uses base 10. The value of `<base>` must be greater than 0 and not equal to 1.
 
 ### Example
 

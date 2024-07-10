@@ -4,7 +4,7 @@ The following list contains the functions that you can use to calculate trigonom
 
 ## acos(x)
 
-This function computes the arc cosine of `x`, in the interval `[0,pi]` radians.
+This function computes the arc cosine of `x`, in the interval `[0, pi]` radians. The valid input domain for `x` is `[-1, 1]`. If `x` is outside this domain, the function will return `NaN`.
 
 ### Example
 
@@ -22,7 +22,7 @@ The following example converts the `acos(0)` from radians to degrees. This examp
 
 ## acosh(x)
 
-This function computes the arc hyperbolic cosine of `x` radians.
+This function computes the arc hyperbolic cosine of `x` radians. The valid input domain for `x` is `[1, ∞)`. If `x` is less than 1, the function will return `NaN`.
 
 ### Example
 
@@ -34,17 +34,17 @@ This example returns `1.3169578969248166`.
 
 ## asin(x)
 
-This function computes the arc sine of `x`, in the interval `[-pi/2,+pi/2]` radians.
+This function computes the arc sine of `x`, in the interval `[-pi/2, +pi/2]` radians. The valid input domain for `x` is `[-1, 1]`. If `x` is outside this domain, the function will return `NaN`.
 
 ### Example
 
-This example returns 1.5707963267948966.
+This example returns `1.5707963267948966`.
 
 ```
 ... | eval n=asin(1)
 ```
 
-The following example converts the `asin(1)` from radians to degrees.
+The following example converts the `asin(1)` from radians to degrees. This example returns `90.0000000003`.
 
 ```
 ... | eval degrees=asin(1)*180/pi()
@@ -52,7 +52,7 @@ The following example converts the `asin(1)` from radians to degrees.
 
 ## asinh(x)
 
-This function computes the arc hyperbolic sine of `x` radians.
+This function computes the arc hyperbolic sine of `x` radians. There are no restrictions on the input domain for `x`.
 
 ### Example
 
@@ -64,11 +64,11 @@ This example returns `0.881373587019543`.
 
 ## atan(x)
 
-This function computes the arc tangent of `x`, in the interval `[-pi/2,+pi/2]` radians.
+This function computes the arc tangent of `x`, in the interval `[-pi/2, +pi/2]` radians. There are no restrictions on the input domain for `x`.
 
 ### Example
 
-This example returns `0.46`.
+This example returns `0.4636476090008061`.
 
 ```
 ... | eval n=atan(0.50)
@@ -76,19 +76,19 @@ This example returns `0.46`.
 
 ## atanh(x)
 
-This function computes the arc hyperbolic tangent of `x` radians.
+This function computes the arc hyperbolic tangent of `x` radians. The valid input domain for `x` is `(-1, 1)`. If `x` is outside this domain, the function will return `NaN`.
 
 ### Example
 
-This example returns `0.549`.
+This example returns `0.5493061443340549`.
 
 ```
-... | eval n=atanh(0.500)
+... | eval n=atanh(0.50)
 ```
 
 ## cos(x)
 
-This function computes the cosine of an angle of `x` radians.
+This function computes the cosine of an angle of `x` radians. There are no restrictions on the input domain for `x`.
 
 ### Example
 
@@ -98,7 +98,7 @@ This example returns `0.5403023058681398`.
 ... | eval n=cos(-1)
 ```
 
-The following example calculates the cosine of *pi* and returns `-1.00000000000`.
+The following example calculates the cosine of π and returns `-1.00000000000`.
 
 ```
 ... | eval n=cos(pi())
@@ -106,7 +106,7 @@ The following example calculates the cosine of *pi* and returns `-1.00000000000`
 
 ## cosh(x)
 
-This function computes the hyperbolic cosine of `x` radians.
+This function computes the hyperbolic cosine of `x` radians. There are no restrictions on the input domain for `x`.
 
 ### Example
 
@@ -118,7 +118,7 @@ This example returns `1.5430806348152437`.
 
 ## sin(x)
 
-This function computes the sine of `x` radians.
+This function computes the sine of `x` radians. There are no restrictions on the input domain for `x`.
 
 ### Example
 
@@ -128,7 +128,7 @@ This example returns `0.8414709848078965`.
 ... | eval n=sin(1)
 ```
 
-The following search calculates the sine of pi divided by 180 and then multiplied by 90.
+The following search calculates the sine of π divided by 180 and then multiplied by 90.
 
 ```
 ... | eval n=sin(90 * pi()/180)
@@ -136,7 +136,7 @@ The following search calculates the sine of pi divided by 180 and then multiplie
 
 ## sinh(x)
 
-This function computes the hyperbolic sine of `x` radians.
+This function computes the hyperbolic sine of `x` radians. There are no restrictions on the input domain for `x`.
 
 ### Example
 
@@ -148,7 +148,7 @@ This example returns `1.1752011936438014`.
 
 ## tan(x)
 
-This function computes the tangent of `x` radians.
+This function computes the tangent of `x` radians. There are no restrictions on the input domain for `x`.
 
 ### Example
 
@@ -160,7 +160,7 @@ This example returns `1.5574077246549023`.
 
 ## tanh(x)
 
-This function computes the hyperbolic tangent of x radians.
+This function computes the hyperbolic tangent of `x` radians. There are no restrictions on the input domain for `x`.
 
 ### Example
 
