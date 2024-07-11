@@ -18,6 +18,7 @@ The required syntax is in **bold**.
 **Syntax:** `"<string>"`\
 **Description:** \
 This argument must be a regular expression compatible with RE2 syntax and enclosed in double quotes.\
+By default, the `<regex-expression>` is considered unanchored unless you explicitly anchor it.\
 If only `<regex-expression>` is present without any `<field>` argument, it will fetch all records where this `<regex-expression>` matches in any field.
 
 ### Optional Arguments
