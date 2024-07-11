@@ -93,7 +93,7 @@ This example demonstrates how to retrieve the most recent web requests that resu
     | head limit=10 error_rate >= 0.5 keeplast=true
 ```
 
-## Explanation
+**Explanation:**
 1. `stats count(eval(http_status>=400)) as error_count, count as total_count by url` performs two main functions:
    - `count(eval(http_status>=400)) as error_count`: This part of the command filters and counts the number of requests for each URL where the HTTP status code is 400 or higher, indicating a bad request or server error. The result is stored in a new field named `error_count`.
    - `count as total_count`: This counts the total number of requests made to each URL, regardless of the HTTP status code, and stores the result in a field named `total_count`. This allows for the calculation of the error rate by comparing the number of errors to the total number of requests for each URL.

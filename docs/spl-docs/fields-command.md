@@ -62,7 +62,7 @@ The following example can be used to display only fields that start with "http" 
 ... | fields - *name,ssn,address,user*
 ```
 
-## Explanation
+**Explanation:**
 1. The `fields -` command is used to exclude specific fields from the search results. 
     - `*name` matches and excludes any field that ends with "name", such as "firstname", "lastname", or "username", because the asterisk (`*`) wildcard character matches any sequence of characters before "name".
     - `ssn` specifically matches and excludes the field named "ssn", which typically represents a social security number, without using a wildcard, indicating an exact field name match.
