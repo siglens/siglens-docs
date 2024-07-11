@@ -41,8 +41,7 @@ An alternative method to specify the number of results to be returned.\
 **Syntax:** `<eval-compare-exp> | <eval-bool-exp>`\
 **Description:** \
 `<eval-expression>` is a boolean expression that evaluates to `true` or `false`.\
-The search continues to yield results until the given expression is no longer `true`.
-
+The search continues to yield results until the given expression is no longer `true` or the specified `limit` has been reached.
 
 #### keeplast
 **Syntax:** `keeplast=<bool>`\

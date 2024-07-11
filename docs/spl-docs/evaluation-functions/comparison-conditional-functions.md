@@ -159,15 +159,15 @@ This function returns `<true_value>` if `<predicate>` evaluates to `true`, other
 
 **Problem:** In financial data analysis, identifying transactions that may pose a high risk is crucial for fraud detection and risk management. Transactions that exceed a certain amount and originate from countries other than the USA are often considered higher risk due to various regulatory and risk factors.
 
-**Solution:** To efficiently identify high-risk transactions, a command can be used to analyze transaction data. This command employs the `eval` function along with a conditional `if` statement to categorize transactions based on the `txn_amount` and `country` fields.
+**Solution:** To efficiently identify high-risk transactions, a command can be used to analyze transaction data. This command employs the `eval` function along with a conditional `if` statement to categorize transactions based on the `transaction_amount` and `country` fields.
 
 ```
-... | eval high_risk=if(txn_amount > 10000 AND country != "USA", "Yes", "No")
+... | eval high_risk=if(transaction_amount > 10000 AND country != "USA", "Yes", "No")
 ```
 **Explanation:**
 1. The `eval` function is used to create a new field named `high_risk`, which indicates whether a transaction is considered high risk.
 2. The `if` statement checks two conditions:
-  - Whether the transaction amount (`txn_amount`) exceeds `10000`.
+  - Whether the `transaction_amount` exceeds `10000`.
   - Whether the transaction did not originate from the `USA` (`country != "USA"`).
 3. If both conditions are met, the transaction is categorized as `"Yes"` for high risk.
 4. If either condition is not met, the transaction is categorized as `"No"` for high risk.
