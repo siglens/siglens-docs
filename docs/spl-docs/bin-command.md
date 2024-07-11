@@ -24,7 +24,7 @@ The required syntax is in **bold**.
 ### Optional Arguments
 
 #### \<bin-options\>
-**Syntax:** `<bins> | <minspan> | <span> | <start> | <end> | <aligntime>`\
+**Syntax:** `<bins>`, `<minspan>`, `<span>`, `<start>`, `<end>`, `<aligntime>`\
 **Description:** \
 These are the options for the `bin` command that can be used to create bins for the data in `<field>`.
 
@@ -46,7 +46,7 @@ If not provided, the binned data will overwrite the existing data in the specifi
 Specifies the smallest level of granularity for the bins.
 
 #### \<span\>
-**Syntax:** `<span-length> | <log-span>`\
+**Syntax:** `<span-length>` or `<log-span>`\
 **Description:** \
 Specifies the exact size of the bins.
 
@@ -65,7 +65,7 @@ This value is disregarded if it is less than maximum value present in the data d
 This option applies only to numerical data and does not apply to time-based data.
 
 #### \<aligntime\>
-**Syntax:** `<absolute-time> | <relative-time> | <N>`\
+**Syntax:** `<absolute-time>` or `<relative-time>` or `<N>`\
 **Description:** \
 `<aligntime>` is used to align the bin values for time-based data.\
 The bins created for time data will be aligned to this specific value.\
@@ -91,7 +91,7 @@ Its value must be greater than `1.0`.\
 
 
 #### \<span-length\>
-**Syntax:** `<N> | <int><timescale>`\
+**Syntax:** `<N>` or `<int><timescale>`\
 **Description:** \
 `<span-length>` specifies the span for each bin.\
 `<N>` is a positive numeric value specifying the exact size for creating bins.\
@@ -99,7 +99,7 @@ Its value must be greater than `1.0`.\
 `<int>` is a positive integer used to specify the magnitude of the time unit specified by `timescale`.
 
 #### \<timescale\>
-**Syntax:** `<subsecond> | <second> | <minute> | <hour> | <day> | <week> | <month> | <quarter> | <year>`\
+**Syntax:** `<subsecond>` or `<second>` or `<minute>` or `<hour>` or `<day>` or `<week>` or `<month>` or `<quarter>` or `<year>`\
 **Description:** \
 `<timescale>` is a `<string>` that specifies the unit of time.\
 The magnitude of time represented by `<int><subsecond>` must be less than 1 second and evenly divisible by 1 second.\
@@ -129,6 +129,21 @@ In the absence of an explicitly specified `<span>`, the derived span must strict
 **For Numerical Data:**\
 `<span-length>` or `<log-span>` can be used to specify the exact span of the bin using `<span>` option.\
 The derived `<span-length>` for bins will always be in powers of 10.
+
+**Log Span Example:**
+
+Given `<log-span>` as `2log3`, when calculating the bin for the value 301, the process is as follows:
+1. **Divide the Value by the Coefficient:** Divide 301 by the coefficient (2), resulting in 150.5.
+2. **Calculate Logarithm:** Compute the base 3 logarithm of 150.5, which is approximately 4.5639058801.
+3. **Find Floor and Ceiling Values:** Determine the floor (4) and ceiling (5) of this logarithmic value. If they are equal, increment the ceiling by 1 to ensure a range.
+4. **Calculate Lower and Upper Bounds:** The lower bound is found by raising the base (3) to the power of the floor value (4) and multiplying by the coefficient (2), resulting in 162. The upper bound is calculated similarly, using the ceiling value, resulting in 486.
+5. **Determine Bin Range:** The lower (162) and upper bounds (486) represent the bin range for the value 301.
+
+Some sample bin sizes are presented below for different types of `<log-span>`\
+**2log3:** 2-6, 6-18, 18-54, 54-162, 162-486, 486-1458 ...\
+**log2:** 1-2, 2-4, 4-8, 8-16, 6-32, 32-64, 64-128, 128-256, ...\
+**3log5:** 3-15, 15-75, 75-375, 375-1875, 1875-9375, 9375-46875 ...
+
 
 **For Time-Based Data:**\
 Currently, SigLens only supports time discretization on the default `timestamp` field.\

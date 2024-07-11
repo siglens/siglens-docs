@@ -24,9 +24,10 @@ If the field name already exists in your record, it will be overwritten with the
 Otherwise, a new field will be created. Avoid using reserved keywords as the field name.
 
 `<expression>` is a `<string>` that may include a mix of values, variables, operators, and functions. These components are evaluated together to compute the final result for the target `<field>`.
-- Expressions cannot concatenate string values or fields using the `+` operator directly.
-- Expressions such as `... | eval new_address = address + " USA"` are not supported.
+- Expressions can concatenate string literals or fields using the `.` operator.
+- Expressions such as `... | eval new_address = address." USA"` will concatenate the value from the `address` field with the string `" USA"`, and `new_address` will contain this concatenated value.
 - If the expression contains an operator, the value before the operator must be a numeric field. The value after the operator can be a numeric literal, a field, or a numeric expression itself, which follows this same rule.
+- The exception to the previous rule is when concatenating strings using the `.` operator; fields and string literals can be used in any order or combination.
 - An expression can be a single string or a numeric literal.
 - A string literal must be enclosed in double quotes.
 - The result of `<expression>` cannot be boolean. It must evaluate to a number or a string.
