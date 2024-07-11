@@ -159,6 +159,9 @@ const sidebars = {
     'spl-docs/evaluation-functions/text-functions',
     'spl-docs/evaluation-functions/comparison-conditional-functions',
     'spl-docs/evaluation-functions/multivalue-functions',
+    'spl-docs/evaluation-functions/mathematical-functions',
+    'spl-docs/evaluation-functions/statistical-functions',
+    'spl-docs/evaluation-functions/trig-hyperbolic-functions',
   ],
 },
 {
