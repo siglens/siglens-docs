@@ -151,7 +151,12 @@ const sidebars = {
     title: 'Evaluation Functions',
     description: `Use evaluation functions to evaluate an expression on your events`,
   },
-  items: ['spl-docs/evaluation-functions/overview', 'spl-docs/evaluation-functions/informational-functions', 'spl-docs/evaluation-functions/conversion-functions', 'spl-docs/evaluation-functions/time-functions'],
+  items: [
+    'spl-docs/evaluation-functions/overview', 
+    'spl-docs/evaluation-functions/informational-functions', 
+    'spl-docs/evaluation-functions/conversion-functions', 
+    'spl-docs/evaluation-functions/time-functions'
+  ],
 },
 {
   type: 'category',

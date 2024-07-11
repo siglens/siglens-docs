@@ -159,7 +159,7 @@ The following example creates bins based on the `timestamp` field and aligns the
 
 ## Use-Case Examples
 
-**Analyzing Event Latency in Real-Time**
+### Analyzing Event Latency in Real-Time
 
 **Problem:** The challenge is to understand how the latency of events fluctuates over very short intervals, specifically on a second-by-second basis. This analysis is crucial for identifying performance bottlenecks in real-time systems where even minor delays can impact user experience or system efficiency.
 
@@ -179,7 +179,7 @@ This approach offers a detailed analysis of event latency, enabling the identifi
 
 
 
-**Analyzing Age Distribution in Data**
+### Analyzing Age Distribution in Data
 
 **Problem:** A common challenge in data analysis is understanding the distribution of a numerical attribute, such as age, across a dataset. This is crucial for identifying trends, patterns, and outliers in the data, which can inform decision-making in areas like marketing, product development, and policy formulation.
 
@@ -200,7 +200,7 @@ This approach offers a detailed analysis of event latency, enabling the identifi
 This approach provides a clear view of the age distribution within the dataset, highlighting predominant age groups and potential gaps. It is particularly useful for demographic analysis and understanding the target audience in various contexts.
 
 
-**Analyzing Price Distribution in Product Data**
+### Analyzing Price Distribution in Product Data
 
 **Problem:** A frequent challenge in retail and e-commerce analytics is understanding the distribution of product prices within a catalog. This analysis is vital for identifying pricing trends, setting competitive prices, and spotting outliers that could indicate errors or opportunities for special promotions.
 
@@ -217,3 +217,23 @@ This approach provides a clear view of the age distribution within the dataset, 
 3. The `sort price_bin` command orders the results by price bin, facilitating a sequential analysis of the price distribution from the lowest to the highest price segments.
 
 This approach offers a detailed view of the price distribution within the product catalog, enabling businesses to make informed decisions regarding pricing strategies, product positioning, and market competitiveness. It is especially useful for identifying price points that are over or underrepresented in the product range, guiding adjustments to meet market demand and strategic objectives.
+
+
+### Optimizing Network Performance by Analyzing Packet Size Distribution
+
+**Problem:** Network administrators face challenges in managing network performance due to the wide range and uneven distribution of packet sizes. Small packets like ACKs and large data transfers coexist, affecting throughput and efficiency. Identifying patterns and anomalies in packet size distribution is crucial for network optimization and security.
+
+**Solution:** The solution involves using a command sequence to bin packet sizes using a logarithmic scale, count the occurrences of each bin, and then sort the results to analyze the distribution of packet sizes across the network.
+
+```
+... | bin span=log2 packet_size AS bin_packet_size
+    | stats count by bin_packet_size
+    | sort bin_packet_size
+```
+
+**Explanation:**
+1. The `bin span=log2 packet_size AS bin_packet_size` command segments packet sizes into bins on a logarithmic scale and assigns each packet to a bin, creating a new field named `bin_packet_size`. This method provides a more nuanced view of packet size distribution, especially useful for analyzing a wide range of sizes from very small to very large packets. The creation of the `bin_packet_size` field facilitates subsequent analysis by categorizing packets into distinct size segments.
+2. The `stats count by bin_packet_size` command calculates the number of packets within each bin. This aggregation provides insights into the distribution of packet sizes, highlighting the most common sizes and identifying outliers. It helps in understanding how network traffic is composed in terms of packet sizes, which is crucial for optimizing network performance and capacity planning.
+3. The `sort bin_packet_size` command orders the results by the bin of packet sizes, facilitating a sequential analysis of the packet size distribution. This organization allows for an easier identification of patterns, such as the prevalence of small packets that may indicate a large number of control messages or the presence of large packets that suggest data transfers.
+
+This approach offers a detailed view of the packet size distribution across the network, enabling network administrators to make informed decisions regarding network configuration, optimization, and security. It is particularly useful for identifying trends and anomalies in packet size distribution, which can inform strategies to enhance network efficiency and performance.
