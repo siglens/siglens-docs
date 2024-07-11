@@ -19,7 +19,7 @@ The required syntax is in **bold**.
 #### \<field\>
 **Syntax:** `<field>`\
 **Description:** \
-`<field>` denotes the name of the field you wish to bin.
+`<field>` specifies the name of the field you wish to bin.
 
 ### Optional Arguments
 
@@ -55,21 +55,21 @@ Specifies the exact size of the bins.
 **Description:** \
 `<N>` is a numeric value that signifies the minimum value to be considered when creating bins.\
 This value is disregarded if it exceeds the minimum value present in the data distribution.\
-This option is applicable only to numerical data and does not apply to time-based data.
+This option applies only to numerical data and does not apply to time-based data.
 
 #### \<end\>
 **Syntax:** `<N>`\
 **Description:** \
-`<N>` is a numeric value that signifies the maximum value to be considered when creating bins.
-This value is disregarded if it is less than maximum value present in the data distribution.
-This option is applicable only to numerical data and does not apply to time-based data.
+`<N>` is a numeric value that signifies the maximum value to be considered when creating bins.\
+This value is disregarded if it is less than maximum value present in the data distribution.\
+This option applies only to numerical data and does not apply to time-based data.
 
 #### \<aligntime\>
 **Syntax:** `<absolute-time> | <relative-time> | <N>`\
 **Description:** \
 `<aligntime>` is used to align the bin values for time-based data.\
 The bins created for time data will be aligned to this specific value.\
-`<N>` is a positive integer denoting the time as unix epoch in milliseconds.
+`<N>` is a positive integer specifying the time as unix epoch in milliseconds.
 <!-- TODO link earliest and latest pages -->
 Refer to the earliest and latest commands for `<absolute-time>` and `<relative-time>`\
 This option will be ignored if the span has a timescale of `day, week, month or quarter`.\
@@ -82,10 +82,10 @@ By default, all time bins are aligned to UTC epoch 0.
 Sets the span in terms of logarithmic scale.\
 `<coefficient>` is an optional positive numeric value that serves as the coefficient of this logarithmic span.\
 Its value must be less than `<base>` and greater than or equal to `1.0`.\
-**Default Value:** `1.0`\
+**Default Value:** 1.0\
 `<base>` is an optional positive numeric value that serves as the base for the logarithmic span.\
 Its value must be greater than `1.0`.\
-**Default Value:** `10.0`\
+**Default Value:** 10.0
 
 
 
@@ -94,19 +94,19 @@ Its value must be greater than `1.0`.\
 **Syntax:** `<N> | <int><timescale>`\
 **Description:** \
 `<span-length>` specifies the span for each bin.\
-`<N>` is a positive numeric value denoting the exact size for creating bins.\
+`<N>` is a positive numeric value specifying the exact size for creating bins.\
 `<int><timescale>` is required for creating bins on time-based data in `timestamp`.\
-`<int>` is a positive integer used to denote the magnitude of the time unit specified by `timescale`.
+`<int>` is a positive integer used to specify the magnitude of the time unit specified by `timescale`.
 
 #### \<timescale\>
-**Syntax:**  `<subsecond> | <second> | <minute> | <hour> | <day> | <week> | <month> | <quarter> | <year>`
+**Syntax:** `<subsecond> | <second> | <minute> | <hour> | <day> | <week> | <month> | <quarter> | <year>`\
 **Description:** \
 `<timescale>` is a `<string>` that specifies the unit of time.\
 The magnitude of time represented by `<int><subsecond>` must be less than 1 second and evenly divisible by 1 second.\
 For `<month>`, the only permissible `<int>` values are `1, 2, 3, 4, 6, 12`.\
 For `<quarter>`, the only permissible `<int>` values are `1, 2, 4`.
 
-| **Unit** | **Strings used to denote Unit** |
+| **Unit** | **Strings used to specify Unit** |
 | --------- | ----------------------------- |
 | `<subsecond>` | millisecond (ms), centisecond (cs), decisecond (ds) |
 | `<second>` | seconds, second, secs, sec, s  |
