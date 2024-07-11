@@ -135,6 +135,34 @@ const sidebars = {
     },
   ],
 },
+{ 
+  type: 'category',
+  label: 'Splunk Commands',
+  link: {
+    type: 'generated-index',
+  },
+  items: [
+ 'spl-docs/splunk-commands',
+{
+  type: 'category',
+  label: 'Evaluation Functions',
+  link: {
+    type: 'generated-index',
+    title: 'Evaluation Functions',
+    description: `Use evaluation functions to evaluate an expression on your events`,
+  },
+  items: [
+    'spl-docs/evaluation-functions/overview', 
+    'spl-docs/evaluation-functions/informational-functions', 
+    'spl-docs/evaluation-functions/conversion-functions', 
+    'spl-docs/evaluation-functions/time-functions',
+    'spl-docs/evaluation-functions/mathematical-functions',
+    'spl-docs/evaluation-functions/statistical-functions',
+    'spl-docs/evaluation-functions/trig-hyperbolic-functions',
+  ],
+},
+],
+},
     'searching-logs',
     'log-query-builder',
     'dashboards',
