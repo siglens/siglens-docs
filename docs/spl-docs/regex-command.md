@@ -8,7 +8,7 @@ This command can be used to filter out results that either match or do not match
 The required syntax is in **bold**.
 
 **regex**\
-(\<field\>=\<regex-expression\> | \<field\>!=\<regex-expression\> | **\<regex-expression\>**)
+(\<field\>=\<regex-expression\> or \<field\>!=\<regex-expression\> or **\<regex-expression\>**)
 
 
 ### Required Arguments

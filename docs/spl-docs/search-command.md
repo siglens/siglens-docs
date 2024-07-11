@@ -17,14 +17,14 @@ search **\<search-expression\>**
 
 #### \<search-expression\>
 
-**Syntax:** `<literal-expression> | <comparison-expression>`\
+**Syntax:** `<literal-expression>` or `<comparison-expression>`\
 **Description:** \
 This argument can be a word, phrase, field-value comparison, or combination of search expressions. \
 You can use logical constructs like `AND`, `OR`, or `NOT` to combine search expressions. Parentheses can be used to separate different search expressions.
 
 #### \<literal-expression\>
 
-**Syntax:** `<literal-value> | "<literal-phrase>"`\
+**Syntax:** `<literal-value>` or `"<literal-phrase>"`\
 **Description:** \
 You can use numbers, strings, and phrases to search in the data.\
 If the phrase contains characters like spaces or periods (`.`), you must enclose the phrase in double quotes.

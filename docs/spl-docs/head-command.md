@@ -8,7 +8,7 @@ This command retrieves the initial N results as they appear in the search sequen
 The required syntax is in **bold**.
 
 **head**\
-[\<N\> | (\<eval-expression\>)]\
+[\<N\> or (\<eval-expression\>)]\
 [limit=\<int\>]\
 [null=\<bool\>]\
 [keeplast=\<bool\>]
@@ -38,7 +38,7 @@ An alternative method to specify the number of results to be returned.\
 
 
 #### \<eval-expression\>
-**Syntax:** `<eval-compare-exp> | <eval-bool-exp>`\
+**Syntax:** `<boolean-expression>`\
 **Description:** \
 `<eval-expression>` is a boolean expression that evaluates to `true` or `false`.\
 The search continues to yield results until the given expression is no longer `true` or the specified `limit` has been reached.

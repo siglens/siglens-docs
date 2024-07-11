@@ -9,7 +9,7 @@ By default, Siglens adds timestamp and _index fields to the search results.
 The required syntax is in **bold**.
 
 **fields**\
-[+|-] **\<field-list\>**
+[+ or -] **\<field-list\>**
 
 
 ### Required Arguments
@@ -26,9 +26,9 @@ For e.x. if you want all the fields starting with letter "a" you can specify `a*
 
 ### Optional Arguments
 
-#### +|-
+#### + or -
 
-**Syntax:** `+|-`\
+**Syntax:** `+` or `-`\
 **Description:** \
 The plus (`+`) symbol indicates that only the fields listed in `<field-list>` should be displayed in the search results.\
 The minus (`-`) symbol indicates that the fields listed in `<field-list>` should not be displayed in the search results.\
