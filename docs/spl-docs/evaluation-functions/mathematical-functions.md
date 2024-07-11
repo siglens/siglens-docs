@@ -291,6 +291,8 @@ The `<num>` argument can be the name of a numeric field or a numeric literal. Th
 
 The `<base>` is optional, and if omitted the log function uses base 10. The value of `<base>` must be greater than 0 and not equal to 1.
 
+If the `<num>` or `<base>` arguments are not given properly, the behavior of the function is `undefined`.
+
 ### Example
 
 The following example returns the logarithm of the values of the `number` field, using base 2.
