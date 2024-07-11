@@ -150,7 +150,7 @@ const sidebars = {
     title: 'SPL Commands',
     description: `Use stats functions to perform statistical calculations over your events`,
   },
-  items: ['spl-docs/rename-command', 'spl-docs/sort-command'],
+  items: ['spl-docs/rename-command', 'spl-docs/sort-command', 'spl-docs/rare-command'],
 }
 ],
 },
