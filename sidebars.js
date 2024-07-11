@@ -135,6 +135,25 @@ const sidebars = {
     },
   ],
 },
+{ 
+  type: 'category',
+  label: 'Splunk Commands',
+  link: {
+    type: 'generated-index',
+  },
+  items: [
+{
+  type: 'category',
+  label: 'SPL Commands',
+  link: {
+    type: 'generated-index',
+    title: 'SPL Commands',
+    description: `Use stats functions to perform statistical calculations over your events`,
+  },
+  items: ['spl-docs/rename-command', 'spl-docs/sort-command'],
+}
+],
+},
     'searching-logs',
     'log-query-builder',
     'dashboards',
