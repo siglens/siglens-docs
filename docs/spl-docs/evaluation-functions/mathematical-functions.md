@@ -246,6 +246,8 @@ This ensures that the average transaction amounts are displayed with two decimal
 
 This function returns the natural logarithm of a number.
 
+**Note**: This is *"ln"* (lowercase L for natural logarithm), not *"In"* (uppercase I).
+
 ### Usage
 
 The `<num>` argument can be the name of a numeric field or a numeric literal. 

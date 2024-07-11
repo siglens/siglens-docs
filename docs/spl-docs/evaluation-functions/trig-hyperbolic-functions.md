@@ -4,7 +4,7 @@ The following list contains the functions that you can use to calculate trigonom
 
 ## acos(x)
 
-This function computes the arc cosine of `x`, in the interval `[0, pi]` radians. The valid input domain for `x` is `[-1, 1]`. If `x` is outside this domain, the function will return `NaN`.
+This function computes the arc cosine of `x`, in the interval `[0, pi]` radians. The valid input domain for `x` is `[-1, 1]`. If `x` is outside this domain, the behavior is `undefined`.
 
 ### Example
 
@@ -22,7 +22,7 @@ The following example converts the `acos(0)` from radians to degrees. This examp
 
 ## acosh(x)
 
-This function computes the arc hyperbolic cosine of `x` radians. The valid input domain for `x` is `[1, ∞)`. If `x` is less than 1, the function will return `NaN`.
+This function computes the arc hyperbolic cosine of `x` radians. The valid input domain for `x` is `[1, ∞)`. If `x` is less than 1, the behavior is `undefined`.
 
 ### Example
 
@@ -34,7 +34,7 @@ This example returns `1.3169578969248166`.
 
 ## asin(x)
 
-This function computes the arc sine of `x`, in the interval `[-pi/2, +pi/2]` radians. The valid input domain for `x` is `[-1, 1]`. If `x` is outside this domain, the function will return `NaN`.
+This function computes the arc sine of `x`, in the interval `[-pi/2, +pi/2]` radians. The valid input domain for `x` is `[-1, 1]`. If `x` is outside this domain, the behavior is `undefined`.
 
 ### Example
 
@@ -76,7 +76,7 @@ This example returns `0.4636476090008061`.
 
 ## atanh(x)
 
-This function computes the arc hyperbolic tangent of `x` radians. The valid input domain for `x` is `(-1, 1)`. If `x` is outside this domain, the function will return `NaN`.
+This function computes the arc hyperbolic tangent of `x` radians. The valid input domain for `x` is `(-1, 1)`. If `x` is outside this domain, the behavior is `undefined`.
 
 ### Example
 
