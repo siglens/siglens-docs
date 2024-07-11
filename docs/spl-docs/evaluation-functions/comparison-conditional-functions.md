@@ -111,11 +111,11 @@ This function returns `true` if the record matches for the search string `<searc
 
 ### Usage
 - `<search_str>` is a string containing sets of field value pairs like `"field1=value1 field2=value2"`.
-- This function will search for value in the corresponding field. If all the searches for field value pairs are successful, the functions returns `true`, else returns `false`.
+- This function will search for value in the corresponding field. If all the searches for field value pairs are successful, the functions returns `true`; otherwise it returns `false`.
 - Values presented in the search string can have wildcard characters `*` or `?`. 
 - Wildcard character `*` is used to match multiple characters.
 - Wildcard character `?` is used to match a single character.
-- `<search_str>` could also have a single string literal. In this case, this string literal would be searched in all the available fields and if any one matches the `<search_str>`, it returns `true`, else `false`.
+- `<search_str>` could also have a single string literal. In this case, this string literal would be searched in all the available fields and if any one matches the `<search_str>`, it returns `true`; otherwise it returns `false`.
 - You can use this function with eval and where commands.
 
 ### Use-Case Example
@@ -257,7 +257,7 @@ This function matches `<str>` with regular expression pattern `<regex>` and retu
 ### Usage
 - `<str>` can be a field name or a string literal.
 - `<regex>` is a regular expression pattern in form of a string literal.
-- One can use this function with eval and where commands.
+- You can use this function with eval and where commands.
 
 ### Use-Case Example
 
@@ -273,8 +273,7 @@ This function matches `<str>` with regular expression pattern `<regex>` and retu
 **Explanation:**
 1. The `eval` function creates a new field named `is_google_id`, which indicates whether an email ID is associated with Google.
 2. The `match` function is used to apply a regular expression that checks if the `email` field matches the pattern `^([^@]+)@google.com`. This pattern looks for strings that:
-  - Start with any character sequence except the "@" symbol (`^([^@]+)`),
-  - Followed by "@google.com".
+  - Start with any character sequence except the "@" symbol (`^([^@]+)`), followed by "@google.com".
 3. If the `email` field matches this pattern, the `match` function returns `true`, and the `if` function assigns `"yes"` to the `is_google_id` field.
 4. If the `email` field does not match this pattern, the `match` function returns `false`, and the `if` function assigns `"no"` to the `is_google_id` field.
 
@@ -288,7 +287,7 @@ This function matches `<ip>` with the `<cidr>` and returns `true` if match is su
 ### Usage
 - `<ip>` can be a field name or a string literal representing ip address.
 - `<cidr>` can be a field name or a string literal representing CIDR notation.
-- One can use this function with eval and where commands.
+- You can use this function with eval and where commands.
 
 ### Use-Case Example
 

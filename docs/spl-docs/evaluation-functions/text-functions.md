@@ -24,7 +24,7 @@ The following command returns lowercase version of the given string i.e. `"abc z
 
 **Problem:** In datasets with job titles, variations in case (uppercase vs lowercase) can lead to discrepancies in data analysis, particularly when counting the number of individuals in each job position. This inconsistency can skew results and affect decision-making processes.
 
-**Solution:** To address this issue, job titles can be converted to a consistent case (either all lowercase or all uppercase) using `lower` or `upper` functions before performing counts . This normalization ensures that variations in case do not affect the accuracy of the data analysis.
+**Solution:** To address this issue, job titles can be converted to a consistent case (either all lowercase or all uppercase) using `lower` or `upper` functions before performing counts. This normalization ensures that variations in case do not affect the accuracy of the data analysis.
 
 ```
 ... | eval lowercase_job_title=lower(job_title)
@@ -78,7 +78,6 @@ The following command trims the characters `a`, `Z` and space from both sides of
 
 **Solution:** To ensure data consistency and accuracy, it's essential to clean the address fields by removing any leading or trailing spaces and tabs. This preprocessing step makes the data uniform and easier to work with.
 
-The following command returns the address after removing all leading or trailing spaces and tabs.
 ```
 ... | eval trimmed_address=trim(address)
 ```
@@ -139,7 +138,7 @@ This function substitutes every occurrence of the regular expression `<regex>` m
 - `<str>` can be either a string literal or a field name. 
 - `<regex>` is a string containing regular expression pattern. 
 - `<replacement>` is a string literal.
-- One can use this function with eval and where commands.
+- You can use this function with eval and where commands.
 
 ### Example
 
@@ -152,17 +151,17 @@ The following command replaces slashes ("/") with dashes ("-") in the given date
 
 **Masking Email Addresses**
 
-**Problem:** Sensitive information, such as email addresses in datasets, often needs to be anonymized or masked to protect user privacy. Specifically, the prefix of an email address (everything before the "@" symbol) needs to be hidden or replaced to prevent identification of the individual.
+**Problem:** Sensitive information, such as email addresses in datasets, often needs to be anonymized or masked to protect user privacy. Specifically, the prefix of an email address (everything before the "@" symbol) must be hidden or replaced to prevent identification of the individual.
 
-**Solution:** To address privacy concerns, the local part of email addresses can be masked by replacing it with a generic string (e.g., "xxxxx"). This process retains the structure of the email address while anonymizing the user's identity.
+**Solution:** To address privacy concerns, the prefix of email addresses can be masked by replacing it with a generic string (e.g., "xxxxx"). This process retains the structure of the email address while anonymizing the user's identity.
 
 ```
 ... | eval masked_email=replace(email, "^([^@]+)@", "xxxxx@")
 ```
 
 **Explanation:**
-1. `eval`: This function is used to create a new field `masked_email` that will hold the masked email address.
-2. `replace(email, "^([^@]+)@", "xxxxx@")`: This expression uses a regular expression to match the prefix of the email address and replaces it with `"xxxxx"`, resulting in a masked email address.
+1. `eval` function is used to create a new field `masked_email` that will hold the masked email address.
+2. `replace(email, "^([^@]+)@", "xxxxx@")`: This expression uses a regular expression to identify the prefix of the email address and replaces it with `"xxxxx"`, resulting in a masked email address.
 
 
 ## substr(\<str\>,\<start\>,\<length\>)
@@ -173,7 +172,10 @@ This functions returns a substring of `<str>` starting at index `<start>`. `<len
 - `<str>` can be a string literal or a field name. 
 - `<length>` is optional if not present would return the rest of the string.
 - `<start>` specifies the starting index for the substring, with index beginning at 1, not 0. Use negative indexes to start from the end of the string.
-- One can use this function with eval and where commands.
+- You can use this function with eval and where commands.
+- If `<start>` is past the length of the string, the function will return an empty string.
+- If the specified `<length>` exceeds the available number of characters from `<start>` index, the function returns an empty string.
+- If `<str>` is `NULL`, this function will not process it and an empty string would be present.
 
 ### Example
 The following command returns the first 4 characters of string in field name.
@@ -213,7 +215,7 @@ This function returns the length of `<str>`.
 
 ### Usage
 - `<str>` can be a field name. 
-- One can use this function with eval and where commands.
+- You can use this function with eval and where commands.
 
 ### Example
 The following command returns the length of the string in field name.
@@ -229,7 +231,7 @@ This function decodes `<url>` and returns this decoded url.
 
 ### Usage
 - `<url>` can be a string literal or a field name. 
-- One can use this function with eval and where commands.
+- You can use this function with eval and where commands.
 
 ### Example
 The following command decodes the given url and returns `"https://www.siglens.com/index.html"`.

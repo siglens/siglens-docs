@@ -8,9 +8,9 @@ _This list includes functions that can be used to return multivalue fields or ca
 This function splits `<str>` with the delimiter `<delim>` and return these parts as a multivalue field.
 
 #### Usage
-- `<str>` argument can be a string literal or a field name. 
+- `<str>` can be a string literal or a field name. 
 - `<delim>` is a string literal specifying the delimiter. 
-- One can use this function with an eval command.
+- You can use this function with an eval command.
 
 ### Example
 The following command returns the split parts of the given string as a multivalue field fruits having values `apple`, `banana`, `mango` and `kiwi`.
