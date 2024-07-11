@@ -1,10 +1,10 @@
 # bin command
 
-The bin command allows you to categorize continuous numerical data into discrete intervals or buckets. 
+The `bin` command allows you to categorize continuous numerical data into discrete intervals or buckets.\
 This is useful for:
-Data aggregation - grouping values into time intervals, age brackets, etc.
-Simplifying data presentation - preparing data for visualizations like histograms or bar charts
-Streamlining queries - making searches more efficient by working with binned data
+- Data aggregation - grouping values into time intervals, age brackets, etc.
+- Simplifying data presentation - preparing data for visualizations like histograms or bar charts.
+- Streamlining queries - making searches more efficient by working with binned data.
 
 ## Syntax
 
@@ -19,27 +19,25 @@ The required syntax is in **bold**.
 #### \<field\>
 **Syntax:** `<field>`\
 **Description:** \
-This argument refers to the name of the field on which you want to create bins.
+`<field>` denotes the name of the field you wish to bin.
 
 ### Optional Arguments
 
 #### \<bin-options\>
 **Syntax:** `<bins> | <minspan> | <span> | <start> | <end> | <aligntime>`\
 **Description:** \
-These are the bin options that can be used to create bins or buckets for the data in the `<field>`.
+These are the options for the `bin` command that can be used to create bins for the data in `<field>`.
 
 #### \<newfield\>
 **Syntax:** `AS <string>`\
 **Description:** \
-The name of the new field which would have the binned-data.\
-If not provided the binned-data would overwrite the existing data in the specified `<field>`.
-
-
+`<string>` is the name of the new field that will contain the binned data.\
+If not provided, the binned data will overwrite the existing data in the specified `<field>`.
 
 #### \<bins\>
 **Syntax:** `<N>`\
 **Description:** \
-`<N>` is an integer denoting the maximum number of bins to create.\
+`<N>` is an integer that specifies the maximum number of bins to create.\
 **Default:** 100
 
 #### \<minspan\>
@@ -47,46 +45,46 @@ If not provided the binned-data would overwrite the existing data in the specifi
 **Description:** \
 Specifies the smallest level of granularity for the bins.
 
-
 #### \<span\>
 **Syntax:** `<span-length> | <log-span>`\
 **Description:** \
-Specifies the exact size of the bin.
+Specifies the exact size of the bins.
 
 #### \<start\>
 **Syntax:** `<N>`\
 **Description:** \
-`<N>` is a numeric value that signifies the minimum value to be considered while creating bins.
-This value is ignored if it is greater than the minimum value present in the data distribution.
-This option only works on numerical data. It does not work for time data. 
+`<N>` is a numeric value that signifies the minimum value to be considered when creating bins.\
+This value is disregarded if it exceeds the minimum value present in the data distribution.\
+This option is applicable only to numerical data and does not apply to time-based data.
 
 #### \<end\>
 **Syntax:** `<N>`\
 **Description:** \
-`<N>` is a numeric value that signifies the maximum value to be considered while creating bins.
-This value is ignored if it is greater than the maximum value present in the data distribution.
-This option only works on numerical data. It does not work on time data.
+`<N>` is a numeric value that signifies the maximum value to be considered when creating bins.
+This value is disregarded if it is less than maximum value present in the data distribution.
+This option is applicable only to numerical data and does not apply to time-based data.
 
 #### \<aligntime\>
 **Syntax:** `<absolute-time> | <relative-time> | <N>`\
 **Description:** \
-This argument is used to align the bin values for time-based data.\
-The bins created for time data would be aligned to this specific value.\
-`<N>` is a positive integer denoting the time as unix epoch in milliseconds.\
+`<aligntime>` is used to align the bin values for time-based data.\
+The bins created for time data will be aligned to this specific value.\
+`<N>` is a positive integer denoting the time as unix epoch in milliseconds.
 <!-- TODO link earliest and latest pages -->
-Refer earliest and latest for `<absolute-time>` and `<relative-time>`\
-This option would be ignored if span has a timescale of `day, week, month or quarter`.
-
-
+Refer to the earliest and latest commands for `<absolute-time>` and `<relative-time>`\
+This option will be ignored if the span has a timescale of `day, week, month or quarter`.\
+By default, all time bins are aligned to UTC epoch 0.
 
 
 #### \<log-span\>
 **Syntax:** `<coefficient>log<base>`\
 **Description:** \
 Sets the span in terms of logarithmic scale.\
-`<coefficient>` is an optional positive numeric value which is the coefficient of this logarithmic span. Its value has to be less than `<base>` and greater than or equal to `1.0`. \
+`<coefficient>` is an optional positive numeric value that serves as the coefficient of this logarithmic span.\
+Its value must be less than `<base>` and greater than or equal to `1.0`.\
 **Default Value:** `1.0`\
-`<base>` is an optional positive numeric value which is the base of this logarithmic span. Its value has to be greater than `1.0`.\
+`<base>` is an optional positive numeric value that serves as the base for the logarithmic span.\
+Its value must be greater than `1.0`.\
 **Default Value:** `10.0`\
 
 
@@ -95,35 +93,127 @@ Sets the span in terms of logarithmic scale.\
 #### \<span-length\>
 **Syntax:** `<N> | <int><timescale>`\
 **Description:** \
-This argument specifies the span for each bin. `<int><timescale>` is required for creating bins on time-based data in `timestamp`.\
+`<span-length>` specifies the span for each bin.\
 `<N>` is a positive numeric value denoting the exact size for creating bins.\
+`<int><timescale>` is required for creating bins on time-based data in `timestamp`.\
 `<int>` is a positive integer used to denote the magnitude of the time unit specified by `timescale`.
 
 #### \<timescale\>
 **Syntax:**  `<subsecond> | <second> | <minute> | <hour> | <day> | <week> | <month> | <quarter> | <year>`
 **Description:** \
-`<timescale>` is a `<string>` used to denote the time unit.\
-The magnitude of time represented by `<int><subsecond>` has to be less than 1 second and should be evenly divisible by 1 second.\
-`<month>` can only have `<int>` values `1, 2, 3, 4, 6, 12`.\
-`<quarter>` can only have `<int>` values `1, 2, 4`.
+`<timescale>` is a `<string>` that specifies the unit of time.\
+The magnitude of time represented by `<int><subsecond>` must be less than 1 second and evenly divisible by 1 second.\
+For `<month>`, the only permissible `<int>` values are `1, 2, 3, 4, 6, 12`.\
+For `<quarter>`, the only permissible `<int>` values are `1, 2, 4`.
 
-| **Unit** | **String to denote the Unit** |
+| **Unit** | **Strings used to denote Unit** |
 | --------- | ----------------------------- |
-| `<subsecond>` | millisecond (`ms`), centisecond (`cs`), decisecond (`ds`) |
-| `<second>` | `seconds`, `second`, `secs`, `sec`, `s`  |
-| `<minute>` | `minutes`, `minute`, `mins`, `min`, `m` |
-| `<hour>` | `hours`, `hour`, `hrs`, `hr`, `h` |
-| `<day>` | `days`, `day`, `d` |
-| `<week>` | `weeks`, `week`, `w` |
-| `<month>` | `months`, `month`, `mon` |
-| `<quarter>` | `quarters`, `quarter`, `qtrs`, `qtr`, `q` |
-| `<year>` | `years`, `year`, `yrs`, `yr`, `y` |
-
+| `<subsecond>` | millisecond (ms), centisecond (cs), decisecond (ds) |
+| `<second>` | seconds, second, secs, sec, s  |
+| `<minute>` | minutes, minute, mins, min, m |
+| `<hour>` | hours, hour, hrs, hr, h |
+| `<day>` | days, day, d |
+| `<week>` | weeks, week, w |
+| `<month>` | months, month, mon |
+| `<quarter>` | quarters, quarter, qtrs, qtr, q |
+| `<year>` | years, year, yrs, yr, y |
 
 
 ## How does bin work?
+The `<span>` option always takes priority. All other options are ignored when `<span>` is explicitly specified.
+
+If not specified, the span is derived based on the data distribution of the `<field>`.\
+If `<minspan>` is specified, the derived span must follow this property.\
+In the absence of an explicitly specified `<span>`, the derived span must strictly adhere to the maximum number of bins specified by `<bins>` or its default value.
+
+**For Numerical Data:**\
+`<span-length>` or `<log-span>` can be used to specify the exact span of the bin using `<span>` option.\
+The derived `<span-length>` for bins will always be in powers of 10.
+
+**For Time-Based Data:**\
+Currently, SigLens only supports time discretization on the default `timestamp` field.\
+`<span-length>` can be used to specify the exact span of the bin using `<span>` option. The minimum span length that meets all the specified properties will be decided.\
+All derived `<span-length>` will be aligned to the UTC timezone by default.\
+The derived `<span-length>` are fixed and are listed below in ascending order:
+- 1 second
+- 10 seconds
+- 30 seconds
+- 1 minute
+- 5 minutes
+- 10 minutes
+- 30 minutes
+- 1 hour
+- 1 day
+- 1 month
+
+The `<bins>` option will be ignored in this case if it is not possible to accommodate all the data into the maximum number of bins specified by the largest derived span, i.e., **1 month**.
+
+
+## Examples
+
+The following example creates bins based on the `timestamp` field and aligns the bins to the UTC time of 1720713887000.
+```
+...| bin aligntime=1720713887000 timestamp
+```
+
+
+## Use-Case Examples
+
+**Analyzing Event Latency in Real-Time**
+
+**Problem:** The challenge is to understand how the latency of events fluctuates over very short intervals, specifically on a second-by-second basis. This analysis is crucial for identifying performance bottlenecks in real-time systems where even minor delays can impact user experience or system efficiency.
+
+**Solution:** The solution involves using a command sequence to bin events into one-second intervals based on their timestamps, and then calculate the average latency for events within each interval.
+
+```
+... | bin span=1s timestamp 
+    | stats avg(latency) by timestamp
+    | sort timestamp
+```
+**Explanation:**
+1. The `bin span=1s timestamp` command segments the event data into one-second intervals. This step is essential for analyzing how event latency varies from one second to the next, providing a granular view of performance.
+2. The `stats avg(latency) by timestamp` command computes the average latency for all events within each one-second bin.
+3. The `sort timestamp` command orders the results by the timestamp of each bin, ensuring that the analysis of latency over time is presented in a chronological sequence. This makes it easier to trace the latency trends and identify specific moments of performance spikes or drops.
+
+This approach offers a detailed analysis of event latency, enabling the identification of specific time intervals that may require optimization to improve overall system performance.
 
 
 
+**Analyzing Age Distribution in Data**
+
+**Problem:** A common challenge in data analysis is understanding the distribution of a numerical attribute, such as age, across a dataset. This is crucial for identifying trends, patterns, and outliers in the data, which can inform decision-making in areas like marketing, product development, and policy formulation.
+
+**Solution:** The solution involves using a command sequence to bin numerical data, such as age, into ten-year intervals, and then count the number of records within each interval.
+
+```
+... | bin span=10 age AS age_bin
+    | stats count by age_bin 
+    | sort age_bin
+```
 
 
+**Explanation:**
+1. The `bin span=10 age AS age_bin` command segments the age data into bins of ten-year intervals and creates a new field named `age_bin` containing the bin value. This step is essential for categorizing the data into meaningful groups that reflect different age ranges, facilitating the analysis of age distribution within the dataset.
+2. The `stats count by age_bin` command calculates the number of records within each age bin. This aggregation helps in understanding the distribution of ages across the dataset.
+3. The `sort age_bin` command orders the results by age bin, making it easier to analyze the age distribution sequentially from the youngest to the oldest groups.
+
+This approach provides a clear view of the age distribution within the dataset, highlighting predominant age groups and potential gaps. It is particularly useful for demographic analysis and understanding the target audience in various contexts.
+
+
+**Analyzing Price Distribution in Product Data**
+
+**Problem:** A frequent challenge in retail and e-commerce analytics is understanding the distribution of product prices within a catalog. This analysis is vital for identifying pricing trends, setting competitive prices, and spotting outliers that could indicate errors or opportunities for special promotions.
+
+**Solution:** The solution involves using a command sequence to bin product prices into 20 equal intervals, count the number of products within each interval, and then sort the results to analyze the price distribution across the product range.
+
+```
+... | bin bins=20 price AS price_bin
+    | stats count by price_bin 
+    | sort price_bin
+```
+**Explanation:**
+1. The `bin bins=20 price AS price_bin` command divides the range of product prices into 20 equal intervals and assigns each product to a bin, creating a new field named `price_bin`. The creation of the `price_bin` field facilitates subsequent analysis by categorizing products into distinct price segments.
+2. The `stats count by price_bin` command calculates the number of products within each price bin. This aggregation provides insights into how products are distributed across different price ranges, highlighting the most and least populated price segments.
+3. The `sort price_bin` command orders the results by price bin, facilitating a sequential analysis of the price distribution from the lowest to the highest price segments.
+
+This approach offers a detailed view of the price distribution within the product catalog, enabling businesses to make informed decisions regarding pricing strategies, product positioning, and market competitiveness. It is especially useful for identifying price points that are over or underrepresented in the product range, guiding adjustments to meet market demand and strategic objectives.
