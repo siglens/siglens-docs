@@ -177,7 +177,7 @@ const sidebars = {
     'spl-docs/search-command', 
     'spl-docs/head-command', 
     'spl-docs/tail-command', 
-    'spl-docs/regex-command'
+    'spl-docs/regex-command',
     'spl-docs/eval-command',
     'spl-docs/where-command',
     'spl-docs/bin-command',
