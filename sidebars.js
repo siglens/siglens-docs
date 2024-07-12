@@ -143,6 +143,7 @@ const sidebars = {
   },
   items: [
  'spl-docs/splunk-commands',
+ 'spl-docs/top-command',
 {
   type: 'category',
   label: 'Evaluation Functions',
