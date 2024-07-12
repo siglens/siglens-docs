@@ -155,7 +155,13 @@ const sidebars = {
     'spl-docs/evaluation-functions/overview', 
     'spl-docs/evaluation-functions/informational-functions', 
     'spl-docs/evaluation-functions/conversion-functions', 
-    'spl-docs/evaluation-functions/time-functions'
+    'spl-docs/evaluation-functions/time-functions',
+    'spl-docs/evaluation-functions/text-functions',
+    'spl-docs/evaluation-functions/comparison-conditional-functions',
+    'spl-docs/evaluation-functions/multivalue-functions',
+    'spl-docs/evaluation-functions/mathematical-functions',
+    'spl-docs/evaluation-functions/statistical-functions',
+    'spl-docs/evaluation-functions/trig-hyperbolic-functions',
   ],
 },
 {
@@ -167,6 +173,11 @@ const sidebars = {
     description: `Use stats functions to perform statistical calculations over your events`,
   },
   items: [
+    'spl-docs/fields-command', 
+    'spl-docs/search-command', 
+    'spl-docs/head-command', 
+    'spl-docs/tail-command', 
+    'spl-docs/regex-command'
     'spl-docs/eval-command',
     'spl-docs/where-command',
     'spl-docs/bin-command',
