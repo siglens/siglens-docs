@@ -6,9 +6,12 @@ Finds the most common values for the fields in the field list. Calculates a coun
 
 ## Syntax
 
-```
-top [<N>][<top-options>...] <field-list> [<by-clause>]
-```
+top \
+[\<N>] \
+[\<top-options>...] \
+\<field-list> \
+[\<by-clause>]
+
 
 ## Required arguments
 
@@ -27,7 +30,7 @@ top [<N>][<top-options>...] <field-list> [<by-clause>]
 
 ### `<top-options>`
 
-**Syntax:** `countfield=<string> | limit=<int> | othertstr=<string> | percentfield=<string> | showcount=<bool> | showperc=<bool> | useother=<bool>` \
+**Syntax:** `countfield=<string>`, `limit=<int>`, `othertstr=<string>`, `percentfield=<string>`, `showcount=<bool>`, `showperc=<bool>`, or `useother=<bool>` \
 **Description:** Options for the `top` command. See Top options.
 
 ### `<by-clause>`
@@ -97,7 +100,7 @@ When you use the `top` command, two fields are added to the results: `count` and
 This search returns the 20 most common values of the "referer" field. The results show the number of events (count) that have that count of referer, and the percent that each referer is of the total number of events.
 
 ```
-sourcetype=access_* | top limit=20 referer
+... | top limit=20 referer
 ```
 
 ### 2. Return top values for one field organized by another field
@@ -105,7 +108,7 @@ sourcetype=access_* | top limit=20 referer
 This search returns the top "action" values for each "referer_domain".
 
 ```
-sourcetype=access_* | top action by referer_domain
+... | top action by referer_domain
 ```
 
 Because a limit is not specified, this returns all the combinations of values for "action" and "referer_domain" as well as the counts and percentages.
@@ -115,7 +118,7 @@ Because a limit is not specified, this returns all the combinations of values fo
 This search returns the top product purchased for each category. Do not show the percent field. Rename the count field to "total".
 
 ```
-sourcetype=access_* status=200 action=purchase | top 1 productName by categoryId showperc=f countfield=total
+... status=200 action=purchase | top 1 productName by categoryId showperc=f countfield=total
 ```
 
 ### Use-Case Example
