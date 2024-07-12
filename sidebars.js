@@ -143,6 +143,8 @@ const sidebars = {
   },
   items: [
  'spl-docs/splunk-commands',
+ 'spl-docs/transaction-command',
+ 'spl-docs/makemv-command',
 {
   type: 'category',
   label: 'Evaluation Functions',
