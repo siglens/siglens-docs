@@ -143,6 +143,7 @@ const sidebars = {
   },
   items: [
  'spl-docs/splunk-commands',
+ 'spl-docs/top-command',
  'spl-docs/transaction-command',
  'spl-docs/makemv-command',
 {
