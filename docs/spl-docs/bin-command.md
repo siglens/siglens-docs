@@ -24,7 +24,7 @@ The required syntax is in **bold**.
 ### Optional Arguments
 
 #### \<bin-options\>
-**Syntax:** `<bins>`, `<minspan>`, `<span>`, `<start>`, `<end>`, `<aligntime>`\
+**Syntax:** `<bins>`, `<minspan>`, `<span>`, `<start>`, `<end>` or `<aligntime>`\
 **Description:** \
 These are the options for the `bin` command that can be used to create bins for the data in `<field>`.
 
@@ -65,7 +65,7 @@ This value is disregarded if it is less than maximum value present in the data d
 This option applies only to numerical data and does not apply to time-based data.
 
 #### \<aligntime\>
-**Syntax:** `<absolute-time>` or `<relative-time>` or `<N>`\
+**Syntax:** `<absolute-time>`, `<relative-time>` or `<N>`\
 **Description:** \
 `<aligntime>` is used to align the bin values for time-based data.\
 The bins created for time data will be aligned to this specific value.\
@@ -99,7 +99,7 @@ Its value must be greater than `1.0`.\
 `<int>` is a positive integer used to specify the magnitude of the time unit specified by `timescale`.
 
 #### \<timescale\>
-**Syntax:** `<subsecond>` or `<second>` or `<minute>` or `<hour>` or `<day>` or `<week>` or `<month>` or `<quarter>` or `<year>`\
+**Syntax:** `<subsecond>`, `<second>`, `<minute>`, `<hour>`, `<day>`, `<week>`, `<month>`, `<quarter>` or `<year>`\
 **Description:** \
 `<timescale>` is a `<string>` that specifies the unit of time.\
 The magnitude of time represented by `<int><subsecond>` must be less than 1 second and evenly divisible by 1 second.\
