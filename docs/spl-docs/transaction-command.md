@@ -15,7 +15,7 @@ The required syntax is in **bold**.
 
 **transaction** \
 [\<field-list>] \
-[\<txn_definition-options>...]
+[\<transaction-definition-options>...]
 
 ## Required Arguments
 
@@ -23,14 +23,14 @@ None.
 
 ## Optional Arguments
 
-### fied-list
+### field-list
 
 **Syntax**: `<field>...`
 **Description**: One or more field names. The events are grouped into transactions, based on the unique values in the fields. For example, suppose two fields are specified: `client_ip` and `host`. For each `client_ip` value, a separate transaction is returned for each unique `host` value for that `client_ip`.
 
-### txn_definition-options
+### transaction-definition-options
 
-**Syntax**: `<startswith>` | `<endswith>` \
+**Syntax**: `<startswith>` or `<endswith>` \
 **Description**: Specify the transaction definition options to define your transactions. You can use multiple options to define your transaction.
 
 ### startswith
@@ -52,7 +52,7 @@ These options are used with the `startswith` and `endswith` arguments.
 
 #### \<filter-string>
 
-**Syntax**: `<search-expression> | (<quoted-search-expression>) | eval(<eval-expression>)` \
+**Syntax**: `<search-expression>`, `(<quoted-search-expression>)`, or `eval(<eval-expression>)` \
 **Description**: A search or eval filtering expression which if satisfied by an event marks the end of a transaction.
 
 #### \<search-expression>
@@ -94,7 +94,7 @@ event=3 cookie=b
 **Example:** Group events by the `session_id` field.
 
 ```
-sourcetype=access_combined | transaction session_id
+... | transaction session_id
 ```
 
 This example groups all events with the same `session_id` into a single transaction.
@@ -104,7 +104,7 @@ This example groups all events with the same `session_id` into a single transact
 **Example:** Group events by the combination of `client_ip` and `host` fields.
 
 ```
-sourcetype=access_combined | transaction client_ip host
+... | transaction client_ip host
 ```
 
 This example groups all events with the same combination of `client_ip` and `host` into a single transaction.
@@ -114,17 +114,17 @@ This example groups all events with the same combination of `client_ip` and `hos
 **Example:** Define a transaction where the first event contains the string "login" and the last event contains the string "logout".
 
 ```
-sourcetype=access_combined | transaction session_id startswith="login" endswith="logout"
+... | transaction session_id startswith="login" endswith="logout"
 ```
 
-This example groups events into transactions that start with a "login" event and end with a "logout" event for each `session_id`.
+This example groups events into transactions that start with a `login` event and end with a `logout` event for each `session_id`.
 
 #### Filter Transactions by Duration
 
 **Example:** Define a transaction and filter transactions that took longer than 60 seconds.
 
 ```
-sourcetype=access_combined | transaction session_id startswith="login" endswith="logout" | where duration > 60
+... | transaction session_id startswith="login" endswith="logout" | where duration > 60
 ```
 
 This example filters out transactions where the duration between the "login" and "logout" events is less than 60 seconds.
@@ -134,7 +134,7 @@ This example filters out transactions where the duration between the "login" and
 **Example:** Define a transaction where the first event has a `status` field equal to "started" and the last event has a `status` field equal to "completed".
 
 ```
-sourcetype=access_combined | transaction session_id startswith="eval(status='started')" endswith="eval(status='completed')"
+... | transaction session_id startswith="eval(status='started')" endswith="eval(status='completed')"
 ```
 
 This example groups events into transactions that start with a `status` of "started" and end with a `status` of "completed" for each `session_id`.
@@ -144,7 +144,7 @@ This example groups events into transactions that start with a `status` of "star
 **Example:** Define a transaction and filter transactions that have more than 3 events.
 
 ```
-sourcetype=access_combined | transaction session_id | where eventcount > 3
+... | transaction session_id | where eventcount > 3
 ```
 
 This example filters out transactions that have 3 or fewer events.
@@ -154,7 +154,7 @@ This example filters out transactions that have 3 or fewer events.
 **Example:** Define a transaction with multiple fields and filter based on start and end conditions.
 
 ```
-sourcetype=access_combined | transaction client_ip host startswith="GET /start" endswith="POST /end"
+... | transaction client_ip host startswith="GET /start" endswith="POST /end"
 ```
 
 This example groups events into transactions based on `client_ip` and `host` and starts with a "GET /start" request and ends with a "POST /end" request.
@@ -184,7 +184,7 @@ For the above data, the query will be:
 ```
 sourcetype=access_* 
 | transaction JSESSIONID clientip startswith="view" endswith="purchase" 
-| where duration > 0
+| where duration > 1
 | table JSESSIONID clientip duration eventcount
 ```
 
@@ -204,4 +204,3 @@ XYZ789       192.168.1.1 600        3
 ```
 
 This approach groups events into meaningful transactions, filters out any transactions that did not take a significant amount of time, and displays the duration and event count for each transaction, providing a clear view of user interactions.
-

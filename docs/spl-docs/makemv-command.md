@@ -6,7 +6,11 @@ Converts a single valued field into a multivalue field by splitting the values o
 
 ## Syntax
 
-`makemv [delim=<string> | tokenizer=<string>] [allowempty=<bool>] [setsv=<bool>] <field>`
+makemv \
+[delim=\<string> or tokenizer=\<string>] \
+[allowempty=\<bool>] \
+[setsv=\<bool>] \
+\<field> 
 
 ## Required Arguments
 
@@ -31,7 +35,7 @@ Converts a single valued field into a multivalue field by splitting the values o
 ### allowempty
 
 **Syntax**: `allowempty=<bool>` \
-**Description**: Specifies whether to permit empty string values in the multivalue field. When using `delim=true`, repeats of the delimiter string produce empty string values in the multivalue field. For example if `delim=","` and `field="a,,b"`, by default does not produce any value for the empty string. When using the `tokenizer` argument, zero length matches produce empty string values. By default they produce no values. \
+**Description**: Specifies whether to permit empty string values in the multivalue field. When using `allowempty=true`, repeats of the delimiter string produce empty string values in the multivalue field. For example if `delim=","` and `field="a,,b"`, by default does not produce any value for the empty string. When using the `tokenizer` argument, zero length matches produce empty string values. By default they produce no values. \
 **Default**: false
 
 ### setsv
@@ -66,6 +70,35 @@ The following search creates a result and adds three values to the `my_multival`
 | makeresults
 | eval my_multival="one,two,three"
 | makemv tokenizer="([^,]+),?" my_multival
+```
+
+### 4. Use a delimiter with multiple characters
+
+Separate the value of `log_data` into multiple values using a delimiter with multiple characters.
+
+```
+... | makemv delim=";|;" log_data
+```
+
+**Explanation:**
+1. The `makemv` command uses the delimiter `";|;"` to split the `log_data` field into multiple values.
+
+**Example log entry:**
+
+```
+log_data="error;|;warning;|;info;|;debug"
+```
+
+**Output:**
+
+The output for the above command would be:
+
+```
+log_data
+error
+warning
+info
+debug
 ```
 
 ### Use-Case Example
