@@ -94,5 +94,3 @@ index=email_logs
 1. The search starts by looking at the email logs index.
 2. The `makemv` command splits the "recipients" field into multiple values using the comma as a delimiter.
 3. The `stats` command then counts occurrences for each unique combination of sender and recipient.
-
-This use case demonstrates how `makemv` can transform a single string field into a more analysis-friendly multi-value field, enabling more detailed and accurate data analysis in real-world scenarios.

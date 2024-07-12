@@ -1,4 +1,4 @@
-# Transaction command
+# Transaction
 
 ## Description
 
