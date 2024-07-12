@@ -144,6 +144,8 @@ const sidebars = {
   items: [
  'spl-docs/splunk-commands',
  'spl-docs/top-command',
+ 'spl-docs/transaction-command',
+ 'spl-docs/makemv-command',
 {
   type: 'category',
   label: 'Evaluation Functions',
@@ -173,7 +175,16 @@ const sidebars = {
     title: 'SPL Commands',
     description: `Use stats functions to perform statistical calculations over your events`,
   },
-  items: ['spl-docs/fields-command', 'spl-docs/search-command', 'spl-docs/head-command', 'spl-docs/tail-command', 'spl-docs/regex-command'],
+  items: [
+    'spl-docs/fields-command', 
+    'spl-docs/search-command', 
+    'spl-docs/head-command', 
+    'spl-docs/tail-command', 
+    'spl-docs/regex-command',
+    'spl-docs/eval-command',
+    'spl-docs/where-command',
+    'spl-docs/bin-command',
+  ],
 }
 ],
 },
