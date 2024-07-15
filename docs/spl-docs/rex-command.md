@@ -2,7 +2,7 @@
 
 ## Description
 
-Use this command to either extract fields using regular expression named groups, or replace or substitute characters in a field using sed expressions.
+Use this command to either extract fields using regular expression named groups, or replace characters in a field using sed expressions.
 
 The rex command matches the value of the specified field against the unanchored regular expression and extracts the named groups into fields of the corresponding names.
 
@@ -24,7 +24,7 @@ The required syntax is in **bold**.
 ### regex-expression
 
 **Syntax:** `"<string>"` \
-**Description:** The PCRE regular expression that defines the information to match and extract from the specified field.
+**Description:** The PCRE regular expression that defines the information to match and extract from the specified field. The regular expression must be given in a quoted string.
 
 ### Examples
 
@@ -33,7 +33,7 @@ The required syntax is in **bold**.
 This search extracts the major and minor version numbers from the `app_version` field using named groups and displays them as separate fields.
 
 ```
-... | rex field=app_version "(?<major>\d+)\.(?<minor>\d).*"  
+... | rex field=app_version "(?<major>\d+)\.(?<minor>\d+).*"  
 | fields app_version, major, minor
 ```
 
@@ -47,7 +47,7 @@ app_version = "2.3.5" will be extracted as major = "2" and minor = "3"
 This search extracts the domain part of the email addresses in the `user_email` field.
 
 ```
-... | rex field=user_email "(?<domain>@\w+\.\w+)"
+... | rex field=user_email "@(?<domain>\S+)"
 | fields user_email, domain
 ```
 
