@@ -83,14 +83,14 @@ To analyze user engagement by location and performance, sort results by the "cou
 	... | sort country, -latency
 	```
 
-5. **Fetching the Latest Event**
+4. **Fetching the Latest Event**
 
 Retrieve the most recent event by sorting in descending order based on the `timestamp` field.
 	```spl
 	... | sort 1 -timestamp
 	```
 
-6. **Limiting Results with a Label**
+5. **Limiting Results with a Label**
 
 Specify the number of entries to display by using a label. For instance, to view the top 12 entries based on the "app_name" field in ascending order, you can set a limit.
 
