@@ -34,8 +34,7 @@ This function returns `TRUE` if the given value is Boolean.
 **Implementation**:
 
 ```spl
-... | where isbool(isActive)
-    | stats count by isActive
+... | where isbool(isActive) | stats count by isActive
 ```
 
 **Explanation**:
@@ -49,7 +48,7 @@ This function returns `TRUE` if the given value is numeric.
 
 ### Usage
 
-`isnum` can be used with `eval` and `where` commands to check if a field's value is numeric. This is especially useful in conditional expressions and for filtering records based on numeric field values.
+`isnum` can be used with `eval` and `where` commands to check if a field's value is numeric. This comes in handy for conditional checks and for filtering records that have any numeric value in a field.
 
 ### Example
 
@@ -74,8 +73,7 @@ This function returns `TRUE` if the given value is numeric.
 **Implementation**:
 
 ```spl
-... | where isnum(latency)
-    | stats avg(latency) as AverageLatency
+... | where isnum(latency) | stats avg(latency) as AverageLatency
 ```
 
 **Explanation**:
@@ -114,8 +112,7 @@ This function returns `TRUE` if the given value is an integer.
 **Implementation**:
 
 ```spl
-... | where isint(userAge)
-    | stats count by userAge
+... | where isint(userAge) | stats count by userAge
 ```
 
 **Explanation**:
@@ -147,21 +144,20 @@ This function returns `TRUE` if the given value is `NULL`.
 
 ### Use-Case Example
 
-**Problem**: A financial transactions dataset includes a `transactionAmount` field. Some transactions are pending and have not been assigned an amount, resulting in `NULL` values. These `NULL` values need to be identified and handled appropriately for accurate financial reporting.
+**Problem**:A dataset includes an email field. Some records are incomplete and do not have an email address, resulting in NULL values. You need to validate whether the email field is null and output a message indicating if the field is null.
 
-**Solution**: Use the `isnull` function to identify records with `NULL` `transactionAmount` values. This can help in segregating pending transactions from completed ones.
+**Solution**: Use the `validate` function with `isnull` to check for null values in the email field and print a message accordingly.
 
 **Implementation**:
 
 ```spl
-... | eval transactionStatus=if(isnull(transactionAmount), "Pending", "Completed")
-    | stats count by transactionStatus
+... | eval email_check = validate(isnull(email), "ERROR: Email is null", "Email is valid")
 ```
 
 **Explanation**:
 
-- The `eval` command uses `isnull` to check for `NULL` `transactionAmount` values, labeling these transactions as "Pending" and others as "Completed".
-- The `stats` command then counts the number of transactions in each category, providing a clear overview of pending versus completed transactions.
+- The `validate` function checks if the email field is NULL.
+- If the `email` field is NULL, it returns the message "ERROR: Email is null". If the `email` field is not NULL, it returns the message "Email is valid".
 
 ## **isnotnull(&lt;value&gt;)**
 
@@ -187,21 +183,20 @@ This function returns `TRUE` if the given value is not `NULL`.
 
 ### Use-Case Example
 
-**Problem**: A customer service dataset includes a `customerFeedback` field. Not all interactions result in feedback, leading to `NULL` values in this field. For quality assurance and follow-up processes, it's important to distinguish between interactions that have received feedback and those that haven't.
+**Problem**: In a dataset of server health logs, some entries may lack critical performance metrics like `cpuUsage` due to collection errors or misconfigurations.
 
-**Solution**: Use the `isnotnull` function to filter records based on the presence of `customerFeedback`. This enables targeted analysis and actions for interactions with or without feedback.
+**Solution**: Use the `validate` function to check for the presence of `cpuUsage` and categorize records for immediate anomaly detection.
 
 **Implementation**:
 
 ```spl
-... | eval feedbackStatus=if(isnotnull(customerFeedback), "Received", "Awaiting")
-    | stats count by feedbackStatus
+... | eval healthStatus=validate(isnotnull(cpuUsage), "Normal", "Alert: CPU Usage Missing")
 ```
 
 **Explanation**:
 
-- The `eval` command uses `isnotnull` to check for non-`NULL` `customerFeedback` values, labeling these interactions as "Received" and others as "Awaiting".
-- The `stats` command then counts the number of interactions in each category, providing insights into the volume of feedback received versus pending.
+- This command uses `validate` to check if `cpuUsage` is not `NULL`. If `cpuUsage` is present, the record is marked as "Normal". Otherwise, it's flagged with "Alert: CPU Usage Missing".
+- This approach ensures that entries missing `cpuUsage` are immediately flagged for anomaly detection.
 
 ## **typeof(&lt;value&gt;)**
 
@@ -226,35 +221,18 @@ This function returns the data type of the given value, which can be a literal v
 ... | eval fieldType=typeof(latency)
 ```
 
-2. To handle different data types in processing using `if` statements:
-
-```spl
-... | eval processData=if(typeof(field)=="String", "Process as string",
-                         if(typeof(field)=="Number", "Process as number",
-                         if(typeof(field)=="Boolean", "Process as boolean",
-                         if(typeof(field)=="Multivalue", "Process as multivalue",
-                         "Unknown type"))))
-```
-
 ### Use-Case Example
 
-**Problem**: In a dataset containing various types of data, it's crucial to identify the data type of each field to apply appropriate processing techniques, especially when the data source is dynamic and the types of some fields can change.
+**Problem**: A dataset includes a `response_time` field. Sometimes, due to logging errors, the `response_time` field in server logs is recorded as a `String` instead of a `Number`. This causes issues in calculations and reporting, as the field should consistently be numerical for accurate analysis.
 
-**Solution**: Use the `typeof` function to dynamically identify the data type of fields. This enables the application of data type-specific processing logic, ensuring data integrity and accuracy in analysis.
+**Solution**: Use the `typeof` command to identify and correct entries where `response_time` is misclassified as a string, ensuring all data in this field is treated as numerical.
 
 **Implementation**:
 
 ```spl
-... | eval fieldType=typeof(latency),
-         processData=case(
-           typeof(latency)="String", "Process as string",
-           typeof(latency)="Number", "Process as number",
-           typeof(latency)="Boolean", "Process as boolean",
-           typeof(latency)="NULL", "Process as null"
-         )
+... | eval response_time=if(typeof(response_time)="String", tonumber(response_time), response_time)
 ```
 
 **Explanation**:
 
-- The `eval` command is used to determine the data type of the `latency` field using `typeof`.
-- A `case` statement then maps each identified data type to a specific processing logic. This approach ensures that each data type is handled appropriately, without the need for a default or catch-all case, streamlining the processing logic for known data types.
+- This implementation uses the `typeof` command to identify entries where `response_time` is misclassified as a string. The `if` function checks the type, and if it is a `String`, `tonumber(response_time)` converts it to a `Number`. If not, it leaves the field unchanged. This ensures that all data in the `response_time` field is numeric. By standardizing the data type, this approach prevents errors in downstream processing and reporting.

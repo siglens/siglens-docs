@@ -70,48 +70,19 @@ This function processes field values as numbers if possible, otherwise processes
 
 **Identify the Minimum CPU Utilization per Minute per Server**
 
-**Problem:** A user wants to identify the minimum CPU utilization recorded every minute for each server. The `cpu_usage` field contains CPU usage measurements taken every 10 seconds within that minute, separated by commas.
+**Problem:** You aim to monitor the performance of various servers in your network by identifying the minimum CPU utilization recorded, to ensure that no server is consistently showing abnormal behavior which could indicate issues.
 
-**Solution:** Use the `stats` command with an `eval` function to find the minimum CPU utilization value from the string of measurements.
+**Solution:** Utilize the `stats` command in conjunction with the `min` function to calculate the minimum CPU utilization for each server. This method allows for a straightforward identification of servers that may be underperforming or experiencing issues, by highlighting instances of unusually low CPU utilization.
 
-**Assumed Data Format:**
-
-```
-server,time,cpu_usage  // fields
-server1,1720350000,"50,85,90,70,85,100"
-server2,1720350000,"70,90,99,85,60,70"
-server1,1720350060,"105,90,87,99,90,80"
-server2,1720350060,"75,89,80,70,75,80"
-```
-
-**Query:**
+**Implementation:**
 
 ```spl
-index=server_metrics sourcetype=cpu_usage
-| makemv delim="," cpu_usage
-| eval cpu_usage_list=split(cpu_usage, ",")
-| eval min_cpu_per_min = min(cpu_usage_list)
-| stats min(min_cpu_per_min) AS min_cpu_usage BY server, _time
+... | stats min(cpu_utilization) AS MinCPUUtilization BY host
 ```
 
 **Explanation:**
-1. The `makemv` command splits the `cpu_usage` string into multiple values based on the delimiter ",".
-2. The `split` function in the `eval` command converts the `cpu_usage` string into a list of values.
-3. The `min` function within the `eval` command calculates the minimum CPU utilization value from the list of `cpu_usage` values.
-4. The `stats` command is then used to calculate the minimum `min_cpu_per_min` for each `server` and `time` combination, effectively finding the minimum CPU utilization per minute per server.
-5. The result is stored in a new field called `min_cpu_usage`.
 
-**Output:**
-
-The output for the above command based on the provided data would look like this:
-
-```
-server    _time        min_cpu_usage
-server1   1720350000   50
-server2   1720350000   60
-server1   1720350060   80
-server2   1720350060   70
-```
+- This command calculates the minimum CPU Utilization (`cpu_utilization` field) for each server (`host` field). The `min` function is used to find the lowest value of CPU utilization for each unique server. This approach is useful for monitoring server performance and quickly identifying any servers that may be experiencing issues. 
 
 ## **max(&lt;value&gt;)**
 This function returns the maximum value in a field.
@@ -160,7 +131,6 @@ index=server_metrics sourcetype=cpu_usage
 **Explanation:**
 - This query filters logs to those related to CPU usage metrics.
 - The `stats` command calculates the maximum `cpu_usage` value for each `server`.
-- The result is a table with each server and its maximum CPU utilization.
 
 **Implementation with `timechart`**:
 
@@ -178,7 +148,7 @@ index=server_metrics sourcetype=cpu_usage
 
 **Output:**
 
-- The `stats` command output will be a table listing each server with its maximum CPU utilization.
+- The `stats` command output list each server with its maximum CPU utilization.
 - The `timechart` command output will be a time series chart, with time on the x-axis and CPU utilization on the y-axis, displaying lines for each server to indicate how the maximum CPU utilization varies over time.
 
 ## **range(&lt;value&gt;)**
@@ -368,7 +338,7 @@ To use this function, you can specify `distinct_count(<value>)`, or the abbrevia
 
 **Problem:** A product manager wants to understand how many unique users are engaging with their application across different device types.
 
-**Solution:** Use the `stats` command with the `distinct_count` function to count the number of unique users for each device type..
+**Solution:** Use the `stats` command with the `distinct_count` function to count the number of unique users for each device type.
 
 **Implementation:**
 

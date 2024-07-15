@@ -23,7 +23,7 @@ Imagine you're monitoring a system that logs events with high-precision timestam
 
 ```spl
 ... | eval current_time_ms=now()*1000, time_difference_ms=current_time_ms - timestamp
-| eval time_category=if(time_difference_ms <= 300000, "within 5 minutes",
+	| eval time_category=if(time_difference_ms <= 300000, "within 5 minutes",
 	if(time_difference_ms <= 600000, "within 10 minutes",
 	if(time_difference_ms <= 1800000, "within 30 minutes", "older than 30 minutes")))
 ```
@@ -42,7 +42,6 @@ This SPL command calculates the time difference in milliseconds between the curr
 status=open
 | eval current_time=now()
 | eval ticket_age_hours = round((current_time - timestamp) / 3600, 2)
-| table ticket_id, timestamp, current_time, ticket_age_hours
 | sort - ticket_age_hours
 ```
 
@@ -122,8 +121,7 @@ You can use this function with the `eval` and `where` commands and as part of ev
 **Implementation:**
 
 ```spl
-*
-| eval epoch_time=strptime(date_field, "%Y-%m-%d")
+... | eval epoch_time=strptime(date_field, "%Y-%m-%d")
 | where epoch_time >= strptime("2023-06-01", "%Y-%m-%d") AND epoch_time < strptime("2023-07-01", "%Y-%m-%d")
 | timechart span=1d count BY url_path
 ```

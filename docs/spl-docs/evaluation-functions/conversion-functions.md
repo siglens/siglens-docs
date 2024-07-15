@@ -31,22 +31,21 @@ You can use this function with the `eval` and `where` commands, in the `WHERE` c
 
 ### Use-Case Example
 
-**Problem**: A small business wants to ensure that only devices from its office network can access certain sensitive resources. They need a simple way to verify the network segment of incoming connections.
+**Problem**: A small business wants to monitor its network traffic to detect when devices outside its local network make requests. This is part of a double-check mechanism to ensure their firewall is effectively blocking unauthorized access.
 
-**Solution**: The `ipmask` function can be used to filter connections, allowing only those from the office network subnet. This method is straightforward and doesn't require complex network configuration.
+**Solution**: The `ipmask` function can be used to identify requests coming from outside the office network subnet. By filtering out local network traffic, any remaining traffic can be assumed to be from external sources, thus indicating potential unauthorized access attempts or failures in the firewall configuration.
 
 **Implementation**:
 
 ```spl
-... | eval isOfficeNetwork = if(ipmask("255.255.255.0", ip_address) = "192.168.1.0", "true", "false")
-     | where isOfficeNetwork="true"
+... | eval isExternal = if(ipmask("255.255.255.0", ip_address) != "192.168.1.0", "true", "false") | where isExternal="true"
 ```
 
 **Explanation**:
 
-- The `eval` command applies a subnet mask (`255.255.255.0`) to the `ip_address` field, generating a subnet identifier for each IP address.
-- An `if` statement checks if the masked IP address matches the office network's subnet (`192.168.1.0`), marking it as `true` for office network devices.
-- The `where` clause filters the results to include only devices identified as being on the office network, ensuring that only these devices can access the sensitive resources.
+- The `eval` command applies a subnet mask (`255.255.255.0`) to the `ip_address` field, generating a subnet identifier for each IP address
+- An `if` statement checks if the masked IP address does not match the office network's subnet (`192.168.1.0`), marking it as `true` for external network devices.
+- The `where` clause filters the results to include only devices identified as being outside the office network, highlighting potential unauthorized access attempts or firewall configuration issues.
 
 ## **tonumber(&lt;str&gt;, &lt;base&gt;)**
 
@@ -84,8 +83,7 @@ If the `tonumber` function cannot parse a literal string to a number, it returns
 **Implementation**:
 
 ```spl
-... | eval loadTimeNumeric = tonumber(loadTimeString)
-     | stats avg(loadTimeNumeric) as avgLoadTime
+... | eval loadTimeNumeric = tonumber(loadTimeString) | stats avg(loadTimeNumeric) as avgLoadTime
 ```
 
 **Explanation**:
@@ -105,7 +103,7 @@ The `tostring` function is used within `eval`, `where`, and other commands for c
 
 - **Hexadecimal ("hex")**: Converts a numeric value to its hexadecimal representation. If the value is not numeric, the result is undefined.
 - **With Commas ("commas")**: Formats a numeric value with commas as thousands separators. If the value is not numeric, the result is undefined.
-- **Duration ("duration")**: Converts a numeric value representing seconds into a duration format (e.g., "HH:MM:SS"). If the value is not numeric, the result is undefined.
+- **Duration ("duration")**: Converts a numeric value representing seconds into a duration format (e.g., "HH:MM:SS"). If the value is not numeric, the result is undefined. If the duration is negative, `tostring` handles it by displaying the negative sign before the converted duration. For example, a negative duration of -3600 seconds would be converted to -01:00:00 (representing negative 1 hour). 
 
 ### Example
 
@@ -129,17 +127,16 @@ The `tostring` function is used within `eval`, `where`, and other commands for c
 
 ### Use-Case Example
 
-**Problem**: A financial application displays transaction amounts in a user's activity feed. To enhance readability, the application needs to format large transaction amounts with commas.
+**Problem**: A DevOps team needs to analyze high-value transactions in their e-commerce platform logs. They want to quickly identify transactions above a certain threshold and make the large amounts more readable in their dashboards and searches.
 
 **Solution**: Use the `tostring` function to convert numeric transaction amounts into formatted strings with commas.
 
 **Implementation**:
 
 ```spl
-... | eval formattedAmount=tostring(transactionAmount, "commas")
+... | where transaction_amount > 10000 | eval formatted_amount=tostring(transaction_amount, "commas")
 ```
 
 **Explanation**:
 
-- The `eval` command uses the `tostring` function to convert the numeric `transactionAmount` into a string, applying the "commas" format. This makes large numbers easier to read by adding commas as thousands separators.
-- Displaying transaction amounts in this format improves the user experience by making financial data more accessible and understandable.
+- The `eval` command uses the `tostring` function to create a new field `formatted_amount`, converting the numeric `transaction_amount` into a string with commas as thousands separators.
