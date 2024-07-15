@@ -28,11 +28,25 @@ You can use this function with the `eval` and `where` commands, in the `WHERE` c
 ```spl
 ... | eval maskedip=ipmask("0.255.0.244", clientip)
 ```
- 
-3. Filtering events based on a specific masked IP value:
+
+### Use-Case Example
+
+**Problem**: A small business wants to ensure that only devices from its office network can access certain sensitive resources. They need a simple way to verify the network segment of incoming connections.
+
+**Solution**: The `ipmask` function can be used to filter connections, allowing only those from the office network subnet. This method is straightforward and doesn't require complex network configuration.
+
+**Implementation**:
+
 ```spl
-... | where ipmask("0.255.0.224", clientip)="10.20.30.120"
+... | eval isOfficeNetwork = if(ipmask("255.255.255.0", ip_address) = "192.168.1.0", "true", "false")
+     | where isOfficeNetwork="true"
 ```
+
+**Explanation**:
+
+- The `eval` command applies a subnet mask (`255.255.255.0`) to the `ip_address` field, generating a subnet identifier for each IP address.
+- An `if` statement checks if the masked IP address matches the office network's subnet (`192.168.1.0`), marking it as `true` for office network devices.
+- The `where` clause filters the results to include only devices identified as being on the office network, ensuring that only these devices can access the sensitive resources.
 
 ## **tonumber(&lt;str&gt;, &lt;base&gt;)**
 
@@ -58,31 +72,74 @@ If the `tonumber` function cannot parse a literal string to a number, it returns
 
 2. Converting a hexadecimal number to a decimal number using a base of 16 to return the number "164":
 ```spl
-... | eval n=tonumber("0A4",16)
+... | eval n=tonumber("0A4", 16)
 ```
 
-3. Trimming leading or trailing spaces from values in the `celsius` field before converting it to a number:
+### Use-Case Example
+
+**Problem**: A web application stores user interaction times (like page load time) as strings in a log file. To optimize the user experience, the development team needs to calculate the average page load time.
+
+**Solution**: Use the `tonumber` function to convert the string representations of interaction times into numeric values, enabling the calculation of the average page load time.
+
+**Implementation**:
+
 ```spl
-... | eval temperature=tonumber(trim(celsius))
+... | eval loadTimeNumeric = tonumber(loadTimeString)
+     | stats avg(loadTimeNumeric) as avgLoadTime
 ```
+
+**Explanation**:
+
+- The `eval` command uses the `tonumber` function to convert the loadTimeString (which is in string format) into a numeric value loadTimeNumeric.
+- The `stats` command then calculates the average of these numeric values (avgLoadTime), providing the development team with the information needed to identify performance bottlenecks and improve the user experience.
 
 ## **tostring(&lt;value&gt;, &lt;format&gt;)**
 
-This function converts a value to a string using the specified format.
-
-If the input value is a number, it reformats it as a string. If the input value is Boolean, it returns the corresponding string value, "True" or "False".
+This function converts a numeric, boolean, or NULL value to a string, optionally formatting the output based on the specified format. If the value is a field name and a row has NULL, it returns an empty string or a representation of NULL. The function does not directly support multivalue fields without preprocessing.
 
 ### Usage
 
-You can use this function with the `eval` and `where` commands and as part of evaluation expressions with other commands.
+The `tostring` function is used within `eval`, `where`, and other commands for converting numbers or boolean values to strings. The `<format>` argument is optional and can be used to apply specific formatting styles such as hexadecimal ("hex"), with commas ("commas"), or as a duration ("duration").
 
-If `<value>` is a number, the second argument `<format>` is optional and can be "hex", "commas", or "duration".
+### Formatting Details
+
+- **Hexadecimal ("hex")**: Converts a numeric value to its hexadecimal representation. If the value is not numeric, the result is undefined.
+- **With Commas ("commas")**: Formats a numeric value with commas as thousands separators. If the value is not numeric, the result is undefined.
+- **Duration ("duration")**: Converts a numeric value representing seconds into a duration format (e.g., "HH:MM:SS"). If the value is not numeric, the result is undefined.
 
 ### Example
 
-1. Converting 615 seconds to minutes and seconds, returning `period=615` and `period_time=00:10:15`:
+1. **Hexadecimal Conversion**: Converting a decimal number to a hexadecimal string:
+   ```spl
+   ... | eval hexValue=tostring(255, "hex")
+   ```
+   This converts the decimal number `255` into the hexadecimal string `"ff"`.
+
+2. **Formatting with Commas**: Converting a large number to a string with commas:
+   ```spl
+   ... | eval formattedNumber=tostring(1234567, "commas")
+   ```
+   This converts the number `1234567` into the string `"1,234,567"`.
+
+3. **Duration Formatting**: Converting seconds to a duration format:
+   ```spl
+   ... | eval duration=tostring(3661, "duration")
+   ```
+   This converts `3661` seconds into the string representing the duration `"1:01:01"` (1 hour, 1 minute, and 1 second).
+
+### Use-Case Example
+
+**Problem**: A financial application displays transaction amounts in a user's activity feed. To enhance readability, the application needs to format large transaction amounts with commas.
+
+**Solution**: Use the `tostring` function to convert numeric transaction amounts into formatted strings with commas.
+
+**Implementation**:
+
 ```spl
-... | eval period=615 
-| eval period_time = tostring(period, "duration")
+... | eval formattedAmount=tostring(transactionAmount, "commas")
 ```
 
+**Explanation**:
+
+- The `eval` command uses the `tostring` function to convert the numeric `transactionAmount` into a string, applying the "commas" format. This makes large numbers easier to read by adding commas as thousands separators.
+- Displaying transaction amounts in this format improves the user experience by making financial data more accessible and understandable.
