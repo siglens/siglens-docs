@@ -8,6 +8,7 @@ _The following list includes the supported SPL Commands._
 - [head command](head-command.md)
 - [makemv command](makemv-command.md)
 - [regex command](regex-command.md)
+- [rex command](rex-command.md)
 - [search command](search-command.md)
 - [tail command](tail-command.md)
 - [top command](top-command.md)

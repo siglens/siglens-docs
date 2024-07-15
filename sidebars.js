@@ -149,6 +149,7 @@ const sidebars = {
  'spl-docs/head-command',
  'spl-docs/makemv-command',
  'spl-docs/regex-command',
+ 'spl-docs/rex-command',
  'spl-docs/search-command',
  'spl-docs/tail-command',
  'spl-docs/top-command',
