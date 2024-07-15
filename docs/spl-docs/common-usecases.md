@@ -18,7 +18,7 @@
 
 **Problem:** The objective is to analyze network latency across different device types, identifying which devices experience higher or lower latency. This analysis is crucial for optimizing user experience and network performance for diverse user bases.
 
-**Solution:** Leverage the [`eval`](eval-command.md) and [`stats`](insert-stats-command.md) commands in Splunk to classify devices based on their user agent strings, then calculate the minimum, maximum, and average latency for each device type.
+**Solution:** Leverage the [`eval`](eval-command.md) and `stats` commands in Splunk to classify devices based on their user agent strings, then calculate the minimum, maximum, and average latency for each device type.
 
 ### 4. Protecting Sensitive Information in Search Results
 
