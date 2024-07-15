@@ -248,23 +248,23 @@ You can use this function with the `stats` and `timechart` commands.
 
 ### Example
 
-- To calculate the total latency for all events:
+- To calculate the total revenue from subscriptions for all events:
 
 	```spl
-	... | stats sum(latency)
+	... | stats sum(revenue)
 	```
 
-- To organize the results by a specific field, such as `city`:
+- For summing revenue from subscriptions per month per city:
 
-	```spl
-	... | stats sum(latency) AS "total latency" BY city
-	```
+    ```spl
+    ... | stats sum(revenue) AS "total revenue" BY city, month
+    ```
 
-- The following example displays a timechart of the sum of latency over time:
+- The following example displays a timechart of the sum of revenue over time per city:
 
-	```spl
-	... | timechart sum(latency)
-	```
+    ```spl
+    ... | timechart span=1m sum(revenue) BY city
+    ```
 
 ### Use-Case Example
 

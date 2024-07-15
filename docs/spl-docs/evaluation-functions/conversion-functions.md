@@ -95,7 +95,7 @@ If the `tonumber` function cannot parse a literal string to a number, it returns
 
 ## **tostring(&lt;value&gt;, &lt;format&gt;)**
 
-This function converts a numeric, boolean, or NULL value to a string, optionally formatting the output based on the specified format. If the value is a field name and a row has NULL, it returns an empty string or a representation of NULL. The function does not directly support multivalue fields without preprocessing.
+This function converts a numeric, boolean, or NULL value to a string, optionally formatting the output based on the specified format. If the value is a field name and a row has NULL, it returns an empty string. The function does not directly support multivalue fields without preprocessing.
 
 ### Usage
 

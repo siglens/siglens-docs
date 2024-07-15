@@ -4,7 +4,7 @@ _This list includes functions designed for handling date and time operations._
 
 ## **now()**
 
-This function returns the current date and time. 
+This function returns the current date and time in epoch seconds in local timezone.
 
 ### Usage
 

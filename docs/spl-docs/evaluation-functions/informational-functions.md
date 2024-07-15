@@ -250,7 +250,7 @@ This function returns the data type of the given value, which can be a literal v
            typeof(latency)="String", "Process as string",
            typeof(latency)="Number", "Process as number",
            typeof(latency)="Boolean", "Process as boolean",
-           typeof(latency)="Multivalue", "Process as multivalue"
+           typeof(latency)="NULL", "Process as null"
          )
 ```
 
