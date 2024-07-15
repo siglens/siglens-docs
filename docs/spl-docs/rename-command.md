@@ -3,7 +3,7 @@
 
 ## Description
 
-The rename command allows you to update the names of fields to something more descriptive or easier to understand. For instance, changing "app_version" to "Application Version" can make your data more accessible and self-explanatory. This is particularly helpful when dealing with fields that have cryptic or abbreviated names. If there are multiple fields with a common naming pattern, you can leverage a wildcard to rename them in bulk, streamlining the process of making your dataset user-friendly.
+The rename command allows you to update the names of fields to something more descriptive or easier to understand. For instance, changing `app_version` to `Application Version` can make your data more accessible and self-explanatory. This is particularly helpful when dealing with fields that have cryptic or abbreviated names. If there are multiple fields with a common naming pattern, you can leverage a wildcard to rename them in bulk, streamlining the process of making your dataset user-friendly.
 
 ## Syntax
 
@@ -16,8 +16,6 @@ rename \<field-name\> AS \<field-name\>...
 
 ## Usage
 
-The rename command is a distributable streaming command. See Command types.
-
 ### Rename with a phrase
 Use quotation marks when you rename a field with a phrase.
 
@@ -28,8 +26,8 @@ Use quotation marks when you rename a field with a phrase.
 ### Rename multiple, similarly named fields
 Use wildcards to rename multiple fields with similar names. For example, suppose you have the following field names:
 
-- app_name
-- app_version
+- `app_name`
+- `app_version`
 
 You can rename the fields to replace EU with EMEA:
 
@@ -39,18 +37,18 @@ You can rename the fields to replace EU with EMEA:
 
 The results show these field names:
 
-- Application_name
-- Application_version
+- `Application_name`
+- `Application_version`
 
 Both the original and renamed fields must include the same number of wildcards, otherwise an error is returned.
 
 ### Renaming a field that does not exist
 Renaming a field can cause loss of data.
 
-Suppose you rename appname to app_version, but appname does not exist.
+Suppose you rename `appname` to `app_version`, but `appname` does not exist.
 
-- If app_version does not exist, nothing happens.
-- If app_version does exist, the result of the rename is that the data in app_version is removed. The data in app_version will contain null values.
+- If `app_version` does not exist, nothing happens.
+- If `app_version` does exist, the result of the rename is that the data in `app_version` is removed. The data in `app_version` will contain null values.
 
 ## Examples
 
