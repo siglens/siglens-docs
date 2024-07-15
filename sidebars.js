@@ -145,7 +145,7 @@ const sidebars = {
  'spl-docs/splunk-commands',
  'spl-docs/common-usecases',
  'spl-docs/bin-command',
-  'spl-docs/dedup-command',
+ 'spl-docs/dedup-command',
  'spl-docs/eval-command',
  'spl-docs/fields-command',
  'spl-docs/head-command',
@@ -158,6 +158,9 @@ const sidebars = {
  'spl-docs/top-command',
  'spl-docs/transaction-command',
  'spl-docs/where-command',
+ 'spl-docs/rename-command',
+ 'spl-docs/sort-command',
+ 'spl-docs/rare-command',
 {
   type: 'category',
   label: 'Evaluation Functions',
