@@ -9,7 +9,7 @@ This function returns `TRUE` if the given value is Boolean.
 
 ### Usage
 
-`isbool` can be used with `eval` and `where` commands to check if a field's value is a Boolean (`true` or `false`). This is particularly useful in conditional expressions and for filtering records based on Boolean field values.
+`isbool` can be used with `eval` and `where` commands to check if a field's value is a Boolean (`true` or `false`). This is useful for conditional checks and for filtering records that contain a Boolean value in any field.
 
 ### Example
 
@@ -87,7 +87,7 @@ This function returns `TRUE` if the given value is an integer.
 
 ### Usage
 
-`isint` can be used with `eval` and `where` commands to check if a field's value is an integer. This is particularly useful in conditional expressions and for filtering records based on integer field values.
+`isint` can be used with `eval` and `where` commands to check if a field's value is an integer. This is useful for conditional checks and for filtering records that contain an integer value in any field.
 
 ### Example
 

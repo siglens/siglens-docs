@@ -70,7 +70,7 @@ This function processes field values as numbers if possible, otherwise processes
 
 **Identify the Minimum CPU Utilization per Minute per Server**
 
-**Problem:** You aim to monitor the performance of various servers in your network by identifying the minimum CPU utilization recorded, to ensure that no server is consistently showing abnormal behavior which could indicate issues.
+**Problem:** You aim to monitor the performance of various servers in your network by identifying the minimum CPU utilization recorded, to ensure that no server is showing abnormal behavior which could indicate issues.
 
 **Solution:** Utilize the `stats` command in conjunction with the `min` function to calculate the minimum CPU utilization for each server. This method allows for a straightforward identification of servers that may be underperforming or experiencing issues, by highlighting instances of unusually low CPU utilization.
 
@@ -148,7 +148,7 @@ index=server_metrics sourcetype=cpu_usage
 
 **Output:**
 
-- The `stats` command output list each server with its maximum CPU utilization.
+- The `stats` command output lists each server with its maximum CPU utilization.
 - The `timechart` command output will be a time series chart, with time on the x-axis and CPU utilization on the y-axis, displaying lines for each server to indicate how the maximum CPU utilization varies over time.
 
 ## **range(&lt;value&gt;)**
