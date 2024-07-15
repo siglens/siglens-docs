@@ -351,6 +351,6 @@ index=app_usage sourcetype=user_sessions
 **Explanation**:
 
 - This query filters logs to those related to app usage and user sessions.
-- The stats command calculates the distinct count of user_id for each device_type.
+- The `stats` command calculates the distinct count of `user_id` for each `device_type`.
 - Results are sorted in descending order of unique user count.
 - The output will show each device type and its corresponding number of unique users, helping understand user engagement across different devices.
