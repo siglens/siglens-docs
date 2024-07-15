@@ -144,6 +144,7 @@ const sidebars = {
   items: [
  'spl-docs/splunk-commands',
  'spl-docs/bin-command',
+  'spl-docs/dedup-command',
  'spl-docs/eval-command',
  'spl-docs/fields-command',
  'spl-docs/head-command',

@@ -3,6 +3,7 @@
 _The following list includes the supported SPL Commands._
 
 - [bin command](bin-command.md)
+- [dedup command](dedup-command.md)
 - [eval command](eval-command.md)
 - [fields command](fields-command.md)
 - [head command](head-command.md)
