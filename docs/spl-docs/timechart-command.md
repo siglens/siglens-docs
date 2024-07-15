@@ -17,12 +17,10 @@ timechart \
 
 ## Required Arguments
 
-When specifying `timechart` command arguments, `<single-agg>`  BY `<split-by-clause>` is required.
+### single-agg <!-- TODO: once the stats docs are merged add the links to the page where `Stats function Options` is mentioned -->
 
-### single-agg
-
-**Syntax:** `count or \<stats-func>(\<field>)` \
-**Description:** A single aggregation applied to a single field, including an evaluated field. For \<stats-func>, see [Stats function options](link-for-stats-page.md). No wildcards are allowed. The field must be specified, except when using the count function, which applies to events as a whole.
+**Syntax:** `count or <stats-func>(<field>)` \
+**Description:** A single aggregation applied to a single field, including an evaluated field. For \<stats-func>, see Stats function options. No wildcards are allowed. The field must be specified, except when using the count function, which applies to events as a whole.
 
 ### split-by-clause
 
@@ -33,13 +31,12 @@ When specifying `timechart` command arguments, `<single-agg>`  BY `<split-by-cla
 
 ### bin-options
 
-**Syntax:** `span=<int>[<timescale>]`
-**Descripton:** Option that can be used to specify discrete bins, or groups, to organize the information. A span of each bin, based on time. If the timescale is provided, this is used as a time range. If not, this is an absolute bin length.
+**Syntax:** `span=<int><timescale>` \
+**Descripton:** Option that can be used to specify discrete bins, or groups, to organize the information. A span of each bin, based on time. If the timescale is provided, this is used as a time range.
 
 **\<timescale>** \
 **Syntax:** `<sec>`, `<min>`, `<hr>`, `<day>`, `<week>`, `<month>`, `<quarter>`, or `<subseconds>` \
 **Description:** Timescale units
-**Default**: `<sec>`
 
 | Timescale    | Valid syntax                                       | Description                                              |
 |--------------|----------------------------------------------------|----------------------------------------------------------|
@@ -101,5 +98,5 @@ _time               host       avg(CPU)
 2024-07-12 09:16    server2    43.0
 ...
 ```
-
+<!-- TODO: Show the chart that gets created in the `Visualization` tab on siglens -->
 This use case demonstrates how the `timechart` command can be used to monitor and visualize average CPU usage over time, split by host. This enables the user to identify trends, detect anomalies, and make informed decisions about resource allocation and performance optimization.
