@@ -6,7 +6,7 @@ Removes the events that contain an identical combination of values for the field
 
 With the `dedup` command, you can specify the number of duplicate events to keep for each value of a single field, or for each combination of values among several fields. Events returned by `dedup` are based on search order.
 
-You can specify the number of events with duplicate values, or value combinations, to keep. You can sort the fields, which determines which event is retained. Other options enable you to retain events with the duplicate fields removed, or to keep events where the fields specified do not exist in the events.
+You can sort the fields, which determines which event is retained. Other options enable you to retain events with the duplicate fields removed, or to keep events where the fields specified do not exist in the events.
 
 ## Syntax
 
@@ -16,17 +16,17 @@ The required syntax is in **bold**.
 **dedup** \
 [\<N>] \
 **\<field-list>** \
-[keepevents=\<bool>] \ 
+[keepevents=\<bool>] \
 [keepempty=\<bool>] \
 [consecutive=\<bool>] \
-[sortby \<sort-by-clause>] \
+[sortby \<sort-by-clause>]
 
 
 ## Required arguments
 
 ### field-list
 
-**Syntax:** `field=<string> ...` \
+**Syntax:** `<field1> [<field2> ...]` \
 **Description:** A list of field names to remove duplicate values from.
 
 ## Optional arguments
@@ -43,11 +43,7 @@ The required syntax is in **bold**.
 **Description:** If set to true, keeps every event where one or more of the specified fields is not present (null). \
 **Default:** false. All events where any of the selected fields are null are dropped.
 
-The `keepempty=true` argument keeps every event that does not have one or more of the fields in the field list. To keep N representative events for combinations of field values including null values, use the `fillnull` command to provide a non-null value for these fields. For example:
-
-```
-...| fillnull value="MISSING" field1 field2 | dedup field1 field2
-```
+The `keepempty=true` argument keeps every event that does not have one or more of the fields in the field list.
 
 ### \<N>
 
@@ -166,10 +162,10 @@ index=error_logs
 **Example data:**
 
 ```
-time                     error_code    error_message                host          source
+time                      error_code    error_message                host          source
 2024-07-12 09:15:23       404           Not Found                    server1       /var/log/httpd/error_log
 2024-07-12 09:16:00       500           Internal Server Error        server2       /var/log/httpd/error_log
-2024-07-12 09:17:45       404           Not Found                    server3       /var/log/httpd/error_log
+2024-07-12 09:17:45       400           Bad Request                  server3       /var/log/httpd/error_log
 2024-07-12 09:18:30       503           Service Unavailable          server1       /var/log/httpd/error_log
 ```
 
