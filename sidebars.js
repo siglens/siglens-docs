@@ -151,6 +151,7 @@ const sidebars = {
  'spl-docs/regex-command',
  'spl-docs/search-command',
  'spl-docs/tail-command',
+ 'spl-docs/timechart-command',
  'spl-docs/top-command',
  'spl-docs/transaction-command',
  'spl-docs/where-command',
