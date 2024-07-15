@@ -1,4 +1,3 @@
-
 # Informational Functions
 
 _This list includes functions designed to obtain information about a value._
