@@ -55,6 +55,8 @@ status=open
 
 This function formats an epoch time value as a string according to the specified format. If the format is invalid then the result from this function would be undefined. 
 
+For a complete list and descriptions of the format options you can use, see [Using time variables](/docs/spl-docs/evaluation-functions/time-variables).
+
 ### Usage
 
 The `<epoch_time>` argument is the time in epoch format that you want to format. The `<format>` argument is the format string that defines how the output should be formatted.
@@ -92,13 +94,17 @@ index=security sourcetype=user_logins
 
 ## **strptime(&lt;date_string&gt;, &lt;format&gt;)**
 
-This function converts a date string into epoch time based on a specified format. If the date string doesn't match the format exactly, the function will process only the parts that do match, ignoring any discrepancies. This could lead to unexpected results. If the date string is invalid, the results will be undefined.
+This function converts a date string into epoch time based on a specified format. If the date string doesn't match the format exactly, the function will process only the parts that do match, ignoring any discrepancies. This could lead to unexpected results. If the date string is invalid, the results will be undefined. The strptime function doesn't work with timestamps that consist of only a month and year. The timestamps must include a day.
+
+For instance, given the string `2023-03-15 09:45:30`, the corresponding format should be `%Y-%m-%d %H:%M:%S`. The date string provided must be on or after January 1, 1971. The `strptime` function accepts dates starting from January 1, 1971, and computes the UNIX timestamp, which is the number of seconds elapsed since January 1, 1970, up to the specified date.
 
 ### Usage
 
 The `<date_string>` argument is the date string you want to parse. The `<format>` argument is the format string that defines how the input string is formatted.
 
 You can use this function with the `eval` and `where` commands and as part of evaluation expressions with other commands.
+
+For a complete list and descriptions of the format options you can use, see [Using time variables](/docs/spl-docs/evaluation-functions/time-variables).
 
 ### Example
 
