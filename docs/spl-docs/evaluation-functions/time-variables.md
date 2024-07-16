@@ -20,7 +20,7 @@ The following table lists variables that produce a time.
 
 | Variable | Description |
 |----------|-------------|
-| `%Ez`    | Represents the timezone offset from UTC in hours and minutes. For example, `-0800` indicates 8 hours behind UTC. |
+| `%Ez`    | Represents the timezone offset from UTC with a colon between hours and minutes. For example, `-08:00` indicates 8 hours behind UTC. |
 | `%H`     | Hour (24-hour clock) as a decimal number. Hours are represented by the values 00 to 23. Leading zeros are accepted but not required. |
 | `%I`     | Hour (12-hour clock) with the hours represented by the values 01 to 12. Leading zeros are accepted but not required. |
 | `%k`     | Like `%H`, the hour (24-hour clock) as a decimal number. Leading zeros are replaced by a space, for example, 0 to 23. |
@@ -33,8 +33,8 @@ The following table lists variables that produce a time.
 | `%T`     | The time in 24-hour notation (`%H:%M:%S`). For example, 23:59:59. |
 | `%X`     | The time in the format for the current locale. For US English, the format for 9:30 AM is 9:30:00. |
 | `%Z`     | The timezone abbreviation. For example, PST for US Pacific Standard Time. |
-| `%z`     | The timezone offset from UTC, in hour and minute: +hhmm or -hhmm. For example, for 8 hours behind UTC the value is -0800. |
-| `%%`     | A literal "%" character. |
+| `%z`     | The timezone offset from UTC, without a colon between hours and minutes: +hhmm or -hhmm. For example, for 8 hours behind UTC the value is -0800. |
+| `%%`     | A literal `%` character. |
 
 # Date variables
 
@@ -53,9 +53,9 @@ The following table lists variables that produce values for days and weeks.
 |----------|-------------|
 | `%A`     | Full weekday name. (e.g., Sunday, ..., Saturday) |
 | `%a`     | Abbreviated weekday name. (e.g., Sun, ..., Sat) |
-| `%d`     | Day of the month as a decimal number, includes a leading zero. (e.g., 01 to 31) |
-| `%e`     | Like `%d`, the day of the month as a decimal number, but a leading zero is replaced by a space. (e.g., 1 to 31) |
-| `%j`     | Day of the year as a decimal number, includes a leading zero. (e.g., 001 to 366) |
+| `%d`     | Day of the month as a decimal number, including leading zeros. (e.g., 01 to 31) |
+| `%e`     | Like `%d`, the day of the month as a decimal number, but a leading zero is replaced by a space. (e.g., ` 1` to `31`) |
+| `%j`     | Day of the year as a decimal number, including leading zeros. (e.g., 001 to 366) |
 | `%V`     | Week of the year as a decimal number. (e.g., 1 to 52) |
 | `%w`     | Weekday as a decimal number. (0 = Sunday, ..., 6 = Saturday) |
 

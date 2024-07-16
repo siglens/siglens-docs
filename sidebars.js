@@ -180,6 +180,7 @@ const sidebars = {
     'spl-docs/evaluation-functions/text-functions',
     'spl-docs/evaluation-functions/time-functions',
     'spl-docs/evaluation-functions/trig-hyperbolic-functions',
+    'spl-docs/evaluation-functions/time-variables',
   ],
 },
 ],
