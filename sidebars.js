@@ -161,6 +161,7 @@ const sidebars = {
  'spl-docs/rename-command',
  'spl-docs/sort-command',
  'spl-docs/rare-command',
+ 'spl-docs/time-modifiers',
 {
   type: 'category',
   label: 'Evaluation Functions',
