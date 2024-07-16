@@ -13,7 +13,7 @@ latest=<time_modifier>
 
 An absolute time range specifies exact start and end dates and times, such as from 12 A.M. on June 1, 2024, to 12 A.M. on June 13, 2024.
 
-A relative time range is dependent on when the search is run. For instance, using -60m indicates a search for events from 60 minutes before the current time. So, if it's 2 P.M. now, the search would cover events from 1 P.M. to 2 P.M. on the same day.
+A relative time range is dependent on when the search is run. For instance, using `-60m` indicates a search for events from 60 minutes before the current time. So, if it's 2 P.M. now, the search would cover events from 1 P.M. to 2 P.M. on the same day.
 
 The current time is referred to as `now`.
 
@@ -34,7 +34,7 @@ For exact time ranges, the syntax for the time modifiers is `%m/%d/%Y:%H:%M:%S`.
 earliest=05/01/2023:00:00:00 latest=05/10/2023:00:00:00
 ```
 
-If you specify only the earliest time modifier, latest is set to the current time now by default. If you specify a latest time modifier, you must also specify an earliest time. If the specified time modifiers are invalid, then the system would return an error.
+If you specify only the earliest time modifier, latest is set to the current time `now` by default. If you specify a latest time modifier, you must also specify an earliest time. If the specified time modifiers are invalid, then the system would return an error.
 
 ### Specify relative time ranges
 
@@ -71,7 +71,7 @@ You can also define the relative time modifier using only the snap to time unit.
 
 When a snap to time unit isn't defined, the system defaults to using seconds. If an invalid snap to time unit is provided, it may result in a syntax error or unexpected search results.
 
-The snap to option becomes very useful in a range of situations. For example, if you want to search for events in the previous month, specify earliest=-mon@mon latest=@mon. This sets the search to start at the beginning of the last month and end at the beginning of this month.
+The snap to option becomes very useful in a range of situations. For example, if you want to search for events in the previous month, specify `earliest=-mon@mon latest=@mon`. This sets the search to start at the beginning of the last month and end at the beginning of this month.
 
 ### Difference between relative time and relative snap to time
 
