@@ -40,7 +40,7 @@ If you specify only the earliest time modifier, latest is set to the current tim
 
 The syntax for defining relative time ranges is an integer and a time unit.
 
-1. Begin your relative time modifier String with a minus (-) or a plus (+) sign to indicate the offset before (-) or after (+) the time amount.
+1. Begin your relative time modifier string with a minus (-) or a plus (+) sign to indicate the offset before (-) or after (+) the time amount.
 
 2. Specify the time amount by combining a number with a time unit. When single time units are used, the number 1 is implied. For instance, `s` is equivalent to `1s`, `m` to `1m`, and so on.
 
@@ -65,7 +65,7 @@ In relative time settings, you can specify a snap to time, which acts as an offs
 
 The syntax for the snap to time unit is `[+|-]<time_integer><time_unit>@<time_unit>`.
 
-When snapping to the nearest or latest time, the system always snaps backwards or rounds down to the latest time that is not after the specified time. For example, the current time is 15:45:00 and the snap to time is earliest=-h@h. The time modifier snaps to 14:00.
+When snapping to the nearest or latest time, the system always snaps backwards or rounds down to the latest time that is not after the specified time. For example, the current time is 15:45:00 and the snap to time is earliest=-h@h. The time modifier snaps to 14:00:00.
 
 You can also define the relative time modifier using only the snap to time unit. For example, to snap to a specific day of the week, use @w0 for Sunday, @w1 for Monday, and so on. For Sunday, you can specify either w0 or w7.
 
@@ -91,19 +91,9 @@ The following abbreviations are reserved for special cases of time units and sna
 | `earliest=1` | To search events from the start of UNIX epoch time, use `earliest=1`. UNIX epoch time 1 is UTC January 1, 1970, at 12:00:01 AM. |
 | `earliest=0` | Including `earliest=0` in the search string indicates that time is not considered in the search. |
 | `earliest=1` and `latest=now` or `latest=<a_large_number>` | The search spans all time. However, specifying `latest=now` (the default) excludes future events, while `latest=<a_large_number>` includes future events, which are events with timestamps beyond the current time, `now()`. |
-| `earliest=now` or `latest=now` | Specifies that the search starts or ends at the current time. Any search including `earliest=<relative time offset>` should also include `latest=now`. For example, `earliest=-30s latest=now`. |
+| `earliest=now` or `latest=now` | Specifies that the search starts or ends at the current time. When `earliest=<relative time offset>` is included without specifying `latest`, `latest` will be set to `now` by default. For example, specifying `earliest=-30s` implicitly sets `latest=now` unless otherwise defined. |
 | `@q`, `@qtr`, or `@quarter` | Specify a snap to the beginning of the most recent quarter: Jan 1, Apr 1, July 1, or Oct 1. |
 | `w0`, `w1`, `w2`, `w3`, `w4`, `w5`, `w6`, and `w7` | Specify "snap to" days of the week, with `w0` representing Sunday, `w1` for Monday, and so on. Snapping to a week using `@w` or `@week` defaults to snapping to Sunday, equivalent to `@w0`. Sunday can be referred to as either `w0` or `w7`. |
-
-### Specify earliest relative time offset and latest time in ad hoc searches
-
-Ad hoc searches that use the earliest time modifier with a relative time offset should also include `latest=now` in order to avoid time range inaccuracies. For instance, to capture all events from the last 15 seconds starting at 01:00:15, the following search returns all events that occur between the time of 01:00:00 and 01:00:15, as expected.
-
-```spl
-index=main earliest=-15s latest=now
-```
-
-Running the same search without including `latest=now` might produce unpredictable results.
 
 ## Examples
 
@@ -138,7 +128,7 @@ For the following examples, the current time is Monday, 07 October 2024, 10:15:0
 | `-24h` | 24 hours ago (yesterday) | Sunday, 06 October 2024, 10:15:00 A.M. | `-24h@s` |
 | `-7d@d` | 7 days ago, 1 week ago today | Monday, 30 September 2024, 12:00:00 A.M. |  |
 | `-7d@m` | 7 days ago, snap to minute boundary | Monday, 30 September 2024, 10:15:00 A.M. |  |
-| `@w0` | Beginning of the current week | Sunday, 06 October 2024, 12:00:00 A.M. |  |
+| `@w0` | Beginning of the current week | Sunday, 06 October 2024, 12:00:00 A.M. | `@week`, `@w7`, `@w` |
 | `+1d@d` | Tomorrow | Tuesday, 08 October 2024, 12:00:00 A.M. |  |
 | `+24h` | 24 hours from now, tomorrow | Tuesday, 08 October 2024, 10:15:00 A.M. | `+24h@s` |
 
@@ -151,9 +141,7 @@ In this example, we're looking for events that occurred from the start of the cu
 ```spl
 ... | earliest=@w0 latest=now
 ```
-This query captures events from the very beginning of the week, starting at midnight on Sunday, all the way to the current time. For example, executing this search on a Wednesday at 3:00 P.M. would cover events over an approximate span of 87 hours.
-
-The equivalent time range for this query, if conducted at 3:00 P.M. on a Wednesday, extends from 00:00 A.M. on Sunday to 3:00 P.M. on Wednesday.
+This query captures events from the very beginning of the week, starting at midnight on Sunday, all the way to the current time. 
 
 #### Search the Current Business Week
 
@@ -161,7 +149,7 @@ This example searches for events occurring within the current business week, wit
 ```spl
 ... | earliest=@w1 latest=+7d@w6
 ```
-The query fetches events from the start of the current week at 12:00 A.M. on Monday, concluding at 11:59 P.M. on Friday of the same week.
+The query fetches events from the start of the current week at 12:00 A.M. on Monday, concluding at 12:00 A.M. on Saturday of the same week.
 
 - Conducting this search at noon on a Monday will result in data spanning only the preceding 12 hours.
 - Running the search on a Friday will retrieve events from the entire week up to the current time on Friday.
@@ -174,4 +162,4 @@ This example searches for events from the last full business week.
 ```spl
 ... | earliest=-7d@w1 latest=@w6
 ```
-This search returns matching events starting from 12:00 A.M. of the Monday of the last week and ending at 11:59 P.M. of the Friday of the last week.
+This search returns matching events starting from 12:00 A.M. of the Monday of the last week and ending at 12:00 A.M. of Saturday of the last week.
