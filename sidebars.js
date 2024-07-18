@@ -156,6 +156,7 @@ const sidebars = {
   'spl-docs/rex-command',
   'spl-docs/search-command',
   'spl-docs/sort-command',
+  'spl-docs/stats-command',
   'spl-docs/tail-command',
   'spl-docs/time-modifiers',
   'spl-docs/timechart-command',
