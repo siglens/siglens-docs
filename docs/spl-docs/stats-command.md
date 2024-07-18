@@ -20,14 +20,15 @@ Required syntax is in **bold**.
 ### Required Arguments
 
 #### stats-agg-term  
-**Syntax:** \<stats-func\>(\<evaled-field\> | \<wc-field\>) [AS \<wc-field\>]\  
-**Description:** A statistical aggregation function. This function can be applied to an eval expression, or to a single field or multiple fields. Utilize the AS clause to assign the result to a new field with a name you choose. You can use wild card characters in field names.
+**Syntax:** \<stats-func\>(\<input-field-name>) [AS \<output-field-name\>]   
+**Description:** A statistical aggregation function. This function can be applied to an eval expression, or to a single field or multiple fields. Utilize the AS clause to assign the result to a new field with a name you choose.
+
 
 ### Optional Arguments
 
 #### by-clause
 **Syntax:** `BY <field-list>`\
-**Description:** The name of one or more fields to group by. Wildcard characters cannot be used to specify multiple fields with similar names; each field must be individually named. The BY clause produces one row for each distinct value in the specified fields. Without a BY clause, the stats command returns a single row, aggregating across the entire incoming results set.\
+**Description:** The name of one or more fields to group by. Wildcard characters cannot be used to specify multiple fields with similar names; each field must be individually named. The BY clause produces one row for each distinct value in the specified fields. Without a BY clause, the stats command returns a single row, aggregating across the entire incoming results set.  
 
 ### Stats function options
 
@@ -53,7 +54,7 @@ When you use the stats command, you can use an `eval` expression as part of the 
 ```
 
 
-### Wildcards in BY clauses
+### Invalid Wildcards in BY Clauses
 
 The stats command does not allow the use of wildcard characters in field values within BY clauses.  
 
@@ -63,7 +64,7 @@ For example, you cannot specify:
 | stats count BY app*.
 ```
 
-### Renaming fields
+### Field Renaming Constraints
 
 You cannot assign multiple new names to a single field. For instance, if you have field A, you cannot rename A to both B and C. The following example is not valid:
 
@@ -79,14 +80,14 @@ You cannot assign multiple new names to a single field. For instance, if you hav
     ... | stats avg(load_time) BY server
     ```
 
-### 2. Calculate the average count for each hour for similar fields using wildcard characters
+### 2. Calculate the minimum and maximum latency for each city
 
-    Compute the average, for each hour, of any unique field that ends with the suffix "count". For instance, pagecount, errorcount, visitcount, etc.
+    Compute the minimum and maximum latency for each city, providing insights into the network performance across different locations.
 
     ```spl
-    ... | stats avg(*count) BY date_hour
+    ... | stats min(latency) AS MinLatency, max(latency) AS MaxLatency BY city
     ```
-
+    
 ### 3. Eliminate duplicate entries and calculate the total count of unique entries
 
     Remove duplicate entries based on the "user" value and return the total count of unique entries that remain.
