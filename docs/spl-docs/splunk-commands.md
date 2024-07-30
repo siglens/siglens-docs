@@ -6,6 +6,7 @@ _The following list includes the supported SPL Commands._
 - [dedup command](dedup-command.md)
 - [eval command](eval-command.md)
 - [fields command](fields-command.md)
+- [fillnull command](fillnull-command.md)
 - [head command](head-command.md)
 - [makemv command](makemv-command.md)
 - [regex command](regex-command.md)

@@ -279,7 +279,58 @@ This function matches `<str>` with regular expression pattern `<regex>` and retu
 
 This method allows for the quick identification of Google email IDs, facilitating targeted analysis or actions based on user email domains.
 
+## null()
 
+This function takes no arguments and returns NULL. The evaluation engine uses NULL to represent "no value". Setting a field value to NULL clears the field value.
+
+### Usage
+- NULL values are field values that are missing in a some results but present in another results.
+- You can use this function with the eval and where commands, and as part of eval expressions.
+
+### Use-Case Example
+
+**Resetting Field Values in Inventory Data**
+
+**Problem:** In an inventory management system, there are instances where certain products need to be marked as discontinued or out of stock. For these products, resetting the `stock_level` field to NULL helps indicate that the field no longer holds any meaningful value and should be excluded from stock calculations.
+
+**Solution:** The `null()` function can be used within an `eval` expression to set the `stock_level` field to NULL for discontinued or out-of-stock products.
+
+```
+index=inventory_data 
+| eval stock_level=if(status="discontinued" OR status="out_of_stock", null(), stock_level)
+| fields product_id product_name status stock_level
+```
+
+**Explanation:**
+1. The `eval` command checks if the `status` field is either "discontinued" or "out_of_stock".
+2. If the condition is met, the `stock_level` field is set to NULL using the `null()` function.
+3. This approach ensures that the `stock_level` field is cleared for discontinued or out-of-stock products, making it clear that these products should not be considered in stock-related calculations.
+
+## nullif(\<field1>, \<field2>)
+
+This function compares the values in two fields and returns `NULL` if the value in `<field1>` is equal to the value in `<field2>`. Otherwise the function returns the value in `<field1>`.
+
+### Usage
+- You can use this function with the `eval` and `where` commands, and as part of eval expressions.
+
+### Use-Case Example
+
+**Handling Redundant Data in User Activity Logs**
+
+**Problem:** In user activity logs, sometimes the `previous_page` and `current_page` fields can have the same value, indicating that the user has refreshed the same page. For better clarity in reports, it's useful to set the `current_page` field to NULL when it matches the `previous_page`.
+
+**Solution:** The `nullif()` function can be used within an `eval` expression to set the `current_page` field to NULL if it is equal to the `previous_page`.
+
+```
+index=user_activity_logs 
+| eval current_page=nullif(current_page, previous_page)
+| fields user_id previous_page current_page timestamp
+```
+
+**Explanation:**
+1. The `eval` command uses the `nullif()` function to compare the `current_page` and `previous_page` fields.
+2. If the values in `current_page` and `previous_page` are the same, the `current_page` field is set to NULL.
+3. This approach helps in identifying and handling page refreshes by the user, making the logs cleaner and more meaningful.
 
 ## cidrmatch(\<cidr\>, \<ip\>)
 This function matches `<ip>` with the `<cidr>` and returns `true` if match is successful; otherwise it returns `false`.
