@@ -148,6 +148,7 @@ const sidebars = {
   'spl-docs/dedup-command',
   'spl-docs/eval-command',
   'spl-docs/fields-command',
+  'spl-docs/fillnull-command',
   'spl-docs/head-command',
   'spl-docs/makemv-command',
   'spl-docs/rare-command',
