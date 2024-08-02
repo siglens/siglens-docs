@@ -10,7 +10,7 @@ The `gentimes` command produces events up to, but not including, the end time.
 Required syntax is in **bold**.
 
 | **gentimes**\
-**start=**\<timestamp\>\
+**start=\<timestamp\>**\
 [end=\<timestamp\>]\
 [increment=\<increment\>]
 
@@ -65,8 +65,8 @@ The human-readable time is in the following format:\
 The following example generates daily time ranges from May 1, 2021, to May 5, 2021 (not including the end time).
 ```
 | gentimes start=05/01/2021 end=05/05/2021
-The output would look as follows, considering the timezone to be Eastern Time.
 ```
+The output would look as follows, considering the timezone to be Eastern Time.
 | **endhuman**                  | **endtime**   | **starthuman**                  | **starttime** |
 |-------------------------------|--------------|---------------------------------|---------------|
 | Sat May 1 23:59:59 2021 -0400 | 1619927999   | Sat May 1 00:00:00 2021 -0400   | 1619841600    |
@@ -117,7 +117,7 @@ The output would look as follows, considering the timezone to be Eastern Time.
 
 **Problem:** As a system administrator responsible for monitoring server performance, you need to ensure that your monitoring and alerting systems are functioning correctly. However, you don't have access to real production data for testing. You need to create a simulated dataset that represents server logs with various metrics, such as CPU usage, memory usage, network traffic, and different types of events. This dataset will help you test dashboards, alerts, and queries without risking real data exposure.
 
-**Solution:** To create a simulated dataset, you can use the `gentimes` command to generate timestamps and combine it with `eval` to create random values for different metrics. Here's the SPL (Search Processing Language) query to generate the sample data:
+**Solution:** To create a simulated dataset, you can use the `gentimes` command to generate timestamps and combine it with `eval` to create random values for different metrics.
 
 ```
 | gentimes start=-2 increment=5m
@@ -138,8 +138,6 @@ The output would look as follows, considering the timezone to be Eastern Time.
 ```
 
 #### Explanation
-
-### Explanation
 
 - `gentimes start=-2 increment=5m` generates a series of timestamps starting from 2 days ago, with an increment of 5 minutes between each timestamp.
 - `eval server_id = random() % 5 + 1` assigns a random server ID from 1 to 5 to each event.

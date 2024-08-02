@@ -27,7 +27,7 @@ Required syntax is in **bold**.
 #### stats-agg-term
 **Syntax:** `<stats-func>(<input-field-name>) [AS <output-field-name>]`\
 **Description:** \
-A statistical function can be applied to an `eval` expression or a field.\
+A statistical aggregation function. This function can be applied to an `eval` expression, or to a single field.\
 Use the `AS` clause to assign the result to a new field with a name you choose.\
 Multiple `stats-agg-term` clauses can be used to calculate different statistics in a single `streamstats` command.
 
@@ -60,15 +60,17 @@ If `false`, separate windows are used for statistical calculations for each grou
 #### reset_after
 **Syntax:** reset_after=(`<boolean-expression>`)\
 **Description:**\
-This option resets all accumulated statistics if the `boolean-expression` evaluates to `true` after the `streamstats` calculations are produced for an event.\
-The `boolean-expression` must return either `true` or `false`. When used with the `window` argument, the window is also reset when the accumulated statistics are reset.\
+If the `boolean-expression` is evaluated to `true`, all accumulated statistics are reset after the `streamstats` calculations are produced for an event.\
+The `boolean-expression` must return either `true` or `false`.\
+When used with the `window` argument, the window is also reset when the accumulated statistics are reset.\
 **Default:** `false`
 
 #### reset_before
-**Syntax:** reset_before=(`<boolean-expression>`)
-**Description:**
-This option resets all accumulated statistics if the `boolean-expression` evaluates to `true` before the `streamstats` calculations are produced for an event.\
-The `boolean-expression` must return either `true` or `false`. When used with the `window` argument, the window is also reset when the accumulated statistics are reset.\
+**Syntax:** reset_before=(`<boolean-expression>`)\
+**Description:**\
+If the `boolean-expression` is evaluated to `true`, all accumulated statistics are reset before the `streamstats` calculations are produced for an event.\
+The `boolean-expression` must return either `true` or `false`.\
+When used with the `window` argument, the window is also reset when the accumulated statistics are reset.\
 **Default:** `false`
 
 #### reset_on_change
@@ -86,7 +88,7 @@ This option requires the results to be sorted in either increasing or decreasing
 The `global` and `current` options cannot be set to `false` when using this option.
 
 **For example:**\
-`... | streamstats avg(latency) time_window=10m`\
+`... | streamstats time_window=10m avg(latency)`\
 If the `timestamp` is sorted in increasing order, the `avg` of `latency` is calculated based on the events in the last 10 minutes. If sorted in decreasing order, the `avg` is based on the events in the next 10 minutes.
 
 #### \<span-length\>
@@ -115,7 +117,7 @@ For `<quarter>`, the only permissible `<int>` values are `1, 2, 4`.
 
 
 #### window
-**Syntax:** window=`<integer>`\
+**Syntax:** window=`<int>`\
 **Description:** \
 Specifies the number of events to include in the statistical calculations.\
 A window value of 0 means all previous and current events are used.\
@@ -139,7 +141,7 @@ The following table lists the supported functions by type of function. Use the l
 
 ### reset_on_change
 
-The following command calculates a running `count` on `hobby` and resets the count when the hobby changes:
+The following command calculates a running `count` on hobby and resets the `count` when the hobby changes.
 ```
 ... | streamstats reset_on_change=true count(hobby) AS hobby_count BY Hobby
 ```
@@ -160,7 +162,7 @@ The output of this command for sample data would look as follows:
 
 ### reset_after
 
-The following command calculates running `count` statistics and resets the count when the hobby `Swimming` is observed, after including the current event.
+The following command calculates the running `count` on the hobby and resets the `count` when the hobby `Swimming` is observed, after including the current event.
 ```
 ... | streamstats reset_after=(hobby="Swimming") count(hobby) AS hobby_count
 ```
@@ -183,7 +185,7 @@ The output of this command for sample data would look as follows:
 
 ### reset_before
 
-The following command calculates running `count` statistics and resets the count when the hobby `Swimming` is observed, before including the current event.
+The following command calculates the running `count` on the hobby and resets the `count` when the hobby `Swimming` is observed, before including the current event.
 ```
 ... | streamstats reset_before=(hobby="Swimming") count(hobby) AS hobby_count
 ```
@@ -234,7 +236,7 @@ index=webserver
 index=auth_logs
 | streamstats window=5 global=false count(eval(status="failed" AND reason="invalid password")) as failed_login_count by user, src_ip 
 | where failed_login_count >= 3 
-| stats count as total_failed_attempts, avg(failed_login_count) as avg_failed_attempts, max(failed_login_count) as max_failed_attempts, min(failed_login_count) as min_failed_attempts by user, src_ip
+| stats avg(failed_login_count) as avg_failed_attempts, max(failed_login_count) as max_failed_attempts, min(failed_login_count) as min_failed_attempts by user, src_ip
 ```
 
 #### Explanation
@@ -245,8 +247,7 @@ index=auth_logs
     - `by user, src_ip` groups the calculations by each user and source IP address.
     - `count(eval(status="failed" AND reason="invalid password"))` counts the number of events where the login status is `failed` and the reason is `invalid password`.
 - `where failed_login_count >= 3` filters the results to show only events where there were 3 or more failed login attempts within the last 5 attempts for a user from a specific IP.
-- `stats count as total_failed_attempts, avg(failed_login_count) as avg_failed_attempts, max(failed_login_count) as max_failed_attempts, min(failed_login_count) as min_failed_attempts by user, src_ip` summarizes the findings by calculating:
-    - total_failed_attempts shows the number of events that met the failed login criteria.
+- `stats avg(failed_login_count) as avg_failed_attempts, max(failed_login_count) as max_failed_attempts, min(failed_login_count) as min_failed_attempts by user, src_ip` summarizes the findings by calculating:
     - avg_failed_attempts shows the average number of failed login attempts within the window.
     - max_failed_attempts shows the maximum number of failed login attempts within the window.
     - min_failed_attempts shows the minimum number of failed login attempts within the window.
