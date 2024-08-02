@@ -259,7 +259,7 @@ This approach provides a comprehensive view of potential brute force attacks, al
 
 **Problem:** A financial analyst needs to identify stocks with unusual trading patterns, focusing on high volatility, significant price movements relative to recent averages, and above-average trading volumes. This information can be used to spot potential market trends or anomalies that warrant further investigation.
 
-**Solution:** Use the `streamstats` command to calculate key metrics over a 5-day window:
+**Solution:** Use the `streamstats` command to calculate key metrics over a 5-day window. By applying various statistical functions, you can identify stocks with high volatility, significant price movements, and above-average trading volumes, thereby uncovering unusual trading patterns.
 
 ```
 index=stocks
