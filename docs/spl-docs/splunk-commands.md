@@ -17,3 +17,5 @@ _The following list includes the supported SPL Commands._
 - [top command](top-command.md)
 - [transaction command](transaction-command.md)
 - [where command](where-command.md)
+- [streamstats command](streamstats-command.md)
+- [gentimes command](gentimes-command.md)
