@@ -25,16 +25,18 @@ Specify the start time.
 **Syntax:** `MM/DD/YYYY[:HH:MM:SS]` or `<int>`\
 **Description:**\
 Specify the timeframe using either a timestamp or an integer value.\
+`<int>` represents the number of days relative to the current date.\
 For example: `11/15/2021` for November 15, 2021 at 00:00:00, `05/20/2022:14:30:00` for May 20, 2022 at 14:30:00, or `-7` for seven days ago.
 
 ### Optional Arguments
 
 #### end
-**Syntax:** `end=<timestamp>`\
+**Syntax:** `end=<timestamp>` or `<int>`\
 **Description:**\
 Specify the end time.\
 **Default:** midnight before the current local time.\
-For example: If the current local time is 13:00:00 on May 20, 2022, the default end time would be 00:00:00 on May 20, 2022.
+`<int>` represents the number of days relative to the current date.\
+For example: If the current local time is 13:00:00 on May 20, 2022, the default end time would be 00:00:00 on May 20, 2022, or `5` for five days in the future.
 
 #### increment
 **Syntax:** `increment=<int>(s | m | h | d)` or `increment=<int>`\

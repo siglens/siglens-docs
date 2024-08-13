@@ -149,6 +149,7 @@ const sidebars = {
   'spl-docs/eval-command',
   'spl-docs/fields-command',
   'spl-docs/fillnull-command',
+  'spl-docs/gentimes-command',
   'spl-docs/head-command',
   'spl-docs/makemv-command',
   'spl-docs/rare-command',
@@ -165,7 +166,6 @@ const sidebars = {
   'spl-docs/top-command',
   'spl-docs/transaction-command',
   'spl-docs/where-command',
-  'spl-docs/gentimes-command',
 {
   type: 'category',
   label: 'Evaluation Functions',

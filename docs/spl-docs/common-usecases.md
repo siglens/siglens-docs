@@ -250,11 +250,11 @@ This command determines the user's identity by checking the fields `username`, `
 
 **Solution:** The [`null()`](evaluation-functions/comparison-conditional-functions.md#null) function can be used within an [`eval`](eval-command.md) expression to set the `stock_level` field to NULL for discontinued or out-of-stock products. [View full Solution](evaluation-functions/comparison-conditional-functions.md#use-case-example-8)
 
-### 42. Analyzing Stock Market Data for Trends and Volatility
+### 42. Identifying Anomalous Application Performance Patterns
 
-**Problem:** A financial analyst needs to identify stocks with unusual trading patterns, focusing on high volatility, significant price movements relative to recent averages, and above-average trading volumes. This information can be used to spot potential market trends or anomalies that warrant further investigation.
+**Problem:** A system administrator needs to identify applications with unusual performance patterns, focusing on high latency volatility, significant CPU time deviations from the average, and above-average request volumes. This information can be used to spot potential performance issues, resource constraints, or usage anomalies that require immediate attention or further investigation.
 
-**Solution:** The [`streamstats`](streamstats-command.md) command can be used to calculate key metrics over a 5-day window. By applying various statistical functions, you can identify stocks with high volatility, significant price movements, and above-average trading volumes, thereby uncovering unusual trading patterns. [View full Solution](streamstats-command.md#analyzing-stock-market-data-for-trends-and-volatility)
+**Solution:** Use the [`streamstats`](streamstats-command.md) command to calculate key metrics over a 1-hour window. By applying various statistical functions, you can identify applications with high latency volatility, significant CPU time deviations, and above-average request volumes, thereby uncovering unusual performance patterns. [View full Solution](streamstats-command#identifying-anomalous-application-performance-patterns)
 
 ### 43. Creating Simulated Server Log Data
 

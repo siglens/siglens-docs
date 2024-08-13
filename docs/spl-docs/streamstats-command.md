@@ -255,39 +255,46 @@ index=auth_logs
 
 This approach provides a comprehensive view of potential brute force attacks, allowing security teams to quickly identify and respond to threats. By combining streamstats with stats, we can efficiently detect patterns of failed login attempts and summarize the findings using simple statistical functions.
 
-### Analyzing Stock Market Data for Trends and Volatility
+### Identifying Anomalous Application Performance Patterns
 
-**Problem:** A financial analyst needs to identify stocks with unusual trading patterns, focusing on high volatility, significant price movements relative to recent averages, and above-average trading volumes. This information can be used to spot potential market trends or anomalies that warrant further investigation.
+**Problem:** A system administrator needs to identify applications with unusual performance patterns, focusing on high latency volatility, significant CPU time deviations from the average, and above-average request volumes. This information can be used to spot potential performance issues, resource constraints, or usage anomalies that require immediate attention or further investigation.
 
-**Solution:** Use the `streamstats` command to calculate key metrics over a 5-day window. By applying various statistical functions, you can identify stocks with high volatility, significant price movements, and above-average trading volumes, thereby uncovering unusual trading patterns.
+**Solution:** Use the `streamstats` command to calculate key metrics over a 1-hour window. By applying various statistical functions, you can identify applications with high latency volatility, significant CPU time deviations, and above-average request volumes, thereby uncovering unusual performance patterns.
 
 ```
-index=stocks
-| eval price_change = close - open 
-| eval percent_change = (price_change / open) * 100 
-| streamstats time_window=5d min(low) AS period_low, max(high) AS period_high, avg(volume) AS avg_volume, avg(close) AS avg_close, range(close) AS price_range BY symbol
-| eval volatility = (period_high - period_low) / period_low * 100
-| eval relative_strength = (close / avg_close - 1) * 100
-| where volume > avg_volume * 1.5 AND (volatility > 10 OR abs(relative_strength) > 5)
-| fields _time, symbol, open, close, volume, price_change, percent_change, period_low, period_high, price_range, volatility, relative_strength
-| sort -volatility
+index=app_performance
+| eval cpu_utilization = cpu_time / total_time * 100 
+| streamstats time_window=1h 
+    min(response_time) AS min_response_time,
+    max(response_time) AS max_response_time,
+    avg(cpu_time) AS avg_cpu_time,
+    avg(memory_usage) AS avg_memory_usage,
+    avg(requests) AS avg_requests,
+    BY app_name 
+| eval latency_volatility = (max_response_time - min_response_time) / min_response_time * 100 
+| eval relative_cpu_load = (cpu_time / avg_cpu_time - 1) * 100 
+| where 
+    requests > avg_requests * 1.5 
+    AND (latency_volatility > 50 OR abs(relative_cpu_load) > 25) 
+| fields _time, app_name, response_time, cpu_time, memory_usage, avg_memory_usage, requests, 
+    min_response_time, max_response_time, latency_volatility, 
+    avg_cpu_time, avg_requests, relative_cpu_load, cpu_utilization 
+| sort -latency_volatility
 ```
+
 
 #### Explanation
 
-- `eval price_change = close - open` calculates the difference between the closing and opening prices.
-- `eval percent_change = (price_change / open) * 100` calculates the percentage change based on the opening price.
-- `streamstats time_window=5d` calculates metrics over a 5-day window for each stock symbol.
+- `streamstats time_window=1h` calculates metrics over a 1-hour window for each application.
 - **Metrics Calculation:**
-  - `min(low) AS period_low` finds the lowest price in the 5-day period.
-  - `max(high) AS period_high` finds the highest price in the 5-day period.
-  - `avg(volume) AS avg_volume` calculates the average trading volume over the 5-day period.
-  - `avg(close) AS avg_close` calculates the average closing price over the 5-day period.
-  - `range(close) AS price_range` calculates the range of closing prices over the 5-day period.
-- `eval volatility = (period_high - period_low) / period_low * 100` calculates the volatility as a percentage.
-- `eval relative_strength = (close / avg_close - 1) * 100` calculates the relative strength as a percentage.
-- `where volume > avg_volume * 1.5 AND (volatility > 10 OR abs(relative_strength) > 5)` filters stocks with significant volume and either high volatility or relative strength.
-- `fields _time, symbol, open, close, volume, price_change, percent_change, period_low, period_high, price_range, volatility, relative_strength` selects the relevant fields for the final output.
-- `sort -volatility` sorts the results by volatility in descending order.
-
+  - `min(response_time) AS min_response_time` finds the minimum response time in the 1-hour period.
+  - `max(response_time) AS max_response_time` finds the maximum response time in the 1-hour period.
+  - `avg(cpu_time) AS avg_cpu_time` calculates the average CPU time over the 1-hour period.
+  - `avg(memory_usage) AS avg_memory_usage` calculates the average memory usage over the 1-hour period.
+  - `avg(requests) AS avg_requests` calculates the average number of requests over the 1-hour period.
+- `eval latency_volatility = (max_response_time - min_response_time) / min_response_time * 100` calculates the latency volatility as a percentage.
+- `eval relative_cpu_load = (cpu_time / avg_cpu_time - 1) * 100` calculates the relative CPU load as a percentage.
+- `where requests > avg_requests * 1.5 AND (latency_volatility > 50 OR abs(relative_cpu_load) > 25)` filters applications with above-average request volumes and either high latency volatility or significant CPU load deviations.
+- `fields _time, app_name, response_time, cpu_time, memory_usage, avg_memory_usage, requests, min_response_time, max_response_time, latency_volatility, avg_cpu_time, avg_requests, relative_cpu_load, cpu_utilization` selects the relevant fields for the final output.
+- `sort -latency_volatility` sorts the results by latency volatility in descending order.
 
