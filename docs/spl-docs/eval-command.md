@@ -40,16 +40,16 @@ The `eval` command is generally used to create new fields that result from an ev
 #### Using Eval Functions
 
 The following are the different types of `eval` functions that can be used in an `<expression>`.
-<!-- TODO: once all docs are merged we can add links to the pages -->
-- Comparison and Conditional functions
-- Conversion functions
-- Date and Time functions
-- Informational functions
-- Mathematical functions
-- Multivalue functions
-- Statistical functions
-- Text functions
-- Trig and Hyperbolic functions
+
+- [Comparison and Conditional Functions](evaluation-functions/comparison-conditional-functions.md)
+- [Conversion Functions](evaluation-functions/conversion-functions.md)
+- [Informational Functions](evaluation-functions/informational-functions.md)
+- [Mathematical Functions](evaluation-functions/mathematical-functions.md)
+- [Multivalue Functions](evaluation-functions/multivalue-functions.md)
+- [Statistical Functions](evaluation-functions/statistical-functions.md)
+- [Text Functions](evaluation-functions/text-functions.md)
+- [Time Functions](evaluation-functions/time-functions.md)
+- [Trigonometric and Hyperbolic Functions](evaluation-functions/trig-hyperbolic-functions.md)
 
 
 ## Examples

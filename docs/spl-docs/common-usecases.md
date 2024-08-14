@@ -231,3 +231,33 @@ This command determines the user's identity by checking the fields `username`, `
 **Problem:** A user wants to calculate the area of a circular field given the radius. The formula for the area of a circle is `Area = pi() * radius^2`.
 
 **Solution:** The [`pi()`](evaluation-functions/mathematical-functions#pi) command can be used to get the precise value of π for the area calculation. [View full Solution](evaluation-functions/mathematical-functions#use-case-example-9)
+
+### 39. Ensuring Data Completeness in Sales Reports
+
+**Problem:** In sales data analysis, missing values in fields like `sales_rep`, `region`, and `product_category` can lead to incomplete reports and incorrect insights. These null values need to be filled with a meaningful placeholder to ensure data consistency and completeness.
+
+**Solution:** The [`fillnull`](fillnull-command.md) command can be used to replace null values in specific fields with the string "unknown", ensuring that all fields have valid values for accurate analysis. [View full Solution](fillnull-command.md#use-case-example)
+
+### 40. Handling Redundant Data in User Activity Logs
+
+**Problem:** In user activity logs, sometimes the `previous_page` and `current_page` fields can have the same value, indicating that the user has refreshed the same page. For better clarity in reports, it's useful to set the `current_page` field to NULL when it matches the `previous_page`.
+
+**Solution:** The [`nullif()`](evaluation-functions/comparison-conditional-functions.md/#nulliffield1-field2) function can be used within an [`eval`](eval-command.md) expression to set the `current_page` field to NULL if it is equal to the `previous_page`. [View full Solution](evaluation-functions/comparison-conditional-functions.md#use-case-example-9)
+
+### 41. Resetting Field Values in Inventory Data
+
+**Problem:** In an inventory management system, there are instances where certain products need to be marked as discontinued or out of stock. For these products, resetting the `stock_level` field to NULL helps indicate that the field no longer holds any meaningful value and should be excluded from stock calculations.
+
+**Solution:** The [`null()`](evaluation-functions/comparison-conditional-functions.md#null) function can be used within an [`eval`](eval-command.md) expression to set the `stock_level` field to NULL for discontinued or out-of-stock products. [View full Solution](evaluation-functions/comparison-conditional-functions.md#use-case-example-8)
+
+### 42. Identifying Anomalous Application Performance Patterns
+
+**Problem:** A system administrator needs to identify applications with unusual performance patterns, focusing on high latency volatility, significant CPU time deviations from the average, and above-average request volumes. This information can be used to spot potential performance issues, resource constraints, or usage anomalies that require immediate attention or further investigation.
+
+**Solution:** Use the [`streamstats`](streamstats-command.md) command to calculate key metrics over a 1-hour window. By applying various statistical functions, you can identify applications with high latency volatility, significant CPU time deviations, and above-average request volumes, thereby uncovering unusual performance patterns. [View full Solution](streamstats-command#identifying-anomalous-application-performance-patterns)
+
+### 43. Creating Simulated Server Log Data
+
+**Problem:** As a system administrator responsible for monitoring server performance, you need to ensure that your monitoring and alerting systems are functioning correctly. However, you don't have access to real production data for testing. You need to create a simulated dataset that represents server logs with various metrics, such as CPU usage, memory usage, network traffic, and different types of events. This dataset will help you test dashboards, alerts, and queries without risking real data exposure.
+
+**Solution:** The [`gentimes`](gentimes-command.md) command can be used to generate timestamps, and the `eval` command can be used to create random values for different metrics. By combining these commands, you can create a simulated dataset that represents server logs with various metrics. [View full Solution](gentimes-command.md#creating-simulated-server-log-data)
