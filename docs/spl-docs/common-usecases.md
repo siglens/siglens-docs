@@ -242,7 +242,7 @@ This command determines the user's identity by checking the fields `username`, `
 
 **Problem:** In user activity logs, sometimes the `previous_page` and `current_page` fields can have the same value, indicating that the user has refreshed the same page. For better clarity in reports, it's useful to set the `current_page` field to NULL when it matches the `previous_page`.
 
-**Solution:** The [`nullif()`](evaluation-functions/comparison-conditional-functions.md/#nulliffield1-field2) function can be used within an [`eval`](eval-command.md) expression to set the `current_page` field to NULL if it is equal to the `previous_page`. [View full Solution](evaluation-functions/comparison-conditional-functions.md#use-case-example-9)
+**Solution:** The [`nullif()`](evaluation-functions/comparison-conditional-functions#nulliffield1-field2) function can be used within an [`eval`](eval-command.md) expression to set the `current_page` field to NULL if it is equal to the `previous_page`. [View full Solution](evaluation-functions/comparison-conditional-functions.md#use-case-example-9)
 
 ### 41. Resetting Field Values in Inventory Data
 
