@@ -45,11 +45,12 @@ This function extracts a specific subset of values from a multivalue field based
 - The `<mv>` parameter must be a multivalue field and `<start>` and `<end>` must be numbers.
 - The `<start>` parameter is required and indicates the starting index of the value(s) you want to extract.
 - The `<end>` parameter is optional. If provided, it defines the ending index, and the function will return all values between `<start>` and `<end>`, inclusive.
+- If you don't provide an `<end>` index, the function does not assume a range; it simply returns the value at the start index.
 
 ### Indexing Details
 - Indexes begin at 0, meaning the first item in a list is at position 0, the second at position 1, and so on.
 - If only `<start>` is specified, the function returns the value at that position.
-- If both `<start>` and `<end>` are specified, the function returns all values from `<start>` to `<end>`.
+- If both `<start>` and `<end>` are specified, the function returns all values from `<start>` to `<end>`, inclusive of the item at `<end>`.
 - Negative indexes are supported, where `-1` refers to the last value in the list, `-2` to the second last, and so forth.
 - If the indexes provided are out of range or invalid, the function returns `NULL`.
 
@@ -66,7 +67,7 @@ To extract the third city in the list (Paris), use:
 ... | eval selected_city=mvindex(cities,2)
 ```
 
-This command will set `selected_city` to `Paris`.
+This command will set `selected_city` to `Paris`. When you use `mvindex` to extract a single item, it returns that item as a normal value instead of a multivalue field containing one item.
 
 To get a range of cities, say from the second to the fourth city (London to Tokyo), use:
 
@@ -104,7 +105,7 @@ This function calculates the number of values within a multivalue field and retu
 ### Function Behavior
 - If the multivalue field contains multiple values, this function returns the total count of those values.
 - If the field contains a single value, the function returns 1.
-- If the field is empty, the function returns 0. If the field does not exist, the function returns nothing.
+- If the field is empty, the function returns 0. If the field does not exist, `mvcount` is not applied to the field and produces no output.
 
 ### Example
 Consider a multivalue field `colors` with the following values:
