@@ -137,3 +137,50 @@ For a complete list and descriptions of the format options you can use, see [Usi
 2. It uses `strptime()` to convert the `date_field` to epoch time.
 3. It then filters for events in June 2023 using `strptime()` to convert the date range.
 4. Finally, it creates a time chart of daily page views for different URL paths.
+
+## **relative_time(\<time\>, \<specifier\>)**
+
+This function takes a UNIX time value and a relative time specifier, returning a new UNIX time value that reflects the specified adjustment.
+
+### Usage
+- The `<time>` parameter is a UNIX time value you want to adjust.
+- The `<specifier>` parameter is a relative time string that defines how to adjust the given time. 
+
+You can use this function with the `eval` and `where` commands and as part of evaluation expressions with other commands.
+
+For a complete list and descriptions of the format options you can use, see [Using time variables](/docs/spl-docs/evaluation-functions/time-variables).
+
+### Example
+To calculate the UNIX time for the start of the current week, based on the current time, you can use:
+
+```
+... | eval start_of_week=relative_time(now(), "@w0")
+```
+
+This will return the UNIX time for the most recent Sunday at midnight.
+
+To calculate the UNIX time for exactly 3 days ago, use:
+
+```
+... | eval three_days_ago=relative_time(now(), "-3d")
+```
+
+The result for `three_days_ago` will be the UNIX time corresponding to the same time, but three days earlier.
+
+### Use-Case Example
+
+**Filtering Events from a Specific Time Range**
+
+**Problem:** You need to filter log events to include only those that occurred within a specific time window, such as between two hours ago and one hour ago, snapped to the nearest hour.
+
+**Solution:** The `relative_time` function can be used to define the boundaries of this time range.
+
+```
+... | where _time > relative_time(now(), "-2h@h") AND _time < relative_time(now(), "-1h@h")
+```
+
+**Explanation:**
+1. The `where` clause filters events based on their `_time` field.
+2. The `relative_time` function is used to calculate the UNIX time for two hours ago and one hour ago, both snapped to the nearest hour.
+
+
