@@ -55,7 +55,7 @@ status=open
 
 This function formats an epoch time value as a string according to the specified format. If the format is invalid then the result from this function would be undefined. 
 
-For a complete list and descriptions of the format options you can use, see [Using time variables](/docs/spl-docs/evaluation-functions/time-variables).
+For a complete list and descriptions of the format options you can use, see [Using time variables](time-variables).
 
 ### Usage
 
@@ -104,7 +104,7 @@ The `<date_string>` argument is the date string you want to parse. The `<format>
 
 You can use this function with the `eval` and `where` commands and as part of evaluation expressions with other commands.
 
-For a complete list and descriptions of the format options you can use, see [Using time variables](/docs/spl-docs/evaluation-functions/time-variables).
+For a complete list and descriptions of the format options you can use, see [Using time variables](time-variables).
 
 ### Example
 
@@ -148,7 +148,7 @@ This function takes a UNIX time value and a relative time specifier, returning a
 
 You can use this function with the `eval` and `where` commands and as part of evaluation expressions with other commands.
 
-For a complete list and descriptions of the format options you can use, see [Using time variables](/docs/spl-docs/evaluation-functions/time-variables).
+For a complete list and descriptions of the format options you can use, see [Using time variables](time-variables).
 
 ### Example
 To calculate the UNIX time for the start of the current week, based on the current time, you can use:
