@@ -151,6 +151,7 @@ const sidebars = {
   'spl-docs/fillnull-command',
   'spl-docs/gentimes-command',
   'spl-docs/head-command',
+  'spl-docs/inputlookup-command',
   'spl-docs/makemv-command',
   'spl-docs/rare-command',
   'spl-docs/regex-command',

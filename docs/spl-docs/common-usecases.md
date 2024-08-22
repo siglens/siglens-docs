@@ -261,3 +261,10 @@ This command determines the user's identity by checking the fields `username`, `
 **Problem:** As a system administrator responsible for monitoring server performance, you need to ensure that your monitoring and alerting systems are functioning correctly. However, you don't have access to real production data for testing. You need to create a simulated dataset that represents server logs with various metrics, such as CPU usage, memory usage, network traffic, and different types of events. This dataset will help you test dashboards, alerts, and queries without risking real data exposure.
 
 **Solution:** The [`gentimes`](gentimes-command.md) command can be used to generate timestamps, and the `eval` command can be used to create random values for different metrics. By combining these commands, you can create a simulated dataset that represents server logs with various metrics. [View full Solution](gentimes-command.md#creating-simulated-server-log-data)
+
+### 44. Categorizing and Analyzing Application Services
+
+**Problem:** A system administrator needs to categorize application services based on their maximum concurrent users and allocated memory. Additionally, the administrator wants to analyze the distribution of services across different tiers and resource allocations, including the presence of load balancers and the average number of maximum concurrent users.
+
+**Solution:** Use the [`inputlookup`](inputlookup-command.md) command to load services data from CSV files, categorize the services based on predefined criteria, and then aggregate and analyze the data to provide insights into the distribution and characteristics of the services. [View full Solution](inputlookup-command#44-categorizing-and-analyzing-application-services)
+
