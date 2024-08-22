@@ -40,7 +40,7 @@ Specify the 0-based offset for the first event to read. For example, if `start=0
 **Syntax:** `max=<int>`\
 **Description:**\
 Indicate the maximum number of events to read from the file.\
-**Default:** 1000000000
+**Default:** 1000000000 (1 billion)
 
 #### WHERE \<search-query\>
 **Syntax:** `<boolean-expression>`\
@@ -48,11 +48,12 @@ Indicate the maximum number of events to read from the file.\
 Use this clause to enhance search performance by pre-filtering data from the lookup table.\
 It supports a limited set of comparison operators: `=`, `!=`, `<`, `>`, `<=`, `>=`, `AND`, `OR`, `NOT`.\
 Any combination of these operators is allowed. The `*` character can be used to perform wildcard string searches.
+When used with `max`, the `where` filter applies only to the first `max` number of events fetched. For example, if `max=3` is set along with a `where` condition, it will fetch the first 3 events and filter out those that don't match the `where` condition.
 
 
 ## Usage
 
-The `inputlookup` command is an event-generating command. This command uses a leading pipe character and should be the first command in a search. It can also be used later in the search, but `append` must be set to `true`.
+The `inputlookup` command is an event-generating command. When used as the first command in the query, a preceding pipe is required. If it's not the first command, it must have `append=true`.
 
 Users can upload local `csv` and `csv.gz` files by navigating to Lookup Tab > Add New Lookup File. All the lookup files will be stored under the `data/lookups` directory. These files can be used for further queries.
 
