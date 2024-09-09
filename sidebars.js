@@ -167,6 +167,7 @@ const sidebars = {
   'spl-docs/top-command',
   'spl-docs/transaction-command',
   'spl-docs/where-command',
+  'spl-docs/extract-command',
 {
   type: 'category',
   label: 'Evaluation Functions',
