@@ -147,6 +147,7 @@ const sidebars = {
   'spl-docs/bin-command',
   'spl-docs/dedup-command',
   'spl-docs/eval-command',
+  'spl-docs/extract-command',
   'spl-docs/fields-command',
   'spl-docs/fillnull-command',
   'spl-docs/gentimes-command',
@@ -167,7 +168,6 @@ const sidebars = {
   'spl-docs/top-command',
   'spl-docs/transaction-command',
   'spl-docs/where-command',
-  'spl-docs/extract-command',
 {
   type: 'category',
   label: 'Evaluation Functions',
