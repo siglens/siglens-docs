@@ -55,64 +55,84 @@ To host this documentation on your local machine, follow these steps.
 
 ### Markdown structure
 
-Here's an a detailed overview of the entire markdown file structure of the documentation.
+Expand the header below to view a detailed overview of the documentation's entire markdown file structure.
+
+<details>
+<summary>SigLens Docs Directory Structure</summary>
 
 ```
+|-- /siglens-docs
+    |-- README.md
 |-- /docs
-    |-- alerts.md
-|-- /benchmarks
+|   |-- /docs
+|       |-- alerts.md
 |   |-- /benchmarks
-|       |-- nyc-taxi-benchmark-runbook.md
-    |-- cluster-health.md
-    |-- community.md
-    |-- contribution-guidelines.md
-    |-- dashboards.md
-|-- /installation
+|   |   |-- /benchmarks
+|   |       |-- nyc-taxi-benchmark-runbook.md
+|       |-- cluster-health.md
+|       |-- community.md
+|       |-- contribution-guidelines.md
+|       |-- dashboards.md
 |   |-- /installation
-|       |-- docker.md
-|       |-- git.md
-|       |-- helm.md
-|-- /instrument-traces
+|   |   |-- /installation
+|   |       |-- docker.md
+|   |       |-- git.md
+|   |       |-- helm.md
 |   |-- /instrument-traces
-|       |-- dotnet-app.md
-|       |-- go-app.md
-|       |-- java-app.md
-|       |-- js-app.md
-|       |-- python-app.md
-    |-- introduction.md
-    |-- key-concepts.md
-|-- /log-ingestion
-|   |-- /beats
-|   |   |-- /beats
-|   |       |-- filebeat-elasticsearch.md
-|   |       |-- metricbeat-elasticsearch.md
+|   |   |-- /instrument-traces
+|   |       |-- dotnet-app.md
+|   |       |-- go-app.md
+|   |       |-- java-app.md
+|   |       |-- js-app.md
+|   |       |-- python-app.md
+|       |-- introduction.md
+|       |-- key-concepts.md
 |   |-- /log-ingestion
-|       |-- elastic-search.md
-|   |-- /fluentd
-|   |   |-- /fluentd
-|   |       |-- fluentd-elasticsearch.md
-|   |       |-- fluentd-splunk.md
-|       |-- fluentd-fluentbit.md
-|   |-- /logstash
-|   |   |-- /logstash
-|   |       |-- logstash-elasticsearch.md
-|   |       |-- logstash-splunk.md
-|       |-- loki.md
-|       |-- open-telemetry.md
-|       |-- splunk-hec.md
-|   |-- /vector
-|   |   |-- /vector
-|   |       |-- vector-elasticsearch.md
-|   |       |-- vector-install.md
-|   |       |-- vector-splunk-hec-logs.md
-|   |       |-- vector-splunk-hec-metrics.md
-|       |-- vector.md
-    |-- log-query-builder.md
-    |-- minion-searches.md
-    |-- retention.md
-    |-- saved-searches.md
-    |-- searching-logs.md
+|   |   |-- /log-ingestion
+|   |       |-- filebeat.md
+|   |       |-- fluentd.md
+|   |       |-- logstash.md
+|   |       |-- open-telemetry.md
+|   |       |-- promtail.md
+|   |       |-- vector.md
+|       |-- log-query-builder.md
+|   |-- /metric-ingestion
+|   |   |-- /metric-ingestion
+|   |       |-- metricbeat.md
+|   |       |-- open-telemetry.md
+|   |       |-- vector-metrics.md
+|   |-- /migration
+|   |   |-- /awscloudwatch
+|   |   |   |-- /awscloudwatch
+|   |   |       |-- aws-lambda.md
+|   |   |       |-- fluentd.md
+|   |   |-- /datadog
+|   |   |   |-- /datadog
+|   |   |       |-- vector.md
+|   |   |-- /elasticsearch
+|   |   |   |-- /elasticsearch
+|   |   |       |-- fluentd.md
+|   |   |       |-- logstash.md
+|   |   |       |-- vector.md
+|   |   |-- /gcloud
+|   |   |   |-- /gcloud
+|   |   |       |-- vector.md
+|   |   |-- /loki
+|   |   |   |-- /loki
+|   |   |       |-- promtail.md
+|   |   |-- /splunk
+|   |   |   |-- /splunk
+|   |   |       |-- fluentd.md
+|   |   |       |-- logstash.md
+|   |   |       |-- vector.md
+|       |-- minion-searches.md
+|       |-- retention.md
+|       |-- saved-searches.md
+|       |-- searching-logs.md
 ```
+
+</details>
+
 > [!NOTE]
 > When creating new content file or adjusting docs hierarchy, please consult the SigLens team by opening a Github Issue in this repository.
 
