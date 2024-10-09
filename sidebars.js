@@ -202,6 +202,7 @@ const sidebars = {
 },
 ],
 },
+    'elasticsearch-apis',
     'searching-logs',
     'log-query-builder',
     'dashboards',
