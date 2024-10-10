@@ -9,6 +9,7 @@ _The following list includes the supported SPL Commands._
 - [fillnull command](fillnull-command.md)
 - [gentimes command](gentimes-command.md)
 - [head command](head-command.md)
+- [inputlookup command](inputlookup-command.md)
 - [makemv command](makemv-command.md)
 - [regex command](regex-command.md)
 - [rex command](rex-command.md)
@@ -19,3 +20,6 @@ _The following list includes the supported SPL Commands._
 - [top command](top-command.md)
 - [transaction command](transaction-command.md)
 - [where command](where-command.md)
+
+Non-supported SPL commands:
+- [extract command](extract-command.md)

@@ -69,6 +69,11 @@ const config = {
             label: 'Docs',
           },
           {
+            href: 'http://playground.siglens.com:5122/',
+            label: 'Playground',
+            position: 'right',
+          },
+          {
             href: 'https://github.com/siglens/siglens',
             label: 'GitHub',
             position: 'right',
