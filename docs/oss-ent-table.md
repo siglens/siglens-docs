@@ -1,4 +1,6 @@
-**Features List Supported by SigLens OpenSource vs Enterprise Edition**
+
+# SigLens OpenSource vs Enterprise
+**Features List**
 
 
 | Feature                           | OpenSource    | Enterprise    |
