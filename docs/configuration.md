@@ -14,8 +14,8 @@ ingestListenIP: '0.0.0.0'           # IP address for ingest server to listen on
 queryListenIP: '0.0.0.0'            # IP address for query server to listen on
 ingestPort: 8081                    # Port for receiving data/logs
 queryPort: 5122                     # Port for handling queries and UI access
-ingestUrl: ''                       # Custom ingest URL (if behind proxy/load balancer)
-queryHostname: ''                   # Custom query hostname (if behind proxy/load balancer)
+ingestUrl: ''                       # Ingest server URL
+queryHostname: ''                   # Query server hostname
 
 # Node configuration
 queryNode: 'true'                   # Enable query processing capabilities
