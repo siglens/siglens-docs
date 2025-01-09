@@ -14,15 +14,33 @@ ingestListenIP: '0.0.0.0'           # IP address for ingest server to listen on
 queryListenIP: '0.0.0.0'            # IP address for query server to listen on
 ingestPort: 8081                    # Port for receiving data/logs
 queryPort: 5122                     # Port for handling queries and UI access
-queryHostname: ''                   # Query server hostname
+queryHostname: ''                   # The domain name where user will access SigLens UI
+                                    # Example: If you have DNS configured for logs.company.com
+                                    # pointing to your SigLens server, set this to 'logs.company.com:5122'
+                                    # 
+                                    # When to use:
+                                    # - Leave empty to access via localhost
+                                    # - Set when using a custom domain with DNS pointing to your SigLens server
+                                    #
+                                    # Note: This setting does not affect where the server runs (it will still 
+                                    # run on the configured queryListenIP and queryPort). It only tells SigLens
+                                    # what domain name user will type in their browser to access the service.
+
+ingestUrl: ''                       # The URL where clients/applications will send logs to SigLens
+                                    # If empty, defaults to http://localhost:8081
+                                    #
+                                    # Example: If using custom domain with queryHostname 'logs.company.com:5122',
+                                    # set this to 'http://logs.company.com:8081'
+                                    #
+                                    # Note: Make sure to use the same domain as queryHostname to maintain
+                                    # consistency in your setup
 
 # Node configuration
 queryNode: true                     # Enable query processing capabilities
 ingestNode: true                    # Enable data ingestion capabilities
 
-# For ephemeral servers (docker, k8s) set this variable to unique container name to persist data across restarts
-ssInstanceName: ''                  # the default ssInstanceName is "sigsingle" 
-                                   
+ssInstanceName: 'sigsingle'          # For ephemeral servers (docker, k8s) set this variable to unique
+                                     # container name to persist data across restarts
 ```
 
 ### Data Management
@@ -31,11 +49,12 @@ Configure how SigLens handles data storage and retention:
 
 ```yaml
 dataPath: 'data/'                   # Where to store data files data
-retentionHours: 360                 # How long to keep data (default: 15 days)
+retentionHours: 360                 # How long to keep data (Default: 15 days)
 timeStampKey: 'timestamp'           # Name of the timestamp field
 dataDiskThresholdPercent: 85        # Stop ingesting data if disk usage exceeds this percentage
-maxSegFileSize: 4294967296          # Maximum size for data segments (4GB default)
-maxOpenColumns: 20000               # Maximum number of unique columns to track in logs
+maxSegFileSize: 4294967296          # Maximum size for data segments (Default: 4GB)
+maxAllowedColumns: 20000            # Maximum number of column names allowed across all indices. 
+                                    # Ingestion will be rejected if exceeded
 ```
 
 ## Memory Configuration
@@ -57,8 +76,11 @@ memoryConfig:
   metricsPercent: 2               # Memory for metrics collection
 
   # Memory limit per query execution
-  bytesPerQuery: 209715200        # Maximum memory buffer size per query (Default: 200MB)
-                                  # Acts as a safety limit on query memory consumption
+  bytesPerQuery: 209715200         # Memory allocation per concurrent query (Default: 200MB)
+                                   # Controls query concurrency: Lower values allow more concurrent queries
+                                   # but may impact complex query performance. Higher values improve complex
+                                   # query performance but reduce max concurrent queries.
+
 
   # Enable optimizations for low-memory environments
   lowMemoryMode: false            # When enabled, reduces memory usage by:
@@ -116,7 +138,6 @@ safeServerStart: false           # Perform additional startup validations
 pqsEnabled: true                # Enable Persistent Query Store (saves query history)
 analyticsEnabled: true          # Enable usage analytics collection
 agileAggsEnabled: true          # Enable optimized aggregation processing
-dualCaseCheck: true             # Enable case-insensitive field matching
 compressStatic: true            # Enable compression of static assets
 ```
 
