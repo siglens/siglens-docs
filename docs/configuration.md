@@ -1,6 +1,7 @@
 # SigLens Configuration Guide
 
 This guide provides a comprehensive overview of SigLens configuration options. SigLens uses a YAML configuration file (`server.yaml`) to manage its settings.
+The values shown in this guide represent the default configuration unless otherwise specified.
 
 ## Basic Configuration
 
@@ -14,6 +15,7 @@ ingestListenIP: '0.0.0.0'           # IP address for ingest server to listen on
 queryListenIP: '0.0.0.0'            # IP address for query server to listen on
 ingestPort: 8081                    # Port for receiving data/logs
 queryPort: 5122                     # Port for handling queries and UI access
+
 queryHostname: ''                   # The domain name where user will access SigLens UI
                                     # Example: If you have DNS configured for logs.company.com
                                     # pointing to your SigLens server, set this to 'logs.company.com:5122'
@@ -39,8 +41,9 @@ ingestUrl: ''                       # The URL where clients/applications will se
 queryNode: true                     # Enable query processing capabilities
 ingestNode: true                    # Enable data ingestion capabilities
 
-ssInstanceName: 'sigsingle'          # For ephemeral servers (docker, k8s) set this variable to unique
-                                     # container name to persist data across restarts
+ssInstanceName: ''                  # For ephemeral servers (docker, k8s) set this variable to unique
+                                    # container name to persist data across restarts 
+                                    # the default ssInstanceName is 'sigsingle'
 ```
 
 ### Data Management
@@ -80,7 +83,6 @@ memoryConfig:
                                    # Controls query concurrency: Lower values allow more concurrent queries
                                    # but may impact complex query performance. Higher values improve complex
                                    # query performance but reduce max concurrent queries.
-
 
   # Enable optimizations for low-memory environments
   lowMemoryMode: false            # When enabled, reduces memory usage by:
@@ -156,7 +158,7 @@ tls:
 
 ```yaml
 log:
-  logPrefix: './logs/'            # Directory for log files
+  logPrefix: ''                   # Directory for log files (Example: './logs/')
   logFileRotationSizeMB: 100      # Size trigger for log rotation
   compressLogFile: false          # Compress rotated logs
 ```
@@ -166,7 +168,8 @@ log:
 ```yaml
 tracing:
   serviceName: 'siglens'                            # Service name in traces
-  endpoint: 'http://localhost:5122/otlp/v1/traces'  # Where to send traces
+  endpoint: ''                                      # Where to send traces    
+                                                    # (Example: 'http://localhost:5122/otlp/v1/traces')
   samplingPercentage: 1                             # Percentage of operations to trace (0-100)
 ```
 
