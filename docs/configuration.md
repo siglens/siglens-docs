@@ -1,7 +1,7 @@
 # SigLens Configuration Guide
 
 This guide provides a comprehensive overview of SigLens configuration options. SigLens uses a YAML configuration file (`server.yaml`) to manage its settings.
-The values shown in this guide represent the default configuration unless otherwise specified.
+The values shown in this guide represent the default configuration.
 
 ## Basic Configuration
 
@@ -16,10 +16,11 @@ queryListenIP: '0.0.0.0'            # IP address for query server to listen on
 ingestPort: 8081                    # Port for receiving data/logs
 queryPort: 5122                     # Port for handling queries and UI access
 
-queryHostname: ''                   # The domain name where user will access SigLens UI
+queryHostname: ''                   # The domain name to access SigLens UI
                                     # Example: If you have DNS configured for logs.company.com
-                                    # pointing to your SigLens server, set this to 'logs.company.com:5122'
-                                    # 
+                                    # pointing to your SigLens server, then set the value 
+                                    # to 'logs.company.com:5122'
+                                    #
                                     # When to use:
                                     # - Leave empty to access via localhost
                                     # - Set when using a custom domain with DNS pointing to your SigLens server
@@ -43,7 +44,8 @@ ingestNode: true                    # Enable data ingestion capabilities
 
 ssInstanceName: ''                  # For ephemeral servers (docker, k8s) set this variable to unique
                                     # container name to persist data across restarts 
-                                    # the default ssInstanceName is 'sigsingle'
+                                    # - If left empty: automatically uses system hostname
+                                    # - If set: uses the specified value as instance name (Example: 'sigsingle')
 ```
 
 ### Data Management
@@ -56,8 +58,8 @@ retentionHours: 360                 # How long to keep data (Default: 15 days)
 timeStampKey: 'timestamp'           # Name of the timestamp field
 dataDiskThresholdPercent: 85        # Stop ingesting data if disk usage exceeds this percentage
 maxSegFileSize: 4294967296          # Maximum size for data segments (Default: 4GB)
-maxAllowedColumns: 20000            # Maximum number of column names allowed across all indices. 
-                                    # Ingestion will be rejected if exceeded
+maxAllowedColumns: 20000            # Maximum unique column names allowed across all indexes,
+                                    # data ingestion will be rejected if this limit is exceeded
 ```
 
 ## Memory Configuration
