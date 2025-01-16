@@ -203,6 +203,7 @@ const sidebars = {
 ],
 },
     'elasticsearch-apis',
+    'promql-apis',
     'searching-logs',
     'log-query-builder',
     'dashboards',
