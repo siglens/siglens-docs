@@ -15,10 +15,10 @@ Parameters:
 Example:
 ```bash
 # Get current value of a metric
-curl -X GET "http://localhost:8081/promql/api/v1/query?query=http_requests_total"
+curl -X GET "http://localhost:5122/promql/api/v1/query?query=http_requests_total"
 
 # Calculate rate of requests
-curl -X POST "http://localhost:8081/promql/api/v1/query" \
+curl -X POST "http://localhost:5122/promql/api/v1/query" \
   -d 'query=rate(http_requests_total[5m])'
 ```
 
@@ -38,7 +38,7 @@ Parameters:
 
 Example:
 ```bash
-curl -X GET "http://localhost:8081/promql/api/v1/query_range?query=rate(http_requests_total[5m])&start=2024-01-01T00:00:00Z&end=2024-01-02T00:00:00Z&step=1h"
+curl -X GET "http://localhost:5122/promql/api/v1/query_range?query=rate(http_requests_total[5m])&start=2024-01-01T00:00:00Z&end=2024-01-02T00:00:00Z&step=1h"
 ```
 
 ### List All Labels
@@ -55,7 +55,7 @@ Parameters:
 
 Example:
 ```bash
-curl -X GET "http://localhost:8081/promql/api/v1/labels"
+curl -X GET "http://localhost:5122/promql/api/v1/labels"
 ```
 
 ### Get Label Values
@@ -73,7 +73,7 @@ Parameters:
 Example:
 ```bash
 # Get all values for the 'job' label
-curl -X GET "http://localhost:8081/promql/api/v1/label/job/values"
+curl -X GET "http://localhost:5122/promql/api/v1/label/job/values"
 ```
 
 ### Get Series by Label Matchers
@@ -92,7 +92,7 @@ Parameters:
 Example:
 ```bash
 # Find series matching a label selector
-curl -X GET "http://localhost:8081/promql/api/v1/series?match[]=http_requests_total{job='apiserver'}"
+curl -X GET "http://localhost:5122/promql/api/v1/series?match[]=http_requests_total{job='apiserver'}"
 ```
 
 ### UI Query
