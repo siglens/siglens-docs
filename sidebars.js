@@ -211,6 +211,7 @@ const sidebars = {
     'minion-searches',
     'cluster-health',
     'retention',
+    'oss-vs-enterprise-features',
     'contribution-guidelines',
     'community',
   ],
