@@ -203,6 +203,7 @@ const sidebars = {
 ],
 },
     'elasticsearch-apis',
+    'siglens-metrics',
     'searching-logs',
     'log-query-builder',
     'dashboards',
