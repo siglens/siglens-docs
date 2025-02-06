@@ -19,39 +19,38 @@ curl -O https://raw.githubusercontent.com/elastic/examples/refs/heads/master/Com
 Create a fluent-bit.conf file:
 ```xml title="fluent-bit.conf"
 [SERVICE]
-    Flush        5
-    Daemon       Off
-    Log_Level    info
-    Parsers_File parsers.conf  # This file is defined below
+    Flush          5
+    Daemon         Off
+    Log_Level      info
+    Parsers_File   parsers.conf  # This file is defined below
 
 [INPUT]
-    Name         tail
-    Path         /Users/fluent-bit-ingestion/nginx_logs_json.txt
-    DB           /tmp/flb.db
-    Tag          nginx_logs
-    Parser       json_parser
-    Refresh_Interval 5
-    Read_from_Head True
+    Name              tail
+    Path              /Users/fluent-bit-ingestion/nginx_logs_json.txt
+    DB                /tmp/flb.db
+    Tag               nginx_logs
+    Parser            json_parser
+    Refresh_Interval  5
+    Read_from_Head    True
 
 [FILTER]
-    Name         parser
-    Match        nginx_logs
-    Key_Name     log
-    Parser       json_parser
-    Reserve_Data On
-
+    Name          parser
+    Match         nginx_logs
+    Key_Name      log
+    Parser        json_parser
+    Reserve_Data  On
 
 [OUTPUT]
-    Name         es
-    Match        nginx_logs
-    Host         localhost
-    Port         8081
-    Path          /elastic
-    TLS          Off
-    Index        nginx-logs-fluentbit-es
-    Suppress_Type_Name On
-    Logstash_Format Off
-    Retry_Limit  False
+    Name                 es
+    Match                nginx_logs
+    Host                 localhost
+    Port                 8081
+    Path                 /elastic
+    TLS                  Off
+    Index                nginx-logs-fluentbit-es
+    Suppress_Type_Name   On
+    Logstash_Format      Off
+    Retry_Limit          False
 ```
 
 Create a parsers.conf file
