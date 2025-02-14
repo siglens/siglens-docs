@@ -154,6 +154,8 @@ tls:
   enabled: false                  # Enable TLS/HTTPS
   certificatePath: ''             # Path to TLS certificate file
   privateKeyPath: ''              # Path to private key file
+  mtlsEnabled: false              # Enable mutual TLS; no effect if TLS is disabled
+  clientCaPath: ''                # Path to the client Certificate Authority file. Required for mTLS.
 ```
 
 ## Logging Configuration
