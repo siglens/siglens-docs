@@ -36,6 +36,7 @@ const sidebars = {
         'log-ingestion/vector',
         'log-ingestion/logstash',
         'log-ingestion/fluentd',
+        'log-ingestion/fluent-bit',
         'log-ingestion/filebeat',
         'log-ingestion/promtail',
         'log-ingestion/open-telemetry',
