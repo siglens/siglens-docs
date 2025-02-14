@@ -11,6 +11,7 @@ Alert Management | ✅ | ✅
 Saved Queries | ✅ | ✅
 Helm Charts | ✅ | ✅
 TLS and HTTPS Support | ✅ | ✅
+mTLS Support | ✅ | ✅
 Community Support (Slack) | ✅ | ✅
 
 ### Ingestion Protocols
