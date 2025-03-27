@@ -1,122 +1,109 @@
-# Elasticsearch APIs
+# Splunk APIs
 
-1. **Ingest API**:
+### 1. Retrieve Ingested Data:
 Ingest data in JSON format. Supports reading json data from file.
 
-    Example:
+```
+GET /api/search
+POST /api/search
+```
 
-    Using json file:
-    ```
-    curl -X POST http://localhost:8081/elastic/_bulk \
-    -H 'Content-Type: application/json' \
-    --data-binary "@sampleEvents.json" 
-    ```
-    Using raw json:
-    ```
-    curl -X POST "http://localhost:8081/elastic/_bulk" \
-    -H 'Content-Type: application/json' \
-    -d '{ "index" : { "_index" : "test" } }
-    { "name" : "john", "age":"23" }'
-    ```
+Parameters:
+- `searchText`: The actual search query using Splunk syntax.
+- `indexName:` Specifies the index (like "traces") to search data from.
 
+Example:
 
-2. **Get elasticsearch cluster information**:
+Using raw json:
+```bash
+# Send data in the request body to perform a search using Splunk QL.
+curl -X POST http://localhost:5122/api/search \
+-H "Content-Type: application/json" \
+-d '{
+  "startEpoch": "now-1h",
+  "endEpoch": "now",
+  "searchText": "*",
+  "indexName": "traces",
+  "queryLanguage": "Splunk QL"
+}'
 
-    ```
-    curl  http://localhost:8081/elastic/
-    curl -X GET "http://localhost:8081/elastic/"
-    curl -X GET "http://localhost:8081/elastic/_xpack"
-    ```
+# Pass search parameters directly in the URL to retrieve data using a GET request.
+curl -X GET "http://localhost:5122/api/search?startEpoch=now-1h&endEpoch=now&searchText=*&indexName=traces&queryLanguage=Splunk%20QL"
+```
 
-    Example Output:
-    ```
-    {"name":"local","cluster_name":"siglens","cluster_uuid":"398fb430-f809-4f4c-88a7-95a5a1c28738","version":{"number":"7.9.3","build_flavor":"oss","build_type":"tar","build_date":"2021-10-07T21:56:19.031608185Z","build_hash":"83c34f456ae29d60e94d886e455e6a3409bba9ed","build_snapshot":false,"lucene_version":"8.9.0","minimum_wire_compatibility_version":"6.8.0","minimum_index_compatibility_version":"6.0.0-beta1"}}
-    ```
+### 2. Gantt chart data
+For Gantt chart data specific to a trace ID, modify the request body accordingly
 
+Example:
+```bash
 
-3. **Create a new elasticsearch index**
-
-    ```
-    curl -X PUT http://localhost:8081/elastic/{indexName}
-    ```
-
-
-4. **Query / search ingested data**
-
-    ```
-    GET /elastic/_search
-    GET /elastic/{indexName}/_search
-    POST /elastic/_search
-    POST /elastic/{indexName}/_search
-    POST /elastic/{indexName}/_doc/_search
-    GET /elastic/{indexName}/{docType}/_search
-    POST /elastic/{indexName}/{docType}/_search 
-    ```
-    Examples:
-    ```    
-    curl -X GET http://localhost:5122/elastic/_search  \
-        -d'{"query": {"match_all": {}}, "size": 2}'
-
-    curl -X GET http://localhost:5122/elastic/ind-0/_search  \
-        -d'{"query": {"match_all": {}}, "size": 2}'
-
-    curl -X POST http://localhost:5122/elastic/_search  \
-        -d'{"query": {"match_all": {}}}'
-
-    curl -X POST http://localhost:5122/elastic/ind-0/_search  \
-        -d '{"query":{"bool":{"must":{"term": {"weekday": "Saturday"}}}},"size": 1}' 
-
-    curl -X POST http://localhost:5122/elastic/ind-0/_doc/_search  \
-        -d '{"query":{"bool":{"must":{"term": {"weekday": "Saturday"}}}},"size": 1}' 
-    ```
+# send a POST request to search for Gantt chart data using the specific trace ID.
+curl -X POST http://localhost:5122/api/search \
+-H "Content-Type: application/json" \
+-d '{
+  "startEpoch": "now-1h",
+  "endEpoch": "now",
+  "searchText": "trace_id=9f3239f9e01f9f648d188de4767c9a36",
+  "indexName": "traces",
+  "queryLanguage": "Splunk QL"
+}'
+```
 
 
-5. **Delete index**
-
-    ```
-    curl -X DELETE http://localhost:5122/elastic/{indexName}
-    ```
+### 3. Red-metrics Data
+Retrieve Red-metrics data
 
 
-6. **Create index alias**
+Example:
 
-    ```
-    curl -X POST http://localhost:5122/elastic/_aliases 
-    curl -X PUT http://localhost:5122/elastic/{indexName}/_alias/{aliasName}
-    curl -X POST http://localhost:5122/elastic/{indexName}/_alias/{aliasName}
-    ```
-    Example:
-    ```
-    curl -X POST http://localhost:5122/elastic/_aliases \
-    -d'{"actions" : [{ "add" : { "index" : "ind-0", "alias" : "alias1" } }]}'
+Using Raw json
+```bash
+# retrieve Red-metrics data from the red-traces index using Splunk QL.
+curl -X POST http://localhost:5122/api/search \
+-H "Content-Type: application/json" \
+-d '{
+  "startEpoch": "now-1h",
+  "endEpoch": "now",
+  "searchText": "*",
+  "indexName": "red-traces",
+  "queryLanguage": "Splunk QL"
+}'
 
-    curl -X PUT http://localhost:5122/elastic/ind-0/_alias/ddd
-    ```
+```
 
+### 4. Searching all Traces Data
+Fetch all traces data .
 
-7. **Create multiple index aliases**
+Example:
 
-    ```
-    curl -X PUT http://localhost:5122/elastic/{indexName}/_aliases/{aliasName}
-    curl -X POST http://localhost:5122/elastic/{indexName}/_aliases/{aliasName}
-    ```
-    Example:
-    ```
-    curl -X PUT http://localhost:5122/elastic/ind-0/_aliases/{ind-alias1,ind-alias2}
-    ```
+Using Raw json
+```bash
+#Fetch all traces data from the traces index using Splunk QL.
+curl -X POST http://localhost:5122/api/traces/search \
+-H "Content-Type: application/json" \
+-d '{
+  "startEpoch": "now-1h",
+  "endEpoch": "now",
+  "searchText": "*",
+  "indexName": "traces",
+  "queryLanguage": "Splunk QL"
+}'
 
+```
 
-8. **Get index alias**
+### 5. Dependency Graph Data
+Get dependency graph data
 
-    ```
-    curl -X GET http://localhost:5122/elastic/_aliases
-    curl -X GET http://localhost:5122/elastic/_cat/aliases
-    curl -X GET http://localhost:5122/elastic/_alias/{aliasName}
-    ```
-    Example:
-    ```
-    curl -X GET http://localhost:5122/elastic/_alias/ind-alias1
-
-    Output:
-    {"ind-0":{"aliases":{"ddd":{},"alias1":{},"ind-alias1":{},"ind-alias2":{}}}}%
-    ```
+Example:
+```bash
+# get dependency graph data from the service-dependency index using Splunk QL.
+curl -X POST http://localhost:5122/api/traces/dependencies \
+-H "Content-Type: application/json" \
+-d '{
+  "startEpoch": "now-1h",
+  "endEpoch": "now",
+  "searchText": "*",
+  "indexName": "service-dependency",
+  "queryLanguage": "Splunk QL"
+}'
+```
