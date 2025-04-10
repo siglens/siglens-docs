@@ -27,9 +27,8 @@ SigLens is engineered for excellence in managing massive volumes of data, from t
 
 ## Getting Started
 
-**SigLens Platform**: We encourage you to try out SigLens using
+**SigLens Platform**: We encourage you to try out SigLens
 
-- The [SigLens Playground](http://playground.siglens.com:5122/), or
 - Installing SigLens in your local machine
 
 ### &emsp; <a href="https://siglens.github.io/siglens-docs/installation/git" target="_blank">Git</a> &emsp; | &emsp; <a href="https://siglens.github.io/siglens-docs/installation/docker" target="_blank">Docker</a> &emsp;| &emsp; <a href="https://siglens.github.io/siglens-docs/installation/helm" target="_blank">Helm</a>
@@ -175,4 +174,4 @@ Thank you to all the contributors who have helped grow SigLens. Your efforts are
 </a> -->
 <a href="https://www.linkedin.com/company/sigscalr-io/?miniCompanyUrn=urn%3Ali%3Afs_miniCompany%3A77978282" target="_blank">
 <img src=https://img.shields.io/badge/linkedin-%231E77B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white alt=SigLens_linkedin style="margin-bottom: 5px;" />
-</a> 
+</a>
