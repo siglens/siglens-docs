@@ -42,7 +42,7 @@ For detailed usage and examples, please refer to the specific command documentat
       ![Query Search](../static/img/icon-query.png)
 
 2. **Choose Query Type:**
-   - Select which type of query you want to search: SQL, Splunk QL, LogQL.
+   - Select which type of query you want to search: Splunk QL, LogQL.
      
       ![log-query Type](../static/img/log-query-type.png)
 
@@ -55,29 +55,6 @@ For detailed usage and examples, please refer to the specific command documentat
    - Select the time range for the query.
 
       ![log-time-range](../static/img/log-time.png)
-
-
-      ### ⭐ SQL Query Examples ⭐
-      ```
-      SELECT first_name AS firstnames, country AS origincountry FROM `ind-0`
-      ```
-      ![sql-1](../static/img/sql-1.png)
-      ```   
-      SELECT * FROM `ind-0` ORDER BY latency ASC
-      ```
-      ![sql-2](../static/img/sql-2.png)
-      ```
-      SELECT MAX(latency), COUNT(city) FROM `*` GROUP BY country, gender LIMIT 10
-      ```
-      ![sql-3](../static/img/sql-3.png)
-      ```
-      SELECT min(latency), COUNT(city) FROM `*` WHERE gender = male GROUP BY country LIMIT 10
-      ```
-      ![sql-4](../static/img/sql-4.png)
-      ```
-      select 1 as one,'word' as word,city from `ind-0`
-      ```
-      ![sql-5](../static/img/sql-5.png)
 
       ### ⭐ Splunk QL Query Examples ⭐
       ```
