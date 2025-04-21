@@ -53,22 +53,6 @@ import ReactPlayer from 'react-player'
 
     ![SPL preview](../static/img/spl-preview.png)
 
-### ⭐ Create Panel for SQL Query ⭐
-
-Follow the same steps as for Splunk QL and change the query language to SQL. Modify the panel details as needed.
-
-1. **Enter SQL Query:**
-    ```
-    SELECT COUNT(weekday) FROM `*` GROUP BY weekday
-    ```
-    ![SQL1 Query](../static/img/sql1.png)
-
-2. **Similarly you can add more SQL Queries:**
-    ```
-    SELECT * FROM `ind-0` ORDER BY latency ASC
-    ```
-    ![SQL2 Query](../static/img/sql2.png)
-
 ### ⭐ Create Panel for LogQL Query ⭐
 
 Follow the same steps as for SPL and change the query language to LogQL. Modify the panel details as needed.
