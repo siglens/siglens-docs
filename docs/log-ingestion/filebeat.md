@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 
 # Filebeat
 
-_Ingesting logs into Siglens using Filebeat_
+_Ingesting logs into SigLens using Filebeat_
 
 ### 1. Install Filebeat
 

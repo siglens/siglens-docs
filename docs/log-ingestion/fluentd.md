@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 
 # Fluentd
 
-_Ingesting logs into Siglens using Fluentd_
+_Ingesting logs into SigLens using Fluentd_
 
 ### 1. Install Fluentd
 

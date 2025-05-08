@@ -1,6 +1,6 @@
 # Fluentd
 
-*Migrating from Elastic Search to Siglens using Fluentd*
+*Migrating from Elastic Search to SigLens using Fluentd*
 
 ## 1. Install Fluentd
 

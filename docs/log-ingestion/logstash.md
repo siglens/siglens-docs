@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 
 # Logstash
 
-_Ingesting logs into Siglens using Logstash_
+_Ingesting logs into SigLens using Logstash_
 
 ### 1. Install Logstash
 

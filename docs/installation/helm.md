@@ -1,6 +1,6 @@
 # Helm
 
-*Installing Siglens using Helm*
+*Installing SigLens using Helm*
 
 This comprehensive guide will help you install SigLens on your local Minikube Kubernetes cluster using Helm. Helm simplifies the deployment of Kubernetes applications, making it a breeze to set up SigLens.
 

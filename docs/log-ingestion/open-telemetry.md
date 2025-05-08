@@ -1,5 +1,5 @@
 # Open Telemetry
-_Ingesting logs into Siglens using OpenTelemetry_
+_Ingesting logs into SigLens using OpenTelemetry_
 
 ### 1. Pull OTEL Collector Docker Image
 
