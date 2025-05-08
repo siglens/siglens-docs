@@ -1,5 +1,7 @@
 # bin
 
+## Description
+
 The `bin` command allows you to categorize continuous numerical data into discrete intervals or buckets.\
 This is useful for:
 - Data aggregation - grouping values into time intervals, age brackets, etc.
