@@ -1,9 +1,9 @@
 
-# rename Command
+# rename
 
 ## Description
 
-The rename command allows you to update the names of fields to something more descriptive or easier to understand. For instance, changing `app_version` to `Application Version` can make your data more accessible and self-explanatory. This is particularly helpful when dealing with fields that have cryptic or abbreviated names. If there are multiple fields with a common naming pattern, you can leverage a wildcard to rename them in bulk, streamlining the process of making your dataset user-friendly.
+The `rename` command allows you to update the names of fields to something more descriptive or easier to understand. For instance, changing `app_version` to `Application Version` can make your data more accessible and self-explanatory. This is particularly helpful when dealing with fields that have cryptic or abbreviated names. If there are multiple fields with a common naming pattern, you can leverage a wildcard to rename them in bulk, streamlining the process of making your dataset user-friendly.
 
 ## Syntax
 

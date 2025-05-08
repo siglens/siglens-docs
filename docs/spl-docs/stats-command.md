@@ -1,4 +1,4 @@
-# stats Command
+# stats
 
 ## Description
 

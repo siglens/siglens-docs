@@ -1,4 +1,4 @@
-# where command
+# where
 
 ## Description
 

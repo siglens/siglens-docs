@@ -1,4 +1,4 @@
-# gentimes command
+# gentimes
 
 ## Description
 Generates timestamp results beginning at the specified start time. Each result represents an adjacent, non-overlapping time range based on the increment value. This process continues until enough results are generated to pass the end time.

@@ -6,7 +6,7 @@ Converts a single valued field into a multivalue field by splitting the values o
 
 ## Syntax
 
-makemv \
+**makemv** \
 [delim=\<string> or tokenizer=\<string>] \
 [allowempty=\<bool>] \
 [setsv=\<bool>] \

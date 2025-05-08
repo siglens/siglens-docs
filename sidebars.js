@@ -175,11 +175,11 @@ const sidebars = {
         'spl-docs/stats-command',
         'spl-docs/streamstats-command',
         'spl-docs/tail-command',
-        'spl-docs/time-modifiers',
         'spl-docs/timechart-command',
         'spl-docs/top-command',
         'spl-docs/transaction-command',
         'spl-docs/where-command',
+        'spl-docs/time-modifiers',
         {
           type: 'category',
           label: 'Evaluation Functions',

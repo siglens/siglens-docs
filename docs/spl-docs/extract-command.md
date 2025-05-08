@@ -1,3 +1,3 @@
-# extract command
+# extract
 
-extract command is not supported currently.
+`extract` command is not supported currently.
