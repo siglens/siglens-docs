@@ -1,6 +1,6 @@
 # Vector Metrics
 
-_Ingesting metrics into Siglens using Vector_
+_Ingesting metrics into SigLens using Vector_
 
 ### 1. Install Vector
 
@@ -8,9 +8,9 @@ Begin by installing Vector using the instructions provided [here](../log-ingesti
 
 ### 2. Configure Vector Metrics
 
-Create a vector config file with the Siglens Vector sink.
+Create a vector config file with the SigLens Vector sink.
 
-_Note: This sample configuration file is for exporting Nginx metrics to Siglens._
+_Note: This sample configuration file is for exporting Nginx metrics to SigLens._
 
 ```yml title="vector.yaml"
 # The directory used for persisting Vector state, such as on-disk buffers, file checkpoints, and more. Please make sure the Vector project has write permissions to this directory.

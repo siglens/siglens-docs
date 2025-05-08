@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 
 # Fluent-bit
 
-_Ingesting logs into Siglens using Fluent-bit_
+_Ingesting logs into SigLens using Fluent-bit_
 
 ### 1. Install Fluent-bit
 
