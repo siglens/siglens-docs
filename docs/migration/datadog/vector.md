@@ -1,6 +1,6 @@
 # Vector
 
-*Migrating from Datadog to Siglens using Vector*
+*Migrating from Datadog to SigLens using Vector*
 
 ## 1. Install Vector and Configure Datadog Agent
 
@@ -171,5 +171,5 @@ Vector needs to be started with the `--config` argument to specify the path to t
 vector --config vector.yaml
 ```
 
-To ensure successful data ingestion, verify that Siglens, the Datadog Agent, and Vector are all running properly.
+To ensure successful data ingestion, verify that SigLens, the Datadog Agent, and Vector are all running properly.
 

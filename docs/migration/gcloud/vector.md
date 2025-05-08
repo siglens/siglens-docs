@@ -1,6 +1,6 @@
 # Vector
 
-*Migrating from Google Cloud to Siglens using Vector*
+*Migrating from Google Cloud to SigLens using Vector*
 
 ## 1. Install Vector and setup Google Cloud CLI
 

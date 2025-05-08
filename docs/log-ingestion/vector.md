@@ -2,7 +2,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Vector
-_Ingesting logs into Siglens using Vector_
+_Ingesting logs into SigLens using Vector_
 
 ### 1. Install Vector
 
@@ -78,7 +78,7 @@ Download the sample events file using the following command:
 curl -s -L https://github.com/siglens/pub-datasets/releases/download/v1.0.0/2kevents.json.tar.gz -o 2kevents.json.tar.gz && tar -xvf 2kevents.json.tar.gz
 ```
 
-Create a vector config file with the Siglens Vector sink.
+Create a vector config file with the SigLens Vector sink.
 
 <html>
 <Tabs

@@ -2,7 +2,7 @@
 
 ## Auto-instrument sample .NET App for traces
 
-In this tutorial, we will go through the steps to auto-instrument a .NET app to send traces to Siglens.
+In this tutorial, we will go through the steps to auto-instrument a .NET app to send traces to SigLens.
 
 ## Prerequisites
 

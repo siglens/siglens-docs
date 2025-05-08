@@ -1,6 +1,6 @@
 # Vector
 
-*Migrating from Splunk to Siglens using Vector*
+*Migrating from Splunk to SigLens using Vector*
 
 ## 1. Install Vector
 
