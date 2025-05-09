@@ -1,6 +1,6 @@
 # Fluentd
 
-*Migrating from Splunk to Siglens using Fluentd*
+*Migrating from Splunk to SigLens using Fluentd*
 
 ## 1. Install Fluentd
 

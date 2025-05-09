@@ -1,6 +1,6 @@
 # OpenTelemetry
 
-_Ingesting metrics into Siglens using OpenTelemetry_
+_Ingesting metrics into SigLens using OpenTelemetry_
 
 ### 1. Install OpenTelemetry Collector
 
@@ -12,7 +12,7 @@ docker pull otel/opentelemetry-collector
 
 ### 2. Configure OpenTelemetry Collector
 
-_Note: This sample configuration file is for exporting system metrics to Siglens._
+_Note: This sample configuration file is for exporting system metrics to SigLens._
 
 ```yml title="otel_collector_config.yaml"
 receivers:
@@ -27,7 +27,7 @@ receivers:
 exporters:
   prometheusremotewrite:
     endpoint: "http://localhost:8081/promql/api/v1/write"
-    # If Siglens is running on the host machine where your OTEL Docker container is running, then use `host.docker.internal:8081`.
+    # If SigLens is running on the host machine where your OTEL Docker container is running, then use `host.docker.internal:8081`.
 
 processors:
   batch:

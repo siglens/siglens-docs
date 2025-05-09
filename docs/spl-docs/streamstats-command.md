@@ -1,4 +1,4 @@
-# streamstats command
+# streamstats
 
 ## Description
 

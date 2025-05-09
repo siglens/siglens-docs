@@ -1,6 +1,6 @@
 # Logstash
 
-*Migrating from Elastic Search to Siglens using Logstash*
+*Migrating from Elastic Search to SigLens using Logstash*
 
 ## 1. Install Logstash
 

@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 
 # Promtail
 
-*Ingesting logs into Siglens using Promtail*
+*Ingesting logs into SigLens using Promtail*
 
 ### 1. Install Promtail
 

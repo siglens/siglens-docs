@@ -1,4 +1,4 @@
-# inputlookup command
+# inputlookup
 
 ## Description
 The `inputlookup` command is used to search the contents of a CSV-based lookup table. This command allows you to retrieve and filter data stored in a lookup table.

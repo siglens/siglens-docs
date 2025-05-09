@@ -30,7 +30,7 @@ const sidebars = {
       link: {
         type: 'generated-index',
         description:
-          'Siglens default ingestion server runs on port: 8081. The below are the various ways to ingest logs into Siglens.',
+          'SigLens default ingestion server runs on port: 8081. The below are the various ways to ingest logs into SigLens.',
       },
       items: [
         'log-ingestion/vector',
@@ -80,7 +80,7 @@ const sidebars = {
           link: {
             type: 'generated-index',
             title: 'Migrating from Splunk',
-            description: `Migrating from Splunk to Siglens is a simple process. Please follow the below steps to migrate from Splunk to Siglens.`,
+            description: `Migrating from Splunk to SigLens is a simple process. Please follow the below steps to migrate from Splunk to SigLens.`,
           },
           items: [
             'migration/splunk/vector',
@@ -94,7 +94,7 @@ const sidebars = {
           link: {
             type: 'generated-index',
             title: 'Migrating from Elastic Search',
-            description: `Migrating from Elastic Search to Siglens is a simple process. Please follow the below steps to migrate from Elastic Search to Siglens.`,
+            description: `Migrating from Elastic Search to SigLens is a simple process. Please follow the below steps to migrate from Elastic Search to SigLens.`,
           },
           items: [
             'migration/elasticsearch/vector',
@@ -108,7 +108,7 @@ const sidebars = {
           link: {
             type: 'generated-index',
             title: 'Migrating from Loki',
-            description: `Migrating from Loki to Siglens is a simple process. Please follow the below steps to migrate from Loki to Siglens.`,
+            description: `Migrating from Loki to SigLens is a simple process. Please follow the below steps to migrate from Loki to SigLens.`,
           },
           items: ['migration/loki/promtail'],
         },
@@ -118,7 +118,7 @@ const sidebars = {
           link: {
             type: 'generated-index',
             title: 'Migrating from Google Cloud',
-            description: `Migrating from Google Cloud to Siglens is a simple process. Please follow the below steps to migrate from Loki to Siglens.`,
+            description: `Migrating from Google Cloud to SigLens is a simple process. Please follow the below steps to migrate from Loki to SigLens.`,
           },
           items: ['migration/gcloud/vector'],
         },
@@ -128,7 +128,7 @@ const sidebars = {
           link: {
             type: 'generated-index',
             title: 'Migrating from AWS CloudWatch',
-            description: `Migrating/Streaming Logs from AWS CloudWatch to Siglens is a simple process. Please follow the below steps to migrate to Siglens.`,
+            description: `Migrating/Streaming Logs from AWS CloudWatch to SigLens is a simple process. Please follow the below steps to migrate to SigLens.`,
           },
           items: [
             'migration/awscloudwatch/aws-lambda',
@@ -141,7 +141,7 @@ const sidebars = {
           link: {
             type: 'generated-index',
             title: 'Migrating from Datadog',
-            description: `Migrating from Datadog to Siglens is a simple process. Please follow the below steps to migrate from Datadog to Siglens.`,
+            description: `Migrating from Datadog to SigLens is a simple process. Please follow the below steps to migrate from Datadog to SigLens.`,
           },
           items: ['migration/datadog/vector'],
         },
@@ -162,10 +162,12 @@ const sidebars = {
         'spl-docs/extract-command',
         'spl-docs/fields-command',
         'spl-docs/fillnull-command',
+        'spl-docs/format-command',
         'spl-docs/gentimes-command',
         'spl-docs/head-command',
         'spl-docs/inputlookup-command',
         'spl-docs/makemv-command',
+        'spl-docs/mvexpand-command',
         'spl-docs/rare-command',
         'spl-docs/regex-command',
         'spl-docs/rename-command',
@@ -175,11 +177,11 @@ const sidebars = {
         'spl-docs/stats-command',
         'spl-docs/streamstats-command',
         'spl-docs/tail-command',
-        'spl-docs/time-modifiers',
         'spl-docs/timechart-command',
         'spl-docs/top-command',
         'spl-docs/transaction-command',
         'spl-docs/where-command',
+        'spl-docs/time-modifiers',
         {
           type: 'category',
           label: 'Evaluation Functions',

@@ -1,8 +1,8 @@
-# Transaction
+# transaction
 
 ## Description
 
-The transaction command finds transactions based on events that meet various constraints. Transactions are made up of the raw text (the raw event) of each member, the time and date fields of the earliest member, as well as the union of all other fields of each member.
+The `transaction` command finds transactions based on events that meet various constraints. Transactions are made up of the raw text (the raw event) of each member, the time and date fields of the earliest member, as well as the union of all other fields of each member.
 
 Additionally, the `transaction` command adds two fields to the raw events, `duration` and `eventcount`. The values in the `duration` field show the difference between the timestamps for the `first` and `last` events in the transaction. The values in the `eventcount` field show the number of events in the transaction.
 

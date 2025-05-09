@@ -4,7 +4,7 @@
 
 Use this command to either extract fields using regular expression named groups, or replace characters in a field using sed expressions.
 
-The rex command matches the value of the specified field against the unanchored regular expression and extracts the named groups into fields of the corresponding names.
+The `rex` command matches the value of the specified field against the unanchored regular expression and extracts the named groups into fields of the corresponding names.
 
 ## Syntax
 
