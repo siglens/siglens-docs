@@ -2,11 +2,9 @@
 
 _The following list includes the supported SPL Commands._
 
-- [append](append-command.md)
 - [bin](bin-command.md)
 - [dedup](dedup-command.md)
 - [eval](eval-command.md)
-- [eventcount](eventcount-command.md)
 - [fields](fields-command.md)
 - [fillnull](fillnull-command.md)
 - [format](format-command.md)
@@ -21,7 +19,6 @@ _The following list includes the supported SPL Commands._
 - [rex](rex-command.md)
 - [search](search-command.md)
 - [sort](sort-command.md)
-- [spath](spath-command.md)
 - [stats](stats-command.md)
 - [streamstats](streamstats-command.md)
 - [tail](tail-command.md)
