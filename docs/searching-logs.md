@@ -30,6 +30,16 @@ Our system supports the following SPL (Search Processing Language) commands:
 12. **Top**: Returns the most frequent values of a field. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Top).
 13. **Rare**: Returns the least frequent values of a field. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Rare).
 14. **Rename**: Renames fields in your events. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Rename).
+15. **Where**: Filters events based on a specified condition.  [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Where).
+16. **Tail**: Returns the last N events from your search results. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Tail).
+17. **Makemv**: Converts a field with delimiters into a multi-value field. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Makemv).
+18. **Format**: Formats field values according to specified templates. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Format).
+19. **Streamstats**: Computes running statistics on your events. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Streamstats).
+20. **Bin**: Groups numeric values into bins or ranges. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Bin).
+21. **Fillnull**: Replaces null values with specified values. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Fillnull).
+22. **Mvexpand**: Expands multi-value fields into separate events. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Mvexpand).
+23. **Gentimes**: Generates events for specified time ranges. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Gentimes).
+24. **Inputlookup**: Retrieves data from lookup tables. [Read more](https://docs.splunk.com/Documentation/SplunkCloud/9.1.2312/SearchReference/Inputlookup).
 
 For detailed usage and examples, please refer to the specific command documentation.
 

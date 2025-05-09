@@ -1,9 +1,9 @@
-# fields command
+# fields
 
 ## Description
 
 This command allows you to filter the fields that you want to display in the search results.
-By default, SigLens adds timestamp and _index fields to the search results.
+By default, Siglens adds `timestamp` and `_index` fields to the search results.
 
 ## Syntax
 The required syntax is in **bold**.

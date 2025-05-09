@@ -1,5 +1,5 @@
 
-# rare Command
+# rare
 
 ## Description
 
@@ -11,7 +11,7 @@ This command functions similarly to the `top` command but focuses on identifying
 
 ## Syntax
 
-rare [\<rare-options\>...] \<field-list\> [\<by-clause\>]
+**rare** [\<rare-options\>...] \<field-list\> [\<by-clause\>]
 
 ### Required Arguments
 
