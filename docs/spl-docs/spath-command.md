@@ -143,4 +143,4 @@ inventory-api   400           Invalid product ID format           28
 payment-api     422           Insufficient funds                  15
 ```
 
-This use case demonstrates how the `spath` command enables effective analysis of structured data by extracting and organizing key information from complex nested structures.RetryClaude can make mistakes. Please double-check responses.
+This use case demonstrates how the `spath` command enables effective analysis of structured data by extracting and organizing key information from complex nested structures.

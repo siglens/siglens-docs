@@ -16,7 +16,7 @@ The required syntax is in **bold**.
 [extendtimerange=\<bool>] \
 [maxtime=\<int>] \
 [maxout=\<int>] \
-**[\<subsearch>]**
+**\<subsearch>**
 
 ## Required arguments
 
