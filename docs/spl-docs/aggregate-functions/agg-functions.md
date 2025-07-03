@@ -377,7 +377,7 @@ You can use this function with the [stats](../stats-command.md), [timechart](../
 
 ### Differences between SigLens and Excel percentile algorithms
 
-If there are less than 1000 distinct values, the Splunk percentile functions use the nearest rank algorithm. See <a href="http://en.wikipedia.org/wiki/Percentile#Nearest_rank">Nearest Rank</a>. Excel uses the NIST interpolated algorithm, which basically means you can get a value for a percentile that does not exist in the actual data, which is not possible for the nearest rank approach.
+If there are less than 1000 distinct values, the Splunk percentile functions use the nearest rank algorithm. See <a href="http://en.wikipedia.org/wiki/Percentile#Nearest_rank" target="_blank" rel="noopener">Nearest Rank</a>. Excel uses the NIST interpolated algorithm, which basically means you can get a value for a percentile that does not exist in the actual data, which is not possible for the nearest rank approach.
 
 ### SigLens algorithm with more than 1000 distinct values
 
