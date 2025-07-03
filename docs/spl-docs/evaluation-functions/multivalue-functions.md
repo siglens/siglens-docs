@@ -230,4 +230,45 @@ The result for `joined_numbers` will be `1 AND 2 AND 3 AND 4 AND 5`.
 1. The `eval` command creates a new field called `search_query`.
 2. The `mvjoin` function joins all selected options from the `selected_options` field into a single string, using "OR" as the delimiter.
 
-This approach is particularly useful for dynamically generating complex search queries based on user input, ensuring that all selected options are included in the query.
+This approach is particularly useful for dynamically generating complex search queries based on user input, ensuring that all selected options are included in the query.  
+
+## mvappend(\<values\>)
+
+### Description
+
+This function takes one or more values and returns a single multivalue result that contains all of the values. The values can be strings, multivalue fields, or single value fields.
+
+### Usage
+
+You can use this function with the `eval` and `where` commands, and as part of eval expressions.
+
+### Basic examples
+
+This example shows how to append two values, `localhost` is a literal string value and `srcip` is a field name.
+
+```
+... | eval fullName=mvappend("localhost", srcip)
+```
+
+The following example shows how to use nested `mvappend` functions.
+
+  * The inner `mvappend` function contains two values: `localhost` is a literal string value and `srcip` is a field name.
+  * The outer `mvappend` function contains three values: the inner `mvappend` function, `destip` is a field name, and `192.168.1.1` which is a literal IP address.
+
+The results are placed in a new field called `ipaddresses`, which contains the array `["localhost", <values_in_scrip>, <values_in_destip>, "192.168.1.1"]`.
+
+```
+... | eval ipaddresses=mvappend(mvappend("localhost", srcip), destip, "192.168.1.1")
+```
+
+Note that the previous example generates the same results as the following example, which does not use a nested `mvappend` function:
+
+```
+... | eval ipaddresses=mvappend("localhost", srcip, destip, "192.168.1.1")
+```
+
+If the first value in the `srcip` field is 203.0.113.0 and the first value in the `destip` field is 203.0.113.255, the results look something like this:
+
+| time                | ipaddresses                                           |
+| :------------------ | :---------------------------------------------------- |
+| 2024-11-19 16:43:31 | localhost \<br\> 203.0.113.0 \<br\> 203.0.113.255 \<br\> 192.168.1.1 |
