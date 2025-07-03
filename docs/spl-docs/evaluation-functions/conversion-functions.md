@@ -52,7 +52,7 @@ This function generates a string formatted using the arguments passed to it. The
 
 ### Usage
 
-The `<format_specifier>` argument must be a valid format specifier, or a field name containing a valid format specifier. Each `<argument>` may be a value of the appropriate data type or a field name containing the value of the appropriate data type.
+The `<format_specifier>` argument must be a valid format specifier, or a field name containing a valid format specifier. Each `<argument>` may be a value of the appropriate data type or a field name containing a value of the appropriate data type.
 
 You can use this function with the `eval` and `where` commands, and as part of evaluation expressions with other commands.
 
@@ -77,13 +77,13 @@ The conversion specifiers follow the syntax: `%[<flags>][<width>][.<precision>]<
 
 #### Flags
 
-| Flag    | Description                                   | Example                                                  |
-|---------|-----------------------------------------------|----------------------------------------------------------|
-| `'`     | Thousands separator                           | `printf("%'d", 1234567)` : `1,234,567`                   |
-| `-`     | Left‑justify                                  | `printf("\|%-5d\|", 42)` : `\|42   \|`                   |
-| `0`     | Pad with leading zeros                        | `printf("%05d", 42)` : `00042`                           |
-| `+`     | Always include sign                           | `printf("%+d", 42)` : `+42`                              |
-| (space) | Prefix space for positive numbers and zero    | `printf("% d", 42)` : ` 42`                              |
+| Flag    | Description                                   | Example                                                     |
+|---------|-----------------------------------------------|----------------------------------------------------------   |
+| `'`     | Adds commas as thousands separators           | `printf("%'d", 1234567)` : `1,234,567`                      |
+| `-`     | Left‑justify                                  | `printf("\|%-5d\|", 42)` : `\|42   \|`                      |
+| `0`     | Pad number with leading zeros                 | `printf("%05d", 42)` : `00042`                              |
+| `+`     | Always include sign                           | `printf("%+d", 42)` : `+42`<br/>`printf("%+d", 0)` : `+0`   |
+| (space) | Prefix space for positive numbers and zero    | `printf("% d", 42)` : ` 42`                                 |
 | `#`     | Alternate form (`0`/`0x` prefix or force dot) | `printf("%#x", 31)` : `0x1f`<br/>`printf("%#o", 8)` : `010` |
 
 #### Field Width
