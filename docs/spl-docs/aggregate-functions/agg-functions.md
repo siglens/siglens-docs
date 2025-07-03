@@ -605,4 +605,52 @@ index=web sourcetype=access_combined
 - The `convert ctime()` command formats the timestamp into a readable format.
 - This helps track the timeline of request types appearing in your system logs.
 
+## **sumsq(<value>)**
+This function returns the **sum of the squares** of values in a numeric field.
 
+### Usage
+
+You can use this function with the `stats`, `timechart`, and `chart` commands.  
+It is often used to evaluate the variance of a dataset. A large sum of squares indicates wide fluctuation from the mean.
+
+### Example
+
+- Calculate the sum of squares of `latency` values:
+
+    ```spl
+    ... | stats sumsq(latency)
+    ```
+
+- For each `city`, calculate the sum of squared latencies:
+
+    ```spl
+    ... | stats sumsq(latency) AS LatencySquareSum BY city
+    ```
+
+- Show a timechart of `sumsq(latency)` per city every hour:
+
+    ```spl
+    ... | timechart span=1h sumsq(latency) BY city
+    ```
+
+### Use-Case Example
+
+**Measure Network Latency Variance Across Locations**
+
+**Problem:** A network engineer wants to identify cities with high fluctuations in latency over time.
+
+**Solution:** Use the `sumsq()` function to calculate the squared sum of `latency` values by city, which can help in determining variance trends.
+
+**Implementation:**
+
+```spl
+index=server_metrics sourcetype=latency_logs
+| stats sumsq(latency) AS LatencyFluctuation BY city
+| sort - LatencyFluctuation
+```
+
+**Explanation**:
+
+- This query computes the sum of squares of the `latency` field grouped by each `city`.
+- Larger values indicate cities where latency fluctuates significantly from the average.
+- This insight can be used for troubleshooting unstable regions in the network.
