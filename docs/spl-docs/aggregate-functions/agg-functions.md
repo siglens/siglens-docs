@@ -354,3 +354,54 @@ index=app_usage sourcetype=user_sessions
 - The `stats` command calculates the distinct count of `user_id` for each `device_type`.
 - Results are sorted in descending order of unique user count.
 - The output will show each device type and its corresponding number of unique users, helping understand user engagement across different devices.
+
+## **varp(<value>)**
+This function returns the population variance of the values in a field.
+
+### Usage
+
+You can use this function with the `stats` and `timechart` commands.  
+The field must contain numeric values.
+
+### Example
+
+- Calculate the population variance of the `latency` field:
+
+    ```spl
+    ... | stats varp(latency)
+    ```
+
+- For each city, calculate the variance of response time:
+
+    ```spl
+    ... | stats varp(latency) AS LatencyVariance BY city
+    ```
+
+- The following example displays a timechart of population variance of latency over time:
+
+    ```spl
+    ... | timechart span=1h varp(latency) BY city
+    ```
+
+### Use-Case Example
+
+**Analyze Latency Stability Across Cities**
+
+**Problem:** A site reliability engineer wants to understand how stable network latency is across different cities.
+
+**Solution:** Use the `stats` command with the `varp` function to calculate the population variance of the `latency` field for each city.
+
+**Implementation:**
+
+```spl
+index=server_metrics sourcetype=latency_logs
+| stats varp(latency) AS LatencyVariance BY city
+| sort - LatencyVariance
+```
+
+**Explanation**:
+
+- This query calculates the population variance of `latency` for each `city`.
+- The `stats` command aggregates variance per city to help identify regions with inconsistent network behavior.
+- A high variance suggests that latency is fluctuating significantly, possibly indicating infrastructure or routing issues.
+
