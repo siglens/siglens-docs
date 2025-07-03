@@ -90,8 +90,9 @@ The conversion specifiers follow the syntax: `%[<flags>][<width>][.<precision>]<
 
 | Width     | Description                                 | Example                                |
 |-----------|---------------------------------------------|----------------------------------------|
-| number    | Minimum field width (pads with spaces)      | `printf("%6s", "go")` : `"    go"`     |
-| `*`       | Dynamic width from argument                 | `printf("%*d", 5, 7)` : `"    7"`      |
+| number    | Minimum field width (pads with spaces)      | `printf("%6s", "go")` : `    go`       |
+| `*`       | Dynamic width from argument                 | `printf("%*d", 5, 7)` : `    7`        |
+<!-- We use non-breaking spaces to type the Example outputs because normal spaces collapse into a single space -->
 
 #### Precision
 
