@@ -505,4 +505,54 @@ index=users sourcetype=activity_logs
 - This helps monitor the recency of different job-related activities across regions.
 - Results are sorted for easy comparison by city.
 
+## **earliest(<value>)**
+This function returns the earliest observed value in a field based on chronological order.
+
+### Usage
+
+You can use this function with the `stats` and `timechart` commands.  
+This function processes values in the order of event time and selects the first one seen.
+
+### Example
+
+- Return the earliest observed `user_color` value:
+
+    ```spl
+    ... | stats earliest(user_color)
+    ```
+
+- For each `city`, find the first `http_method` used:
+
+    ```spl
+    ... | stats earliest(http_method) AS FirstMethod BY city
+    ```
+
+- Display a timechart of the earliest `job_title` seen over time for each city:
+
+    ```spl
+    ... | timechart span=1h earliest(job_title) BY city
+    ```
+
+### Use-Case Example
+
+**Identify the First Job Title Recorded Per City**
+
+**Problem:** A data analyst wants to track the earliest job title recorded for users in each city.
+
+**Solution:** Use the `stats` command with the `earliest` function to extract the chronologically first job title seen in each location.
+
+**Implementation:**
+
+```spl
+index=users sourcetype=activity_logs
+| stats earliest(job_title) AS FirstSeenJob BY city
+| sort city
+```
+
+**Explanation**:
+
+- The `earliest()` function finds the first value observed for `job_title` by timestamp.
+- It is useful for detecting original data points, like first-seen users or starting values in time series.
+- Sorting by city allows clear inspection of regional first-occurrence trends.
+
 
