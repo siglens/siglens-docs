@@ -354,3 +354,139 @@ index=app_usage sourcetype=user_sessions
 - The `stats` command calculates the distinct count of `user_id` for each `device_type`.
 - Results are sorted in descending order of unique user count.
 - The output will show each device type and its corresponding number of unique users, helping understand user engagement across different devices.
+
+## **perc&lt;percentile&gt;(&lt;value&gt;)**
+
+### Description
+The percentile functions return the Nth percentile value of the numeric field \<value\>. You can think of this as an estimate of where the top percentile starts. For example, a 95th percentile says that 95% of the values in field Y are below the estimate and 5% of the values in field \<value\> are above the estimate.
+
+Valid percentile values are floating point numbers between 0 and 100, such as 99.95. 
+I can help you convert that into a Markdown table. Here it is:
+
+| Function | Description |
+|---|---|
+| `perc<percentile>(<value>)` or `p<percentile>(<value>)` | Use the perc function to calculate an approximate threshold, such that of the values in field Y, X percent fall below the threshold. The perc function returns a single number that represents the lower end of the approximate values for the percentile requested. |  
+
+The percentile functions process field values as strings
+
+> **Note:** The **perc** and **upperperc** functions are nondeterministic, which means that that subsequent searches using these functions over identical data can return variances in their results.  
+
+### Usage
+
+You can use this function with the [stats](../stats-command.md), [timechart](../timechart-command.md), commands.
+
+### Differences between SigLens and Excel percentile algorithms
+
+If there are less than 1000 distinct values, the Splunk percentile functions use the nearest rank algorithm. See <a href="http://en.wikipedia.org/wiki/Percentile#Nearest_rank">Nearest Rank</a>. Excel uses the NIST interpolated algorithm, which basically means you can get a value for a percentile that does not exist in the actual data, which is not possible for the nearest rank approach.
+
+### SigLens algorithm with more than 1000 distinct values
+
+If there are more than 1000 distinct values for the field, the percentiles are approximated using a radix-tree digest-based algorithm. This algorithm is much faster and uses much less memory, a constant amount, than an exact computation, which uses memory in linear relation to the number of distinct values. By default this approach limits the approximation error to \< 1% of rank error. That means if you ask for 95th percentile, the number you get back is between the 94th and 96th percentile.
+
+### Basic examples
+
+Consider this list of values `Y = {10,9,8,7,6,5,4,3,2,1}`.
+
+The following example returns 5.5.
+
+```splunk
+...| stats perc50(Y)
+```
+
+The following example returns 9.55.
+
+```splunk
+...| stats perc95(Y)
+```
+
+### Extended example
+
+Consider the following set of data, which shows the number of visitors for each hour a store is open:
+
+| hour | visitors |
+|---|---|
+| 0800 | 0 |
+| 0900 | 212 |
+| 1000 | 367 |
+| 1100 | 489 |
+| 1200 | 624 |
+| 1300 | 609 |
+| 1400 | 492 |
+| 1500 | 513 |
+| 1600 | 376 |
+| 1700 | 337 |
+
+This data resides in the `visitor_count` index. You can use the `streamstats` command to create a cumulative total for the visitors.
+
+```splunk
+index=visitor_count | streamstats sum(visitors) as 'visitors total'
+```
+
+The results from this search look like this:
+
+| hour | visitors | visitors total |
+|---|---|---|
+| 0800 | 0 | 0 |
+| 0900 | 212 | 212 |
+| 1000 | 367 | 579 |
+| 1100 | 489 | 1068 |
+| 1200 | 624 | 1692 |
+| 1300 | 609 | 2301 |
+| 1400 | 492 | 2793 |
+| 1500 | 513 | 3306 |
+| 1600 | 376 | 3673 |
+| 1700 | 337 | 4010 |
+
+Let's add the `stats` command with the `perc` function to determine the 50th and 95th percentiles.
+
+```splunk
+index=visitor_count | streamstats sum(visitors) as 'visitors total' | stats perc50('visitors total') perc95('visitors total')
+```
+
+The results from this search look like this:
+
+| perc50(visitors total) | perc95(visitors total) |
+|---|---|
+| 1996.5 | 3858.35 |
+
+The `perc50` estimates the 50th percentile, when 50% of the visitors had arrived. You can see from the data that the 50th percentile was reached between visitor number 1996 and 1997, which was sometime between 1200 and 1300 hours. The `perc95` estimates the 95th percentile, when 95% of the visitors had arrived. The 95th percentile was reached with visitor 3858, which occurred between 1600 and 1700 hours.  
+
+## **median(&lt;value&gt;)**
+
+### Description
+
+Returns the middle-most value of the field specified.
+
+### Usage
+
+You can use this function with the [stats](../stats-command.md) and [timechart](../timechart-command.md) commands.
+
+If you have an even number of events, by default the median calculation is approximated to the higher of the two values.
+
+> **Note:** This function is, by its nature, nondeterministic. This means that subsequent runs of a search using this function over identical data can contain slight variances in their results.
+
+### Basic examples
+
+Consider the following list of values, which counts the number of different customers who purchased something from the Buttercup Games online store yesterday. The values are organized by the type of product (accessories, t-shirts, and type of games) that customers purchased.
+
+| categoryId  | count |
+|-------------|-------|
+| ACCESSORIES | 37    |
+| ARCADE      | 58    |
+| NULL        | 8     |
+| SIMULATION  | 34    |
+| SPORTS      | 13    |
+| STRATEGY    | 74    |
+| TEE         | 38    |
+
+When the list is sorted the median, or middle-most value, is 37.
+
+| categoryId  | count |
+|-------------|-------|
+| NULL        | 8     |
+| SPORTS      | 13    |
+| SIMULATION  | 34    |
+| ACCESSORIES | 37    |
+| TEE         | 38    |
+| ARCADE      | 58    |
+| STRATEGY    | 74    |
