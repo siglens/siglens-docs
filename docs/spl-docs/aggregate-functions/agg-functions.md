@@ -448,9 +448,61 @@ index=users sourcetype=activity_logs
 | stats latest(job_title) AS LatestJobTitle BY city
 | sort city
 ```
+
 **Explanation**:
 
 - The `latest` function picks the most recent `job_title` for each `city` based on event timestamp.
 - This helps track shifting trends in job-related data across different locations.
 - Sorting by `city` allows for easy scanning of geographic patterns.
+
+## **latest_time(<value>)**
+This function returns the UNIX timestamp of the most recent occurrence of a value in a field.
+
+### Usage
+
+You can use this function with the `stats` and `timechart` commands.  
+It is helpful for tracking the last time a value appeared in event data or metrics.  
+
+### Example
+
+- Show the last time each `http_status` was seen:
+
+    ```spl
+    ... | stats latest_time(http_status) AS LastSeenTime BY http_status
+    ```
+
+- Get the latest timestamp when each `job_company` was mentioned:
+
+    ```spl
+    ... | stats latest_time(job_company) AS LastMentionedTime
+    ```
+
+- Display a timechart of the last time `user_color` was seen by city:
+
+    ```spl
+    ... | timechart span=1h latest_time(user_color) BY city
+    ```
+
+### Use-Case Example
+
+**Determine When Each Job Title Was Last Observed**
+
+**Problem:** An HR analyst wants to know when a specific `job_title` was last recorded in the logs for each city.
+
+**Solution:** Use the `latest_time` function with `stats` to retrieve the most recent timestamp for each job title seen in various cities.
+
+**Implementation:**
+
+```spl
+index=users sourcetype=activity_logs
+| stats latest_time(job_title) AS LastSeenJobTime BY city
+| sort city
+```
+
+**Explanation**:
+
+- The `latest_time()` function extracts the most recent time a `job_title` appeared in the dataset for each city.
+- This helps monitor the recency of different job-related activities across regions.
+- Results are sorted for easy comparison by city.
+
 
