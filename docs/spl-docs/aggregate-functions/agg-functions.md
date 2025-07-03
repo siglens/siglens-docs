@@ -555,4 +555,54 @@ index=users sourcetype=activity_logs
 - It is useful for detecting original data points, like first-seen users or starting values in time series.
 - Sorting by city allows clear inspection of regional first-occurrence trends.
 
+## **earliest_time(<value>)**
+This function returns the UNIX timestamp of the earliest-seen occurrence of a value in a field.
+
+### Usage
+
+You can use this function with the `stats` and `timechart` commands.  
+This function outputs numeric UNIX time and is useful in time-based aggregations.
+
+### Example
+
+- Get the earliest timestamp when each `http_method` was seen:
+
+    ```spl
+    ... | stats earliest_time(http_method) AS FirstSeenTime BY http_method
+    ```
+
+- For each `job_title`, return when it was first observed:
+
+    ```spl
+    ... | stats earliest_time(job_title) AS FirstTimestamp BY job_title
+    ```
+
+- Display a timechart of earliest occurrence of each `user_color`:
+
+    ```spl
+    ... | timechart span=1h earliest_time(user_color) BY user_color
+    ```
+
+### Use-Case Example
+
+**Monitor First Appearance of HTTP Methods**
+
+**Problem:** A security analyst wants to monitor when each type of HTTP method (e.g., POST, GET) was first observed in logs.
+
+**Solution:** Use the `stats` command with `earliest_time()` to find the first UNIX timestamp for each method.
+
+**Implementation:**
+
+```spl
+index=web sourcetype=access_combined
+| stats earliest_time(http_method) AS FirstObservedTime BY http_method
+| convert ctime(FirstObservedTime)
+```
+
+**Explanation**:
+
+- This query aggregates the earliest seen time (in UNIX epoch) for each distinct `http_method`.
+- The `convert ctime()` command formats the timestamp into a readable format.
+- This helps track the timeline of request types appearing in your system logs.
+
 
