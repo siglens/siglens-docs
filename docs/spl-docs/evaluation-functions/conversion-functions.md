@@ -80,7 +80,7 @@ The conversion specifiers follow the syntax: `%[<flags>][<width>][.<precision>]<
 | Flag    | Description                                   | Example                                                     |
 |---------|-----------------------------------------------|----------------------------------------------------------   |
 | `'`     | Adds commas as thousands separators           | `printf("%'d", 1234567)` : `1,234,567`                      |
-| `-`     | Left‑justify                                  | `printf("\|%-5d\|", 42)` : `\|42   \|`                      |
+| `-`     | Left-justify                                  | `printf("\|%-5d\|", 42)` : `\|42   \|`                      |
 | `0`     | Pad number with leading zeros                 | `printf("%05d", 42)` : `00042`                              |
 | `+`     | Always include sign                           | `printf("%+d", 42)` : `+42`<br/>`printf("%+d", 0)` : `+0`   |
 | (space) | Prefix space for positive numbers and zero    | `printf("% d", 42)` : ` 42`                                 |
@@ -106,9 +106,9 @@ The conversion specifiers follow the syntax: `%[<flags>][<width>][.<precision>]<
 
 ### Use-Case Example
 
-**Problem**: An operations team needs to generate a human‑readable report in Splunk that shows disk usage percentages and service names in aligned columns. The default output is hard to scan because numeric fields and strings vary in length.
+**Problem**: An operations team needs to generate a human-readable report in Splunk that shows disk usage percentages and service names in aligned columns. The default output is hard to scan because numeric fields and strings vary in length.
 
-**Solution**: The `printf` function can format numbers and strings with fixed widths, padding, and precision. By left‑justifying service names and zero‑padding percentages to two decimal places, the report becomes easy to read.
+**Solution**: The `printf` function can format numbers and strings with fixed widths, padding, and precision. By left-justifying service names and zero-padding percentages to two decimal places, the report becomes easy to read.
 
 **Implementation**:
 
@@ -121,8 +121,8 @@ The conversion specifiers follow the syntax: `%[<flags>][<width>][.<precision>]<
 
 - The `eval` command `round(disk_used / disk_total * 100, 2)` computes the disk usage percentage to two decimal places
 - `printf("%-20s %06.2f%%", service_name, pct_used)`:
-   - `%-20s` left-justifies the service name in a 20‑character field
-   - `%06.2f`formats the percentage with at least 6 characters, two after the decimal, and padding with leading zeros
+   - `%-20s` left-justifies the service name in a 20-character field
+   - `%06.2f`formats the percentage with at least 6 characters, two after the decimal, padding with leading zeros
    - `%%` emits a literal percent symbol
 - `table report_line` displays each formatted line as a single column, making it easy to scan service names and usage side by side
 
