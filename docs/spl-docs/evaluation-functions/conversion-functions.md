@@ -14,7 +14,7 @@ A valid IPv4 address uses quad-dotted notation of four decimal integers, each ra
 
 For the `<mask>` argument, you can specify a default subnet mask like `255.255.255.0`.
 
-You can use this function with the `eval` and `where` commands, in the `WHERE` clause of the `from` command, and as part of evaluation expressions with other commands.
+You can use this function with the `eval` and `where` commands, and as part of evaluation expressions with other commands.
 
 ### Example
 
@@ -52,7 +52,7 @@ This function converts a string to a number. The base is optional and defaults t
 
 ### Usage
 
-You can use this function with the `eval` and `where` commands, in the `WHERE` clause of the `from` command, and as part of evaluation expressions with other commands.
+You can use this function with the `eval` and `where` commands, and as part of evaluation expressions with other commands.
 
 The `<str>` argument can be a field name or a value.
 
