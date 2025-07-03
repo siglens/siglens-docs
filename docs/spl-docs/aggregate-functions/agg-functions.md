@@ -405,3 +405,52 @@ index=server_metrics sourcetype=latency_logs
 - The `stats` command aggregates variance per city to help identify regions with inconsistent network behavior.
 - A high variance suggests that latency is fluctuating significantly, possibly indicating infrastructure or routing issues.
 
+## **latest(<value>)**
+This function returns the most recently seen value in a field, based on timestamp order.
+
+### Usage
+
+You can use this function with the `stats` and `timechart` commands.  
+The field is evaluated based on event time and the latest value is picked chronologically.
+
+### Example
+
+- Return the most recent `zip` value across all events:
+
+    ```spl
+    ... | stats latest(zip)
+    ```
+
+- For each `city`, show the latest observed `http_status`:
+
+    ```spl
+    ... | stats latest(http_status) AS LatestStatus BY city
+    ```
+
+- The following example displays a timechart of the latest `job_title` value by city over time:
+
+    ```spl
+    ... | timechart span=1h latest(job_title) BY city
+    ```
+
+### Use-Case Example
+
+**Track the Most Recent Job Title Seen Per City**
+
+**Problem:** A recruiter wants to monitor which job titles are most recently observed in various cities based on user activity.
+
+**Solution:** Use the `stats` command with the `latest` function to get the last recorded job title for each city.
+
+**Implementation:**
+
+```spl
+index=users sourcetype=activity_logs
+| stats latest(job_title) AS LatestJobTitle BY city
+| sort city
+```
+**Explanation**:
+
+- The `latest` function picks the most recent `job_title` for each `city` based on event timestamp.
+- This helps track shifting trends in job-related data across different locations.
+- Sorting by `city` allows for easy scanning of geographic patterns.
+
