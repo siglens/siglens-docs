@@ -122,7 +122,7 @@ The conversion specifiers follow the syntax: `%[<flags>][<width>][.<precision>]<
 - The `eval` command `round(disk_used / disk_total * 100, 2)` computes the disk usage percentage to two decimal places
 - `printf("%-20s %06.2f%%", service_name, pct_used)`:
    - `%-20s` left-justifies the service name in a 20‑character field
-   - `%06.2f`formats the percentage with at least 6 characters, two after the decimal, padding with leading zeros
+   - `%06.2f`formats the percentage with at least 6 characters, two after the decimal, and padding with leading zeros
    - `%%` emits a literal percent symbol
 - `table report_line` displays each formatted line as a single column, making it easy to scan service names and usage side by side
 
