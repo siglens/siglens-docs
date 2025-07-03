@@ -20,7 +20,7 @@ Required syntax is in **bold**.
 
 #### tojson-function
 **Syntax:** `[auto|bool|json|none|num|str](<wc-field>)...`  
-**Description:** Applies JSON datatype functions to values of named fields. See Usage for details about how `tojson` interprets these datatype functions, and how `tojson` applies datatypes to field values when it converts events into JSON objects.  
+**Description:** Applies JSON datatype functions to values of named fields. See [Usage](#usage) for details about how `tojson` interprets these datatype functions, and how `tojson` applies datatypes to field values when it converts events into JSON objects.  
 If you provide no fields, the tojson processor creates JSON objects for each event that include all available fields. In other words, it applies `none(*)` to the search.  
 **Default**: `none(*)`
 
