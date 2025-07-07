@@ -407,6 +407,62 @@ index=circle_data
 
 This ensures that the user can accurately calculate the area of a circle given its radius using the precise value of π.
 
+## **sigfig(&lt;num&gt;)**
+
+This function rounds a number to the appropriate number of significant figures.
+
+### Usage
+
+The `<num>` argument can be the name of a numeric field or a numeric literal.
+
+You can use this function with the `eval` and `where` commands, and as part of evaluation expressions with other commands.
+
+### How sigfig Is Computed
+
+The number of significant figures is based on the type of calculation that produced the value:
+
+- For multiplication and division, the result should have the minimum number of significant figures among all operands. `sigfig(34.56 * 1.0) = 35`
+- For addition and subtraction, the result should have the same number of decimal places as the least precise operand. `sigfig(12.34 + 10.0) = 22.3`
+
+### Examples
+
+The numbers `123.0` and `4.567` have different precision:
+
+- `123.0` has 1 decimal place  
+- `4.567` has 3 decimal places
+
+If the expression is:
+
+```spl
+| eval x = 123.0 + 4.567
+| eval rounded = sigfig(x)
+```
+
+Then `sigfig(x)` returns `127.6`, not `127.567`, because the least precise operand (`123.0`) dictates 1 decimal place.
+
+### Special cases
+
+Integers are considered to have infinite precision and an infinite number of decimals.
+- `sigfig(1 + 0.1) = 1.1` 
+- `sigfig(1 / 11) = 0.09090909090909091`
+
+---
+
+#### Use-Case Example
+
+To suppress floating-point noise:
+
+```spl
+* | stats avg(latency) AS avg_latency
+| eval avg_latency_pretty = sigfig(avg_latency * 1.00)
+```
+
+- `* | stats avg(latency) AS avg_latency` will give the average latency, but it will have floating-point noise
+- `sigfig(avg_latency * 1.00)` gives the average latency rounded to 2 decimal places
+- Multiplying by `1.00` controls the precision
+  - `1.00` = 2 decimal places
+  - `1.0000` = 4 decimal places
+
 ## sqrt(\<num>)
 
 This function returns the square root of a number.
