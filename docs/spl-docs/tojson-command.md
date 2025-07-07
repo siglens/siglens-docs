@@ -31,7 +31,7 @@ If you provide no fields, the tojson processor creates JSON objects for each eve
 
 #### fill_null
 **Syntax:** `fill_null=<boolean>`  
-**Description:** When set to true, `tojson` outputs a literal `null` value when `tojson` skips a value. For example, normally, when `tojson` tries to apply the `json` datatype to a field that does not have proper JSON formatting, `tojson` skips the field. However, if `fill_null=true`, the `tojson` processor outputs a `null` value  
+**Description:** When set to true, `tojson` outputs a literal `null` value when `tojson` skips a value. For example, normally, when `tojson` tries to apply the `json` datatype to a field that does not have proper JSON formatting, `tojson` skips the field. However, if `fill_null=true`, the `tojson` processor outputs a `null` value.  
 **Default:** `false`
 
 #### include_internal
@@ -45,7 +45,7 @@ If you provide no fields, the tojson processor creates JSON objects for each eve
 **Default:** `_raw` 
 
 ### Usage
-The `tojson` command is a <a href="https://docs.splunk.com/Splexicon:Streamingcommand" target="_blank" rel="noopener">streaming command</a>, which means it operates on each event as it is returned by the search.
+The `tojson` command operates on each event as it is returned by the search.
 
 #### Apply JSON datatypes to field values
 The `tojson` command applies JSON datatypes to field values according to logic encoded in its datatype functions.
@@ -58,13 +58,12 @@ The following table explains the logic that the various datatype functions use t
 
 | Datatype function | Conversion logic |
 |-------------------|------------------|
-| **auto** | Converts all values of the specified field into JSON-formatted output. Automatically determines the field datatypes. • If the value is numeric, the JSON output has a numeric output and includes a literal numeric. • If the value is the string `true` or `false`, the JSON output has a Boolean type. • If the value is a literal `null`, the JSON output has a null type and includes a null value. • If the value is a string other than the previously mentioned strings, `tojson` examines the string. If it is proper JSON, `tojson` outputs a nested JSON object. If not, it includes the string as-is. |
-| **bool** | Converts valid values of the specified field to the Boolean datatype and skips invalid values using string validation. • If the value is a number, `tojson` outputs `false` only if the value is `0`. Otherwise it outputs `true`. • If the value is a string, `tojson` outputs `false` only if the value is `false`, `f`, or `no`. • `tojson` outputs `true` only if the value is `true`, `t`, or `yes`. Other strings are skipped. • Validation is case-insensitive: `FALSE`, `False`, `F`, `NO`, etc. are interpreted as `false`. |
-| **json** | Converts all values of the specified field to the JSON type using string validation. Skips invalid JSON values. • If the value is a number, `tojson` outputs that number. • If the value is a string, `tojson` outputs the string as a JSON block. • Invalid JSON values are skipped. |
-| **none** | Outputs all values for the specified field in the JSON type. No string validation is applied. • Numeric values are output with a numeric type. • String values are output with a string type. |
-| **num** | Converts all values of the specified field to the numeric type using string validation. • If the value is a number, it is output as a numeric type. • If the value is a string, `tojson` attempts to parse it as a number. Invalid strings are skipped. |
-| **str** | Converts all values of the specified field into the string datatype using string validation. The `tojson` processor applies the string type to all values of the specified field, even if they are numbers, Booleans, etc. |
-
+| **auto** | - Converts all values of the specified field into JSON-formatted output.<br/>- Automatically determines the field datatypes.<br/>  - If the value is numeric, the JSON output has a numeric output and includes a literal numeric.<br/>  - If the value is the string `true` or `false`, the JSON output has a Boolean type.<br/>  - If the value is a literal `null`, the JSON output has a null type and includes a null value.<br/>  - If the value is a string other than the previously mentioned strings, `tojson` examines the string. If it is proper JSON, `tojson` outputs a nested JSON object. If not, it includes the string as-is. |
+| **bool** | - Converts valid values of the specified field to the Boolean datatype and skips invalid values using string validation.<br/>  - If the value is a number, `tojson` outputs `false` only if the value is `0`. Otherwise it outputs `true`.<br/>  - If the value is a string, `tojson` outputs `false` only if the value is `false`, `f`, or `no`.<br/>  - `tojson` outputs `true` only if the value is `true`, `t`, or `yes`. Other strings are skipped.<br/>  - Validation is case-insensitive: `FALSE`, `False`, `F`, `NO`, etc. are interpreted as `false`. |
+| **json** | - Converts all values of the specified field to the JSON type using string validation.<br/>- Skips invalid JSON values.<br/>  - If the value is a number, `tojson` outputs that number.<br/>  - If the value is a string, `tojson` outputs the string as a JSON block.<br/>  - Invalid JSON values are skipped. |
+| **none** | - Outputs all values for the specified field in the JSON type.<br/>- No string validation is applied.<br/>  - Numeric values are output with a numeric type.<br/>  - String values are output with a string type. |
+| **num** | - Converts all values of the specified field to the numeric type using string validation.<br/>  - If the value is a number, it is output as a numeric type.<br/>  - If the value is a string, `tojson` attempts to parse it as a number. Invalid strings are skipped. |
+| **str** | - Converts all values of the specified field into the string datatype using string validation.<br/>- The `tojson` processor applies the string type to all values of the specified field, even if they are numbers, Booleans, etc. |
 
 When a field includes multivalues, `tojson` outputs a JSON array and applies the datatype function logic to each element of the array. 
 
@@ -72,10 +71,10 @@ When a field includes multivalues, `tojson` outputs a JSON array and applies the
 
 ### 1\. Convert all events returned by a search into JSON objects
 
-This search of **`index=_internal`** converts all events it returns for its time range into **JSON-formatted** data. Because the search string doesn't assign datatype functions to specific fields, by default **`tojson`** applies the **`none`** datatype function to all fields returned by the search. This means all of their values get either the numeric or string datatypes.
+This query converts all events it returns for its time range into **JSON-formatted** data. Because the search string doesn't assign datatype functions to specific fields, by default **`tojson`** applies the **`none`** datatype function to all fields returned by the search. This means all of their values get either the numeric or string datatypes.
 
 ```splunk
-index=_internal | tojson
+... | tojson
 ```
 
 For example, say you start with events that look like this:
