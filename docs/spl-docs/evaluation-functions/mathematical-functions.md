@@ -446,8 +446,6 @@ Integers are considered to have infinite precision and an infinite number of dec
 - `sigfig(1 + 0.1) = 1.1` 
 - `sigfig(1 / 11) = 0.09090909090909091`
 
----
-
 #### Use-Case Example
 
 To suppress floating-point noise:
