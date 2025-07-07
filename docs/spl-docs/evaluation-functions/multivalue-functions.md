@@ -231,3 +231,52 @@ The result for `joined_numbers` will be `1 AND 2 AND 3 AND 4 AND 5`.
 2. The `mvjoin` function joins all selected options from the `selected_options` field into a single string, using "OR" as the delimiter.
 
 This approach is particularly useful for dynamically generating complex search queries based on user input, ensuring that all selected options are included in the query.
+
+## mvfilter(\<predicate\>)
+
+This function filters the values in a multivalue field based on a Boolean expression. It evaluates each value in the field and retains only those that satisfy the given condition.
+
+### Usage
+- The `<predicate>` parameter is a Boolean expression used to test each value in the multivalue field.
+- The expression **must reference only one field** at a time.
+- The function will include `NULL` values in the result. If you want to exclude them, use additional conditions like `mvfilter(!isnull(<value>))` or `mvfilter(isnotnull(<value>))`.
+- You can use `mvfilter` within commands like `eval`, `fieldformat`, and `where`.
+
+### Function Behavior
+- The function iterates over each value in the multivalue field and evaluates the Boolean expression for that value.
+- Only values for which the expression evaluates to `true` (or which are `NULL`, by default) are retained in the result.
+- This is useful when you want to refine multivalue fields based on pattern matches or logical conditions.
+
+### Example
+Consider a multivalue field `email` with the following values:
+
+```
+"abc@example.com", "support@help.net", "team@org.org", NULL
+```
+
+To filter and retain only the email addresses ending in `.net` or `.org`, use:
+
+```
+... | eval filtered_emails = mvfilter(match(email, "\.net$") OR match(email, "\.org$"))
+```
+
+The result for `filtered_emails` will be `"support@help.net", "team@org.org"`.
+
+### Use-Case Example
+
+**Filtering Valid Email Domains**
+
+**Problem:** You have a multivalue field containing various email addresses, and you want to retain only those from specific domains such as `.com` and `.org`.
+
+**Solution:** Use the `mvfilter` function with pattern matching conditions to keep only the relevant email values.
+
+```
+... | eval emails = split(user_email, ",") | eval filtered = mvfilter(match(emails, "\.com$") OR match(emails, "\.org$")) | where mvcount(filtered) > 0 | sort ident | fields filtered, ident, city | head 5
+```
+
+**Explanation:**
+1. The `split` function converts comma-separated email addresses into a multivalue field called `emails`.
+2. The `mvfilter` function retains only emails ending in `.com` or `.org` from the `emails` field.
+3. The `where` clause filters results to show only records that have at least one valid email after filtering.
+
+This method allows you to selectively filter multivalue fields based on complex conditions, enabling more targeted data analysis and processing.
