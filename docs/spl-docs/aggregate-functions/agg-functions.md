@@ -360,8 +360,7 @@ index=app_usage sourcetype=user_sessions
 ### Description
 The percentile functions return the Nth percentile value of the numeric field \<value\>. You can think of this as an estimate of where the top percentile starts. For example, a 95th percentile says that 95% of the values in field Y are below the estimate and 5% of the values in field \<value\> are above the estimate.
 
-Valid percentile values are floating point numbers between 0 and 100, such as 99.95. 
-I can help you convert that into a Markdown table. Here it is:
+Valid percentile values are floating point numbers between 0 and 100 (inclusive), such as 99.95. 
 
 | Function | Description |
 |---|---|
@@ -369,15 +368,15 @@ I can help you convert that into a Markdown table. Here it is:
 
 The percentile functions process field values as strings
 
-> **Note:** The **perc** and **upperperc** functions are nondeterministic, which means that that subsequent searches using these functions over identical data can return variances in their results.  
+> **Note:** The **perc** and **upperperc** functions are nondeterministic, which means that subsequent searches using these functions over identical data can return variances in their results.  
 
 ### Usage
 
-You can use this function with the [stats](../stats-command.md), [timechart](../timechart-command.md), commands.
+You can use this function with the [stats](../stats-command.md) and [timechart](../timechart-command.md) commands.
 
 ### Differences between SigLens and Excel percentile algorithms
 
-If there are less than 1000 distinct values, the Splunk percentile functions use the nearest rank algorithm. See <a href="http://en.wikipedia.org/wiki/Percentile#Nearest_rank" target="_blank" rel="noopener">Nearest Rank</a>. Excel uses the NIST interpolated algorithm, which basically means you can get a value for a percentile that does not exist in the actual data, which is not possible for the nearest rank approach.
+If there are less than 1000 distinct values, the SigLens percentile functions use the nearest rank algorithm. See <a href="http://en.wikipedia.org/wiki/Percentile#Nearest_rank" target="_blank" rel="noopener">Nearest Rank</a>. Excel uses the NIST interpolated algorithm, which basically means you can get a value for a percentile that does not exist in the actual data, which is not possible for the nearest rank approach.
 
 ### SigLens algorithm with more than 1000 distinct values
 
@@ -389,67 +388,15 @@ Consider this list of values `Y = {10,9,8,7,6,5,4,3,2,1}`.
 
 The following example returns 5.5.
 
-```splunk
+```spl
 ...| stats perc50(Y)
 ```
 
 The following example returns 9.55.
 
-```splunk
+```spl
 ...| stats perc95(Y)
 ```
-
-### Extended example
-
-Consider the following set of data, which shows the number of visitors for each hour a store is open:
-
-| hour | visitors |
-|---|---|
-| 0800 | 0 |
-| 0900 | 212 |
-| 1000 | 367 |
-| 1100 | 489 |
-| 1200 | 624 |
-| 1300 | 609 |
-| 1400 | 492 |
-| 1500 | 513 |
-| 1600 | 376 |
-| 1700 | 337 |
-
-This data resides in the `visitor_count` index. You can use the `streamstats` command to create a cumulative total for the visitors.
-
-```splunk
-index=visitor_count | streamstats sum(visitors) as 'visitors total'
-```
-
-The results from this search look like this:
-
-| hour | visitors | visitors total |
-|---|---|---|
-| 0800 | 0 | 0 |
-| 0900 | 212 | 212 |
-| 1000 | 367 | 579 |
-| 1100 | 489 | 1068 |
-| 1200 | 624 | 1692 |
-| 1300 | 609 | 2301 |
-| 1400 | 492 | 2793 |
-| 1500 | 513 | 3306 |
-| 1600 | 376 | 3673 |
-| 1700 | 337 | 4010 |
-
-Let's add the `stats` command with the `perc` function to determine the 50th and 95th percentiles.
-
-```splunk
-index=visitor_count | streamstats sum(visitors) as 'visitors total' | stats perc50('visitors total') perc95('visitors total')
-```
-
-The results from this search look like this:
-
-| perc50(visitors total) | perc95(visitors total) |
-|---|---|
-| 1996.5 | 3858.35 |
-
-The `perc50` estimates the 50th percentile, when 50% of the visitors had arrived. You can see from the data that the 50th percentile was reached between visitor number 1996 and 1997, which was sometime between 1200 and 1300 hours. The `perc95` estimates the 95th percentile, when 95% of the visitors had arrived. The 95th percentile was reached with visitor 3858, which occurred between 1600 and 1700 hours.  
 
 ## **median(&lt;value&gt;)**
 
@@ -463,7 +410,7 @@ You can use this function with the [stats](../stats-command.md) and [timechart](
 
 If you have an even number of events, by default the median calculation is approximated to the higher of the two values.
 
-> **Note:** This function is, by its nature, nondeterministic. This means that subsequent runs of a search using this function over identical data can contain slight variances in their results.
+> **Note:** This function behaves the same way as `perc50/p50`. 
 
 ### Basic examples
 
