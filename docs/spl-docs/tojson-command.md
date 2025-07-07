@@ -73,7 +73,7 @@ When a field includes multivalues, `tojson` outputs a JSON array and applies the
 
 This query converts all events it returns for its time range into **JSON-formatted** data. Because the search string doesn't assign datatype functions to specific fields, by default **`tojson`** applies the **`none`** datatype function to all fields returned by the search. This means all of their values get either the numeric or string datatypes.
 
-```splunk
+```spl
 ... | tojson
 ```
 
@@ -114,10 +114,10 @@ After being processed by **`tojson`**, such events have JSON formatting like thi
 
 ### 2\. Specify different datatypes for 'date' fields
 
-The following search of the **`_internal`** index converts results into JSON objects that have only the **`date_*`** fields from each event. The **numeric** datatype is applied to all **`date_hour`** field values. The **string** datatype is applied to all other date field values.
+The following query converts the results into JSON objects that have only the **`date_*`** fields from each event. The **numeric** datatype is applied to all **`date_hour`** field values. The **string** datatype is applied to all other date field values.
 
-```splunk
-index=_internal | tojson num(date_hour) str(date_*)
+```spl
+... | tojson num(date_hour) str(date_*)
 ```
 
 This search produces JSON objects like this:
@@ -143,7 +143,7 @@ Note that all fields that don't start with **`date_`** have been stripped from t
 
 This search returns JSON objects only for the **`name`**, **`age`**, and **`isRegistered`** fields. It uses the **`auto`** datatype function to have **`tojson`** automatically apply appropriate JSON datatypes to the values of those fields.
 
-```splunk
+```spl
 ... | tojson auto(name) auto(age) auto(isRegistered)
 ```
 
@@ -153,7 +153,7 @@ This search returns JSON objects only for the **`name`**, **`age`**, and **`isRe
 
 This search converts all of the fields in each event returned by the search into JSON objects. It uses the **`auto`** datatype function in conjunction with a wildcard to apply appropriate datatypes to the values of all fields returned by the search.
 
-```splunk
+```spl
 ... | tojson auto(*)
 ```
 
@@ -161,7 +161,7 @@ Notice that this search references the **`auto`** datatype function, which ensur
 
 Alternatively, you can use **`default_type`** to apply the **`auto`** datatype function to all fields returned by a search:
 
-```splunk
+```spl
 ... | tojson default_type=auto
 ```
 
@@ -171,7 +171,7 @@ Alternatively, you can use **`default_type`** to apply the **`auto`** datatype f
 
 This example generates JSON objects containing values of the **`isInternal`** field. It uses the **`bool`** datatype function to apply the Boolean datatype to those field values.
 
-```splunk
+```spl
 ... | tojson bool(isInternal)
 ```
 
@@ -181,7 +181,7 @@ This example generates JSON objects containing values of the **`isInternal`** fi
 
 This example demonstrates usage of the **`include_internal`** and **`fill_null`** arguments.
 
-```splunk
+```spl
 ... | tojson include_internal=true fill_null=true
 ```
 
@@ -191,6 +191,6 @@ This example demonstrates usage of the **`include_internal`** and **`fill_null`*
 
 This search generates JSON objects based on the values of four fields. It uses the **`default_type`** argument to convert the first three fields to the **`num`** datatype. It applies the string datatype to a fourth field. Finally, it writes the finished JSON objects to the field **`my_JSON_field`**.
 
-```splunk
+```spl
 ... | tojson age height weight str(name) default_type=num output_field=my_JSON_field
 ```
