@@ -355,7 +355,7 @@ index=app_usage sourcetype=user_sessions
 - Results are sorted in descending order of unique user count.
 - The output will show each device type and its corresponding number of unique users, helping understand user engagement across different devices.
 
-## **varp(<value>)**
+## **varp(`&lt;value&gt;`)**
 This function returns the population variance of the values in a field.
 
 ### Usage
@@ -405,7 +405,7 @@ index=server_metrics sourcetype=latency_logs
 - The `stats` command aggregates variance per city to help identify regions with inconsistent network behavior.
 - A high variance suggests that latency is fluctuating significantly, possibly indicating infrastructure or routing issues.
 
-## **latest(<value>)**
+## **latest(`&lt;value&gt;`)**
 This function returns the most recently seen value in a field, based on timestamp order.
 
 ### Usage
@@ -455,7 +455,7 @@ index=users sourcetype=activity_logs
 - This helps track shifting trends in job-related data across different locations.
 - Sorting by `city` allows for easy scanning of geographic patterns.
 
-## **latest_time(<value>)**
+## **latest_time(`&lt;value&gt;`)**
 This function returns the UNIX timestamp of the most recent occurrence of a value in a field.
 
 ### Usage
@@ -505,7 +505,7 @@ index=users sourcetype=activity_logs
 - This helps monitor the recency of different job-related activities across regions.
 - Results are sorted for easy comparison by city.
 
-## **earliest(<value>)**
+## **earliest(`&lt;value&gt;`)**
 This function returns the earliest observed value in a field based on chronological order.
 
 ### Usage
@@ -555,7 +555,7 @@ index=users sourcetype=activity_logs
 - It is useful for detecting original data points, like first-seen users or starting values in time series.
 - Sorting by city allows clear inspection of regional first-occurrence trends.
 
-## **earliest_time(<value>)**
+## **earliest_time(`&lt;value&gt;`)**
 This function returns the UNIX timestamp of the earliest-seen occurrence of a value in a field.
 
 ### Usage
@@ -605,7 +605,7 @@ index=web sourcetype=access_combined
 - The `convert ctime()` command formats the timestamp into a readable format.
 - This helps track the timeline of request types appearing in your system logs.
 
-## **sumsq(<value>)**
+## **sumsq(`&lt;value&gt;`)**
 This function returns the **sum of the squares** of values in a numeric field.
 
 ### Usage
