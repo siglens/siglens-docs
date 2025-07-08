@@ -247,7 +247,7 @@ Values are zipped in order:
 - If the lengths of the two fields differ, extra values from the longer field are ignored.
 
 ### Example
-The following command joins two multivalue fields using space ` ` as the delimiter.
+The following command joins two multivalue fields using space " " as the delimiter.
 ```
 ... | eval nserver=mvzip(mvfield1, mvfield2, " ")
 ```
