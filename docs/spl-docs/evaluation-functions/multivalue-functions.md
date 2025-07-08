@@ -231,3 +231,47 @@ The result for `joined_numbers` will be `1 AND 2 AND 3 AND 4 AND 5`.
 2. The `mvjoin` function joins all selected options from the `selected_options` field into a single string, using "OR" as the delimiter.
 
 This approach is particularly useful for dynamically generating complex search queries based on user input, ensuring that all selected options are included in the query.
+
+## mvzip(&lt;mv_left&gt;, &lt;mv_right&gt;, &lt;delim&gt;)
+This function combines the values in two multivalue fields by pairing corresponding elements and joining them with a delimiter.
+
+#### Usage
+- `<mv_left>` and `<mv_right>` must be multivalue fields of equal or similar length.
+- `<delim>` is an optional string literal specifying the delimiter to insert between paired values. If omitted, a comma (`,`) is used by default.
+- You can use this function with an `eval` command.
+- This function behaves similarly to Python's `zip()`.
+
+Values are zipped in order:
+- First value of `<mv_left>` with first value of `<mv_right>`,
+- Second with second, and so on.
+- If the lengths of the two fields differ, extra values from the longer field are ignored.
+
+### Example
+The following command joins two multivalue fields using space ` ` as the delimiter.
+```
+... | eval nserver=mvzip(mvfield1, mvfield2, " ")
+```
+
+### Use-Case Example
+
+**Combining Host-Port Pairs into a Single Field**
+
+**Problem:** You have two multivalue fields, `hosts` and `ports`, and you want to pair each host with its corresponding port (e.g. `host1:80`, `host2:443`).
+
+**Solution:** Use the `mvzip` function with a colon (`:`) delimiter to create a single multivalue field that merges the corresponding values.
+
+```
+... | eval host_port=mvzip(hosts, ports, ":")
+```
+
+**Explanation:**
+1. The `mvzip` function pairs values by position: `hosts[0]` with `ports[0]`, `hosts[1]` with `ports[1]`, etc.
+2. It joins each pair using the specified delimiter (`:` in this case).
+   - If `hosts = ["host1", "host2"]` and `ports = ["80", "443"]`, the result is `["host1:80", "host2:443"]`.
+3. The output is a new multivalue field that can be used for table displays, comparisons, or lookups.
+
+To combine more than two fields, you can nest the `mvzip` calls. For example:
+```
+... | eval three_fields_zip=mvzip(mvzip(field1, field2), field3)
+```
+This creates multivalue strings like: `value1,value2,value3`
