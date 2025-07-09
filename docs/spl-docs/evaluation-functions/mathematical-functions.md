@@ -409,7 +409,7 @@ This ensures that the user can accurately calculate the area of a circle given i
 
 ## **sigfig(&lt;num&gt;)**
 
-This function rounds a number to the appropriate number of significant figures.
+This function rounds a numeric expression result to the appropriate number of significant figures.
 
 ### Usage
 
