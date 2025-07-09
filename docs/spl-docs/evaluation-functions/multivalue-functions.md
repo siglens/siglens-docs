@@ -236,7 +236,7 @@ This approach is particularly useful for dynamically generating complex search q
 This function combines the values in two multivalue fields by pairing corresponding elements and joining them with a delimiter.
 
 #### Usage
-- `<mv_left>` and `<mv_right>` must be multivalue fields of equal or similar length.
+- `<mv_left>` and `<mv_right>` must be multivalue fields.
 - `<delim>` is an optional string literal specifying the delimiter to insert between paired values. If omitted, a comma (`,`) is used by default.
 - You can use this function with an `eval` command.
 - This function behaves similarly to Python's `zip()`.
