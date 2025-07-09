@@ -236,7 +236,7 @@ This approach is particularly useful for dynamically generating complex search q
 This function takes a multivalue field and returns a new multivalue field with its values sorted lexicographically.
 
 #### Usage
-- `<mv>` must be a multivalue field, either the result of a function like `split()` or a directly ingested multivalue field.
+- `<mv>` must be a multivalue field, such as the result of a function like `split()`.
 - Sorting is lexicographic: values are compared by byte order in UTF-8 encoding.
    - Numbers are sorted before letters.
    - Uppercase letters precede lowercase letters.
