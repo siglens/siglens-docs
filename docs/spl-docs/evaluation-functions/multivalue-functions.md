@@ -232,6 +232,42 @@ The result for `joined_numbers` will be `1 AND 2 AND 3 AND 4 AND 5`.
 
 This approach is particularly useful for dynamically generating complex search queries based on user input, ensuring that all selected options are included in the query.  
 
+## mvsort(&lt;mv&gt;)
+This function takes a multivalue field and returns a new multivalue field with its values sorted lexicographically.
+
+#### Usage
+- `<mv>` must be a multivalue field, such as the result of a function like `split()`.
+- Sorting is lexicographic: values are compared by byte order in UTF-8 encoding.
+   - Numbers are sorted before letters.
+   - Uppercase letters precede lowercase letters.
+   - Symbols are sorted depending on encoding.
+   - For example: `mvsort(split("one,Two,30,4", ","))` results in `["30", "4", "Two", "one"]`
+- You can use this function with an `eval` command.
+
+### Example
+The following command sorts the values in the `fruits` field lexicographically.
+```
+... | eval sorted_fruits=mvsort(split("banana,apple,mango,kiwi", ","))
+```
+
+### Use-Case Example
+
+**Normalizing Field Values for Accurate Grouping**
+
+**Problem:** Multivalue fields with unordered entries can lead to inconsistent groupings or false mismatches. For instance, two rows with values `"beta,alpha"` and `"alpha,beta"` are semantically the same but differ byte-wise.
+
+**Solution:** To ensure consistent grouping and comparisons, the multivalue field can be sorted using `mvsort` before applying further logic.
+
+```
+... | eval tags=split("beta:alpha:gamma", ":") | eval sorted_tags=mvsort(tags)
+```
+
+**Explanation:**
+1. The `split` function creates a multivalue field `tags` from a colon-delimited string.
+2. `mvsort` reorders the values in lexicographic (UTF-8) byte order: `"alpha", "beta", "gamma"`.
+
+Using `mvsort` ensures consistency across pipelines and helps avoid logic errors caused by value ordering mismatches.
+
 ## mvappend(\<values\>)
 
 ### Description
