@@ -14,7 +14,7 @@ A valid IPv4 address uses quad-dotted notation of four decimal integers, each ra
 
 For the `<mask>` argument, you can specify a default subnet mask like `255.255.255.0`.
 
-You can use this function with the `eval` and `where` commands, in the `WHERE` clause of the `from` command, and as part of evaluation expressions with other commands.
+You can use this function with the `eval` and `where` commands, and as part of evaluation expressions with other commands.
 
 ### Example
 
@@ -46,13 +46,94 @@ You can use this function with the `eval` and `where` commands, in the `WHERE` c
 - An `if` statement checks if the masked IP address does not match the office network's subnet (`192.168.1.0`), marking it as `true` for external network devices.
 - The `where` clause filters the results to include only devices identified as being outside the office network, highlighting potential unauthorized access attempts or firewall configuration issues.
 
+## **printf(&lt;format_specifier&gt;[,&lt;argument&gt;]...)**
+
+This function generates a string formatted using the arguments passed to it. The syntax for `<format_specifier>` is similar to that of C's `printf()` function.
+
+### Usage
+
+The `<format_specifier>` argument must be a valid format specifier, or a field name containing a valid format specifier. Each `<argument>` may be a value of the appropriate data type or a field name containing a value of the appropriate data type.
+
+You can use this function with the `eval` and `where` commands, and as part of evaluation expressions with other commands.
+
+### Printf Format Specifiers
+
+The conversion specifiers follow the syntax: `%[<flags>][<width>][.<precision>]<conversion_specifier>`
+
+#### Conversion Specifier
+
+| Specifier(s) | Description               | Example                                     |
+|--------------|---------------------------|---------------------------------------------|
+| `%d`         | Signed decimal integer    | `printf("%d", 123)` : `123`                 |
+| `%u`         | Unsigned decimal integer  | `printf("%u", 123)` : `123`                 |
+| `%o`         | Unsigned octal            | `printf("%o", 8)` : `10`                    |
+| `%x`, `%X`   | Hexadecimal (lower/upper) | `printf("%x, %X", 255, 255)` : `ff, FF`     |
+| `%f`         | Floating point (decimal)  | `printf("%.2f", 3.14159)` : `3.14`          |
+| `%e`         | Float (exponential)       | `printf("%.1e", 12345.0)` : `1.2e+04`       |
+| `%g`         | Float (auto `%e` or `%f`) | `printf("%.3g", 12345.0)` : `1.23e+04`      |
+| `%s`         | String                    | `printf("%s", "go")` : `go`                 |
+| `%c`         | Unicode code point        | `printf("%c", 65)` : `A`                    |
+| `%%`         | Literal percent sign      | `printf("%%")` : `%`                        |
+
+#### Flags
+
+| Flag    | Description                                   | Example                                                     |
+|---------|-----------------------------------------------|----------------------------------------------------------   |
+| `'`     | Adds commas as thousands separators           | `printf("%'d", 1234567)` : `1,234,567`                      |
+| `-`     | Left-justify                                  | `printf("\|%-5d\|", 42)` : `\|42   \|`                      |
+| `0`     | Pad number with leading zeros                 | `printf("%05d", 42)` : `00042`                              |
+| `+`     | Always include sign                           | `printf("%+d", 42)` : `+42`<br/>`printf("%+d", 0)` : `+0`   |
+| (space) | Prefix space for positive numbers and zero    | `printf("% d", 42)` : ` 42`                                 |
+| `#`     | Alternate form (`0`/`0x` prefix or force dot) | `printf("%#x", 31)` : `0x1f`<br/>`printf("%#o", 8)` : `010` |
+
+#### Field Width
+
+| Width     | Description                                 | Example                                |
+|-----------|---------------------------------------------|----------------------------------------|
+| number    | Minimum field width (pads with spaces)      | `printf("%6s", "go")` : `    go`       |
+| `*`       | Dynamic width from argument                 | `printf("%*d", 5, 7)` : `    7`        |
+<!-- We use non-breaking spaces to type the Example outputs because normal spaces collapse into a single space -->
+
+#### Precision
+
+| Applies To                    | Description                                  | Example                                         |
+|-------------------------------|----------------------------------------------|-------------------------------------------------|
+| `%d`,`%i`,`%o`,`%u`,`%x`      | Minimum digits (pads with zeros)             | `printf("%.5d", 42)` : `00042`                  |
+| `%f`,`%e`,`%g`                | Digits after decimal / significant digits    | `printf("%.3f", 2.71828)` : `2.718`             |
+| `%s`                          | Maximum string length                        | `printf("%.3s", "gopher")` : `gop`              |
+| `.*`                          | Precision specified by argument              | `printf("%.*f", 3, 1.23456)` : `1.235`          |
+| `.` (no number)               | Precision zero                               | `printf("%.d", 0)` : `​`(_empty string_)<br/>`printf("%.f", 12.34)` : `12`                   |
+<!-- We use a zero-width space between the backticks in the first Precision-zero example to show an empty string; it shows up as two backticks otherwise -->
+
+### Use-Case Example
+
+**Problem**: An operations team needs to generate a human-readable report in Splunk that shows disk usage percentages and service names in aligned columns. The default output is hard to scan because numeric fields and strings vary in length.
+
+**Solution**: The `printf` function can format numbers and strings with fixed widths, padding, and precision. By left-justifying service names and zero-padding percentages to two decimal places, the report becomes easy to read.
+
+**Implementation**:
+
+```spl
+... | eval pct_used = round(disk_used / disk_total * 100, 2), report_line = printf("%-20s %06.2f%%", service_name, pct_used) | table report_line
+```
+
+
+**Explanation**:
+
+- The `eval` command `round(disk_used / disk_total * 100, 2)` computes the disk usage percentage to two decimal places
+- `printf("%-20s %06.2f%%", service_name, pct_used)`:
+   - `%-20s` left-justifies the service name in a 20-character field
+   - `%06.2f`formats the percentage with at least 6 characters, two after the decimal, padding with leading zeros
+   - `%%` emits a literal percent symbol
+- `table report_line` displays each formatted line as a single column, making it easy to scan service names and usage side by side
+
 ## **tonumber(&lt;str&gt;, &lt;base&gt;)**
 
 This function converts a string to a number. The base is optional and defaults to base 10 if not specified.
 
 ### Usage
 
-You can use this function with the `eval` and `where` commands, in the `WHERE` clause of the `from` command, and as part of evaluation expressions with other commands.
+You can use this function with the `eval` and `where` commands, and as part of evaluation expressions with other commands.
 
 The `<str>` argument can be a field name or a value.
 

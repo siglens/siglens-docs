@@ -178,6 +178,7 @@ const sidebars = {
         'spl-docs/streamstats-command',
         'spl-docs/tail-command',
         'spl-docs/timechart-command',
+        'spl-docs/tojson-command',
         'spl-docs/top-command',
         'spl-docs/transaction-command',
         'spl-docs/where-command',
