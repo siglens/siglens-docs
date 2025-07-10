@@ -238,20 +238,19 @@ This function filters the values in a multivalue field based on a Boolean expres
 
 ### Usage
 - The `<predicate>` parameter is a Boolean expression used to test each value in the multivalue field.
-- The expression **must reference only one field** at a time.
-- The function will include `NULL` values in the result. If you want to exclude them, use additional conditions like `mvfilter(!isnull(<value>))` or `mvfilter(isnotnull(<value>))`.
+- The expression **must reference only one field** at a time. This means the predicate can only evaluate values from the multivalue field being filtered.
 - You can use `mvfilter` within commands like `eval`, `fieldformat`, and `where`.
 
 ### Function Behavior
-- The function iterates over each value in the multivalue field and evaluates the Boolean expression for that value.
-- Only values for which the expression evaluates to `true` (or which are `NULL`, by default) are retained in the result.
-- This is useful when you want to refine multivalue fields based on pattern matches or logical conditions.
+- The function evaluates the Boolean expression for each value in the multivalue field.
+- Only values for which the expression evaluates to `true` are retained in the result.
+- NULL values are not included by default. To include NULL values, use `OR isnull(<value>)` in your expression.
 
 ### Example
 Consider a multivalue field `email` with the following values:
 
 ```
-"abc@example.com", "support@help.net", "team@org.org", NULL
+"abc@example.com", "support@help.net", "team@org.org"
 ```
 
 To filter and retain only the email addresses ending in `.net` or `.org`, use:
