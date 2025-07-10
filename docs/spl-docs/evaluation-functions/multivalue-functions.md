@@ -391,7 +391,7 @@ This function filters the values in a multivalue field based on a Boolean expres
 ### Usage
 - The `<predicate>` parameter is a Boolean expression used to test each value in the multivalue field.
 - The expression **must reference only one field** - specifically, the multivalue field being filtered.
-- If you try to reference another field in the predicate, the filter won't work and will return an   empty result, but the query will still run without errors.
+- If you try to reference another field in the predicate, the filter won't work and will return an empty result, but the query will still run without errors.
 - You can use `mvfilter` within commands like `eval`, `fieldformat`, and `where`.
 
 ### Function Behavior
