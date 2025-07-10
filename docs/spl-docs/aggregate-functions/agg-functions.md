@@ -354,3 +354,386 @@ index=app_usage sourcetype=user_sessions
 - The `stats` command calculates the distinct count of `user_id` for each `device_type`.
 - Results are sorted in descending order of unique user count.
 - The output will show each device type and its corresponding number of unique users, helping understand user engagement across different devices.
+
+## **varp(&lt;value&gt;)**
+This function returns the population variance of the values in a field.
+
+### Usage
+
+You can use this function with the `stats` and `timechart` commands.  
+The field must contain numeric values.
+
+### Example
+
+- Calculate the population variance of the `latency` field:
+
+    ```spl
+    ... | stats varp(latency)
+    ```
+
+- For each city, calculate the variance of response time:
+
+    ```spl
+    ... | stats varp(latency) AS LatencyVariance BY city
+    ```
+
+- The following example displays a timechart of population variance of latency over time:
+
+    ```spl
+    ... | timechart span=1h varp(latency) BY city
+    ```
+
+### Use-Case Example
+
+**Analyze Latency Stability Across Cities**
+
+**Problem:** A site reliability engineer wants to understand how stable network latency is across different cities.
+
+**Solution:** Use the `stats` command with the `varp` function to calculate the population variance of the `latency` field for each city.
+
+**Implementation:**
+
+```spl
+index=server_metrics sourcetype=latency_logs
+| stats varp(latency) AS LatencyVariance BY city
+| sort - LatencyVariance
+```
+
+**Explanation**:
+
+- This query calculates the population variance of `latency` for each `city`.
+- The `stats` command aggregates variance per city to help identify regions with inconsistent network behavior.
+- A high variance suggests that latency is fluctuating significantly, possibly indicating infrastructure or routing issues.
+
+## **latest(&lt;value&gt;)**
+This function returns the most recently seen value in a field, based on timestamp order.
+
+### Usage
+
+You can use this function with the `stats` and `timechart` commands.  
+The field is evaluated based on event time and the latest value is picked chronologically.
+
+### Example
+
+- Return the most recent `zip` value across all events:
+
+    ```spl
+    ... | stats latest(zip)
+    ```
+
+- For each `city`, show the latest observed `http_status`:
+
+    ```spl
+    ... | stats latest(http_status) AS LatestStatus BY city
+    ```
+
+- The following example displays a timechart of the latest `job_title` value by city over time:
+
+    ```spl
+    ... | timechart span=1h latest(job_title) BY city
+    ```
+
+### Use-Case Example
+
+**Track the Most Recent Job Title Seen Per City**
+
+**Problem:** A recruiter wants to monitor which job titles are most recently observed in various cities based on user activity.
+
+**Solution:** Use the `stats` command with the `latest` function to get the last recorded job title for each city.
+
+**Implementation:**
+
+```spl
+index=users sourcetype=activity_logs
+| stats latest(job_title) AS LatestJobTitle BY city
+| sort city
+```
+
+**Explanation**:
+
+- The `latest` function picks the most recent `job_title` for each `city` based on event timestamp.
+- This helps track shifting trends in job-related data across different locations.
+- Sorting by `city` allows for easy scanning of geographic patterns.
+
+## **latest_time(&lt;value&gt;)**
+This function returns the UNIX timestamp of the most recent occurrence of a value in a field.
+
+### Usage
+
+You can use this function with the `stats` and `timechart` commands.  
+It is helpful for tracking the last time a value appeared in event data or metrics.  
+
+### Example
+
+- Show the last time each `http_status` was seen:
+
+    ```spl
+    ... | stats latest_time(http_status) AS LastSeenTime BY http_status
+    ```
+
+- Get the latest timestamp when each `job_company` was mentioned:
+
+    ```spl
+    ... | stats latest_time(job_company) AS LastMentionedTime
+    ```
+
+- Display a timechart of the last time `user_color` was seen by city:
+
+    ```spl
+    ... | timechart span=1h latest_time(user_color) BY city
+    ```
+
+### Use-Case Example
+
+**Determine When Each Job Title Was Last Observed**
+
+**Problem:** An HR analyst wants to know when a specific `job_title` was last recorded in the logs for each city.
+
+**Solution:** Use the `latest_time` function with `stats` to retrieve the most recent timestamp for each job title seen in various cities.
+
+**Implementation:**
+
+```spl
+index=users sourcetype=activity_logs
+| stats latest_time(job_title) AS LastSeenJobTime BY city
+| sort city
+```
+
+**Explanation**:
+
+- The `latest_time()` function extracts the most recent time a `job_title` appeared in the dataset for each city.
+- This helps monitor the recency of different job-related activities across regions.
+- Results are sorted for easy comparison by city.
+
+## **earliest(&lt;value&gt;)**
+This function returns the earliest observed value in a field based on chronological order.
+
+### Usage
+
+You can use this function with the `stats` and `timechart` commands.  
+This function processes values in the order of event time and selects the first one seen.
+
+### Example
+
+- Return the earliest observed `user_color` value:
+
+    ```spl
+    ... | stats earliest(user_color)
+    ```
+
+- For each `city`, find the first `http_method` used:
+
+    ```spl
+    ... | stats earliest(http_method) AS FirstMethod BY city
+    ```
+
+- Display a timechart of the earliest `job_title` seen over time for each city:
+
+    ```spl
+    ... | timechart span=1h earliest(job_title) BY city
+    ```
+
+### Use-Case Example
+
+**Identify the First Job Title Recorded Per City**
+
+**Problem:** A data analyst wants to track the earliest job title recorded for users in each city.
+
+**Solution:** Use the `stats` command with the `earliest` function to extract the chronologically first job title seen in each location.
+
+**Implementation:**
+
+```spl
+index=users sourcetype=activity_logs
+| stats earliest(job_title) AS FirstSeenJob BY city
+| sort city
+```
+
+**Explanation**:
+
+- The `earliest()` function finds the first value observed for `job_title` by timestamp.
+- It is useful for detecting original data points, like first-seen users or starting values in time series.
+- Sorting by city allows clear inspection of regional first-occurrence trends.
+
+## **earliest_time(&lt;value&gt;)**
+This function returns the UNIX timestamp of the earliest-seen occurrence of a value in a field.
+
+### Usage
+
+You can use this function with the `stats` and `timechart` commands.  
+This function outputs numeric UNIX time and is useful in time-based aggregations.
+
+### Example
+
+- Get the earliest timestamp when each `http_method` was seen:
+
+    ```spl
+    ... | stats earliest_time(http_method) AS FirstSeenTime BY http_method
+    ```
+
+- For each `job_title`, return when it was first observed:
+
+    ```spl
+    ... | stats earliest_time(job_title) AS FirstTimestamp BY job_title
+    ```
+
+- Display a timechart of earliest occurrence of each `user_color`:
+
+    ```spl
+    ... | timechart span=1h earliest_time(user_color) BY user_color
+    ```
+
+### Use-Case Example
+
+**Monitor First Appearance of HTTP Methods**
+
+**Problem:** A security analyst wants to monitor when each type of HTTP method (e.g., POST, GET) was first observed in logs.
+
+**Solution:** Use the `stats` command with `earliest_time()` to find the first UNIX timestamp for each method.
+
+**Implementation:**
+
+```spl
+index=web sourcetype=access_combined
+| stats earliest_time(http_method) AS FirstObservedTime BY http_method
+| convert ctime(FirstObservedTime)
+```
+
+**Explanation**:
+
+- This query aggregates the earliest seen time (in UNIX epoch) for each distinct `http_method`.
+- The `convert ctime()` command formats the timestamp into a readable format.
+- This helps track the timeline of request types appearing in your system logs.
+
+## **sumsq(&lt;value&gt;)**
+This function returns the **sum of the squares** of values in a numeric field.
+
+### Usage
+
+You can use this function with the `stats`, `timechart`, and `chart` commands.  
+It is often used to evaluate the variance of a dataset. A large sum of squares indicates wide fluctuation from the mean.
+
+### Example
+
+- Calculate the sum of squares of `latency` values:
+
+    ```spl
+    ... | stats sumsq(latency)
+    ```
+
+- For each `city`, calculate the sum of squared latencies:
+
+    ```spl
+    ... | stats sumsq(latency) AS LatencySquareSum BY city
+    ```
+
+- Show a timechart of `sumsq(latency)` per city every hour:
+
+    ```spl
+    ... | timechart span=1h sumsq(latency) BY city
+    ```
+
+### Use-Case Example
+
+**Measure Network Latency Variance Across Locations**
+
+**Problem:** A network engineer wants to identify cities with high fluctuations in latency over time.
+
+**Solution:** Use the `sumsq()` function to calculate the squared sum of `latency` values by city, which can help in determining variance trends.
+
+**Implementation:**
+
+```spl
+index=server_metrics sourcetype=latency_logs
+| stats sumsq(latency) AS LatencyFluctuation BY city
+| sort - LatencyFluctuation
+```
+
+**Explanation**:
+
+- This query computes the sum of squares of the `latency` field grouped by each `city`.
+- Larger values indicate cities where latency fluctuates significantly from the average.
+- This insight can be used for troubleshooting unstable regions in the network.
+
+## **perc&lt;percentile&gt;(&lt;value&gt;)**
+
+### Description
+The percentile functions return the Nth percentile value of the numeric field \<value\>. You can think of this as an estimate of where the top percentile starts. For example, a 95th percentile says that 95% of the values in field Y are below the estimate and 5% of the values in field \<value\> are above the estimate.
+
+Valid percentile values are floating point numbers between 0 and 100 (inclusive), such as 99.95. 
+
+| Function | Description |
+|---|---|
+| `perc<percentile>(<value>)` or `p<percentile>(<value>)` | Use the perc function to calculate an approximate threshold, such that of the values in field Y, X percent fall below the threshold. The perc function returns a single number that represents the lower end of the approximate values for the percentile requested. |  
+
+The percentile functions process field values as strings
+
+> **Note:** The **perc** and **upperperc** functions are nondeterministic, which means that subsequent searches using these functions over identical data can return variances in their results.  
+
+### Usage
+
+You can use this function with the [stats](../stats-command.md) and [timechart](../timechart-command.md) commands.
+
+### Differences between SigLens and Excel percentile algorithms
+
+If there are less than 1000 distinct values, the SigLens percentile functions use the nearest rank algorithm. See <a href="http://en.wikipedia.org/wiki/Percentile#Nearest_rank" target="_blank" rel="noopener">Nearest Rank</a>. Excel uses the NIST interpolated algorithm, which basically means you can get a value for a percentile that does not exist in the actual data, which is not possible for the nearest rank approach.
+
+### SigLens algorithm with more than 1000 distinct values
+
+If there are more than 1000 distinct values for the field, the percentiles are approximated using a radix-tree digest-based algorithm. This algorithm is much faster and uses much less memory, a constant amount, than an exact computation, which uses memory in linear relation to the number of distinct values. By default this approach limits the approximation error to \< 1% of rank error. That means if you ask for 95th percentile, the number you get back is between the 94th and 96th percentile.
+
+### Basic examples
+
+Consider this list of values `Y = {10,9,8,7,6,5,4,3,2,1}`.
+
+The following example returns 5.5.
+
+```spl
+...| stats perc50(Y)
+```
+
+The following example returns 9.55.
+
+```spl
+...| stats perc95(Y)
+```
+
+## **median(&lt;value&gt;)**
+
+### Description
+
+Returns the middle-most value of the field specified.
+
+### Usage
+
+You can use this function with the [stats](../stats-command.md) and [timechart](../timechart-command.md) commands.
+
+If you have an even number of events, by default the median calculation is approximated to the higher of the two values.
+
+> **Note:** This function behaves the same way as `perc50/p50`. 
+
+### Basic examples
+
+Consider the following list of values, which counts the number of different customers who purchased something from the Buttercup Games online store yesterday. The values are organized by the type of product (accessories, t-shirts, and type of games) that customers purchased.
+
+| categoryId  | count |
+|-------------|-------|
+| ACCESSORIES | 37    |
+| ARCADE      | 58    |
+| NULL        | 8     |
+| SIMULATION  | 34    |
+| SPORTS      | 13    |
+| STRATEGY    | 74    |
+| TEE         | 38    |
+
+When the list is sorted the median, or middle-most value, is 37.
+
+| categoryId  | count |
+|-------------|-------|
+| NULL        | 8     |
+| SPORTS      | 13    |
+| SIMULATION  | 34    |
+| ACCESSORIES | 37    |
+| TEE         | 38    |
+| ARCADE      | 58    |
+| STRATEGY    | 74    |
