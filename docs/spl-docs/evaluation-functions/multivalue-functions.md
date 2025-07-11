@@ -432,3 +432,59 @@ The result for `filtered_emails` will be `"support@help.net", "team@org.org"`.
 3. The `where` clause filters results to show only records that have at least one valid email after filtering.
 
 This method allows you to selectively filter multivalue fields based on complex conditions, enabling more targeted data analysis and processing.
+
+
+## mv_to_json_array(&lt;mv&gt;, &lt;infer_types&gt;)
+
+This function converts a multivalue field into a JSON array string. It optionally infers the data types of the elements to produce correctly typed JSON values.
+
+### Usage
+
+You can use this function with the eval and where commands, and as part of evaluation expressions with other commands.
+- `<mv>` is the multivalue field
+- `<infer_types>` is an **optional** boolean expression (default: false)
+
+### Function Behavior
+- If `<infer_types>` is **false** (or omitted), each value is treated as a string and inserted into the JSON array with quotes preserved.
+- If `<infer_types>` is **true**, the function strips one level of outer quotes and tries to convert the value to an appropriate JSON data type (`number`, `boolean`, `null`, or string). If a value cannot be inferred, it is inserted as `null`.
+- The output is a single-valued string that is a valid JSON array.
+
+### Example
+
+Suppose you have a multivalue field called `readings` with the following values:
+
+`"10", "12.5", "true", "null"`
+
+Without inferring types:
+
+```spl
+... | eval readings_json = mv_to_json_array(readings, false)
+```
+
+Result: `["10", "12.5", "true", "null"]`
+
+With type inference:
+
+```spl
+... | eval readings_json = mv_to_json_array(readings, 1=1)
+```
+
+Result: `[10, 12.5, true, null]`
+
+### Use-Case Example
+
+**Formatting Data for External JSON Consumers**
+
+**Problem:** You want to export multivalue fields to downstream systems that expect a valid JSON array, with correct types like numbers and booleans—not just strings.
+
+**Solution:** Use `mv_to_json_array` with a boolean condition to serialize your multivalue field into a properly typed JSON array.
+
+```spl
+... | eval json_payload = mv_to_json_array(metrics, true())
+```
+
+**Explanation:**
+1. `metrics` contains values like `"5"`, `"3.14"`, `"true"`, `"null"` as strings.
+2. The resulting array is: `[5, 3.14, true, null]`
+
+This function is essential when you need to control the structure and typing of JSON arrays emitted by Splunk for integration with APIs, dashboards, or logging systems.
