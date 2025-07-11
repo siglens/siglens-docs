@@ -451,27 +451,25 @@ You can use this function with the eval and where commands, and as part of evalu
 
 ### Example
 
-Suppose you create a multivalue field `ponies` like this:
+Suppose you have a multivalue field called `readings` with the following values:
 
-```spl
-... | eval ponies = mvappend("\"Buttercup\"", "\"Fluttershy\"", "\"Rarity\"", "true", "null")
-```
+`"10", "12.5", "true", "null"`
 
 Without inferring types:
 
 ```spl
-... | eval my_sweet_ponies = mv_to_json_array(ponies, false)
+... | eval readings_json = mv_to_json_array(readings, false)
 ```
 
-Result: `["\"Buttercup\"", "\"Fluttershy\"", "\"Rarity\"", "true", "null"]`
+Result: `["10", "12.5", "true", "null"]`
 
 With type inference:
 
 ```spl
-... | eval my_sweet_ponies = mv_to_json_array(ponies, some_condition="yes")
+... | eval readings_json = mv_to_json_array(readings, 1=1)
 ```
 
-If `some_condition="yes"` evaluates to true, the result is: `["Buttercup", "Fluttershy", "Rarity", true, null]`
+Result: `[10, 12.5, true, null]`
 
 ### Use-Case Example
 
