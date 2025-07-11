@@ -304,3 +304,60 @@ If the first value in the `srcip` field is 203.0.113.0 and the first value in th
 | time                | ipaddresses                                           |
 | :------------------ | :---------------------------------------------------- |
 | 2024-11-19 16:43:31 | localhost <br/> 203.0.113.0 <br/> 203.0.113.255 <br/> 192.168.1.1 |
+
+## mv_to_json_array(&lt;mv&gt;, &lt;infer_types&gt;)
+
+This function converts a multivalue field into a JSON array string. It optionally infers the data types of the elements to produce correctly typed JSON values.
+
+### Usage
+
+You can use this function with the eval and where commands, and as part of evaluation expressions with other commands.
+- `<mv>` is the multivalue field
+- `<infer_types>` is an **optional** boolean expression (default: false)
+
+### Function Behavior
+- If `<infer_types>` is **false** (or omitted), each value is treated as a string and inserted into the JSON array with quotes preserved.
+- If `<infer_types>` is **true**, the function strips one level of outer quotes and tries to convert the value to an appropriate JSON data type (`number`, `boolean`, `null`, or string). If a value cannot be inferred, it is inserted as `null`.
+- The output is a single-valued string that is a valid JSON array.
+
+### Example
+
+Suppose you create a multivalue field `ponies` like this:
+
+```spl
+... | eval ponies = mvappend("\"Buttercup\"", "\"Fluttershy\"", "\"Rarity\"", "true", "null")
+```
+
+Without inferring types:
+
+```spl
+... | eval my_sweet_ponies = mv_to_json_array(ponies, false)
+```
+
+Result: `["\"Buttercup\"", "\"Fluttershy\"", "\"Rarity\"", "true", "null"]`
+
+With type inference:
+
+```spl
+... | eval my_sweet_ponies = mv_to_json_array(ponies, some_condition="yes")
+```
+
+If `some_condition="yes"` evaluates to true, the result is: `["Buttercup", "Fluttershy", "Rarity", true, null]`
+
+### Use-Case Example
+
+**Formatting Data for External JSON Consumers**
+
+**Problem:** You want to export multivalue fields to downstream systems that expect a valid JSON array, with correct types like numbers and booleans—not just strings.
+
+**Solution:** Use `mv_to_json_array` with a boolean condition to serialize your multivalue field into a properly typed JSON array.
+
+```spl
+... | eval json_payload = mv_to_json_array(metrics, true())
+```
+
+**Explanation:**
+1. `metrics` contains values like `"5"`, `"3.14"`, `"true"`, `"null"` as strings.
+2. The resulting array is: `[5, 3.14, true, null]`
+
+This function is essential when you need to control the structure and typing of JSON arrays emitted by Splunk for integration with APIs, dashboards, or logging systems.
